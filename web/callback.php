@@ -38,7 +38,7 @@ $result = file_get_contents($url, false, stream_context_create($options));
 
 $response_format_text = [
     "type" => "text",
-    "text" => "こんにちは"
+    "text" => $result
 ];
 
 $post_data = [
