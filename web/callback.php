@@ -25,24 +25,24 @@ $url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifie
 $username = "8a9fc757-fc79-43c2-ac3c-16cd7ed91f0b";
 $password = "Uj31NjHaEspV";
 
-$headers = array(
-    'Authorization: Basic '.base64_encode($username.':'.$password),
-    'Content-Type: text/plain'
+$data = array("text" => $text);
+$curl = curl_init($url);
+
+$options = array(
+    CURLOPT_HTTPHEADER => array(
+     'Content-Type: application/json',
+    ),
+    CURLOPT_USERPWD => $username . ':' . $password,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => json_encode($data),
+    CURLOPT_RETURNTRANSFER => true,
 );
 
-$options = array('http' => array(
-    'method' => 'POST',
-    'content' => $text,
-    'header' => implode("\r\n", $headers)
-));
+curl_setopt_array($curl, $options);
+$jsonString = curl_exec($curl);
+$json = json_decode($jsonString, true);
 
-try{
-	$result = file_get_contents($url, false, stream_context_create($options));
-	$jsonRe = json_decode($result);
-	$mes = $jsonRe->{"top_class"};
-} catch (Exception $e) {
-	$mes = $e;
-}
+$mes = $json["top_class"];
 
 $response_format_text = [
     "type" => "text",
