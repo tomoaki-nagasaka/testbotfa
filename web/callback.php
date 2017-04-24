@@ -41,7 +41,7 @@ try{
 	$jsonRe = json_decode($result);
 	$mes = $jsonRe->{"top_class"};
 } catch (Exception $e) {
-	$mes = $e
+	$mes = $e;
 }
 
 $response_format_text = [
