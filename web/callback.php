@@ -19,7 +19,8 @@ if($type != "text"){
 
 $classfier = "12d0fcx34-nlc-410";
 
-$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
+//$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
+$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
 
 $username = "8a9fc757-fc79-43c2-ac3c-16cd7ed91f0b";
 $password = "Uj31NjHaEspV";
@@ -31,12 +32,17 @@ $headers = array(
 
 $options = array('http' => array(
     'method' => 'POST',
+    'content' => $text,
     'header' => implode("\r\n", $headers)
 ));
 
-$result = file_get_contents($url, false, stream_context_create($options));
-$jsonRe = json_decode($result);
-$mes = $jsonRe->{"top_class"};
+try{
+	$result = file_get_contents($url, false, stream_context_create($options));
+	$jsonRe = json_decode($result);
+	$mes = $jsonRe->{"top_class"};
+} catch (Exception $e) {
+	$mes = $e
+}
 
 $response_format_text = [
     "type" => "text",
