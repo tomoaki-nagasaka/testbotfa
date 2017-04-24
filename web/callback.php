@@ -35,10 +35,12 @@ $options = array('http' => array(
 ));
 
 $result = file_get_contents($url, false, stream_context_create($options));
+$jsonRe = json_decode($result);
+$mes = $jsonRe->{"top_class"};
 
 $response_format_text = [
     "type" => "text",
-    "text" => $result
+    "text" => $mes
 ];
 
 $post_data = [
