@@ -35,9 +35,30 @@ $options = array('http' => array(
 ));
 $result = file_get_contents($url, false, stream_context_create($options));
 
+$response_format_text = [
+    "type" => "template",
+    "altText" => $result,
+    "template" => [
+        "type" => "confirm",
+        "text" => "こんにちわ 何かご用ですか？",
+        "actions" => [
+            [
+              "type" => "message",
+              "label" => "はい",
+              "text" => "はい"
+            ],
+            [
+              "type" => "message",
+              "label" => "いいえ",
+              "text" => "いいえ"
+            ]
+        ]
+    ]
+];
+
 $post_data = [
 	"replyToken" => $replyToken,
-	"messages" => [$result]
+	"messages" => [$response_format_text]
 	];
 
 $ch = curl_init("https://api.line.me/v2/bot/message/reply");
