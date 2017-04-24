@@ -19,7 +19,7 @@ if($type != "text"){
 
 $classfier = "12d0fcx34-nlc-410"
 
-$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/" . $classfier . "/classify?text=" . $text;
+$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 
 $username = "8a9fc757-fc79-43c2-ac3c-16cd7ed91f0b";
 $password = "Uj31NjHaEspV";
@@ -36,24 +36,8 @@ $options = array('http' => array(
 $result = file_get_contents($url, false, stream_context_create($options));
 
 $response_format_text = [
-    "type" => "template",
-    "altText" => $result,
-    "template" => [
-        "type" => "confirm",
-        "text" => "こんにちわ 何かご用ですか？",
-        "actions" => [
-            [
-              "type" => "message",
-              "label" => "はい",
-              "text" => "はい"
-            ],
-            [
-              "type" => "message",
-              "label" => "いいえ",
-              "text" => "いいえ"
-            ]
-        ]
-    ]
+    "type" => "text",
+    "text" => "こんにちは",
 ];
 
 $post_data = [
