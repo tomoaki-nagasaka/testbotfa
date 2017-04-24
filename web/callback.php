@@ -17,6 +17,25 @@ if($type != "text"){
 	exit;
 }
 
+$classfier = "12d0fcx34-nlc-410";
+
+$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
+
+$username = "8a9fc757-fc79-43c2-ac3c-16cd7ed91f0b";
+$password = "Uj31NjHaEspV";
+
+$headers = array(
+    'Authorization: Basic '.base64_encode($username.':'.$password),
+    'Content-Type: text/plain'
+);
+
+$options = array('http' => array(
+    'method' => 'POST',
+    'header' => implode("\r\n", $headers)
+));
+
+$result = file_get_contents($url, false, stream_context_create($options));
+
 $response_format_text = [
     "type" => "text",
     "text" => "こんにちは"
