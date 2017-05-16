@@ -50,6 +50,28 @@ $options = array(
 
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
+$json = json_decode($jsonString, true);
+
+$conversation_id = $json["context"]["conversation_id"];
+
+$data["context"] = array("conversation_id" => $conversation_id,
+      "system" => array("dialog_stack" => array(array("dialog_node" => "root")), 
+      "dialog_turn_counter" => 1,
+      "dialog_request_counter" => 1));
+
+$curl = curl_init($url);
+$options = array(
+    CURLOPT_HTTPHEADER => array(
+     'Content-Type: application/json',
+    ),
+    CURLOPT_USERPWD => $username . ':' . $password,
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => json_encode($data),
+    CURLOPT_RETURNTRANSFER => true,
+);
+
+curl_setopt_array($curl, $options);
+$jsonString = curl_exec($curl);
 error_log($jsonString);
 $json = json_decode($jsonString, true);
 
