@@ -49,6 +49,7 @@ $options = array(
 
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
+fputs(STDOUT,$jsonString);
 $json = json_decode($jsonString, true);
 
 $mes = $json["output"]["text"];
