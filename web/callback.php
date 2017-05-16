@@ -18,19 +18,19 @@ if($type != "text"){
 }
 
 $classfier = "12d0fcx34-nlc-410";
-$conversation_id = "fa6f1b64-533d-4aaa-b181-b534fc0b3d1e"
+$workspace_id = "fa6f1b64-533d-4aaa-b181-b534fc0b3d1e"
 
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
-$url = 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' . $conversation_id . '/message?version=2017-04-21';
+$url = 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' . $workspace_id . '/message?version=2017-04-21';
 
 $username = "bfeeeb55-a8a0-459b-9410-0eb1fa44a285";
 $password = "kR2NobNe1lkJ";
 
 //$data = array("text" => $text);
 $data = array('input' => array("text" => $text));
-$data["context"] = array("conversation_id" => $conversation_id,
-      "system" => array("dialog_stack" => array(array("dialog_node" => "root")), 
+$data["context"] = array("conversation_id" => "",
+      "system" => array("dialog_stack" => array(array("dialog_node" => "")), 
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
 $curl = curl_init($url);
@@ -49,7 +49,8 @@ curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
 $json = json_decode($jsonString, true);
 
-$mes = $json["output"]["text"];
+//$mes = $json["output"]["text"];
+$mes = $json["output"];
 
 $response_format_text = [
     "type" => "text",
