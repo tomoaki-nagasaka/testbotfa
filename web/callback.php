@@ -29,10 +29,12 @@ $password = "kR2NobNe1lkJ";
 
 //$data = array("text" => $text);
 $data = array('input' => array("text" => $text));
+/*
 $data["context"] = array("conversation_id" => "",
       "system" => array("dialog_stack" => array(array("dialog_node" => "")), 
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
+*/
 $curl = curl_init($url);
 
 $options = array(
@@ -49,8 +51,8 @@ curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
 $json = json_decode($jsonString, true);
 
-//$mes = $json["output"]["text"];
-$mes = $json["output"];
+$mes = $json["output"]["text"];
+//$mes = $json["output"];
 
 $response_format_text = [
     "type" => "text",
