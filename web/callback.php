@@ -1,5 +1,5 @@
 <?php
-echo "開始します";
+error_log("開始します");
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
@@ -50,7 +50,7 @@ $options = array(
 
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
-echo $jsonString;
+error_log($jsonString);
 $json = json_decode($jsonString, true);
 
 $mes = $json["output"]["text"];
