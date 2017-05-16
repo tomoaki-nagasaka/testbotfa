@@ -75,7 +75,7 @@ $jsonString = curl_exec($curl);
 error_log($jsonString);
 $json = json_decode($jsonString, true);
 
-$mes = $json["output"]["text"];
+$mes = $json["output"]["text"][0];
 //$mes = $json["output"];
 
 $response_format_text = [
