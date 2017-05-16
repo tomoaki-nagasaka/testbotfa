@@ -18,11 +18,11 @@ if($type != "text"){
 }
 
 $classfier = "12d0fcx34-nlc-410";
-$workspace_id = "fa6f1b64-533d-4aaa-b181-b534fc0b3d1e"
+$workspace_id = "fa6f1b64-533d-4aaa-b181-b534fc0b3d1e";
 
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
-$url = 'https://gateway.watsonplatform.net/conversation/api/v1/workspaces/' . $workspace_id . '/message?version=2017-04-21';
+$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
 
 $username = "bfeeeb55-a8a0-459b-9410-0eb1fa44a285";
 $password = "kR2NobNe1lkJ";
