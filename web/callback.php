@@ -1,5 +1,5 @@
 <?php
-error_log("開始します");
+//error_log("開始します");
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
@@ -32,7 +32,7 @@ $password = "kR2NobNe1lkJ";
 $data = array('input' => array("text" => $text));
 /*
 $data["context"] = array("conversation_id" => "",
-      "system" => array("dialog_stack" => array(array("dialog_node" => "")), 
+      "system" => array("dialog_stack" => array(array("dialog_node" => "")),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
 */
@@ -55,7 +55,7 @@ $json = json_decode($jsonString, true);
 $conversation_id = $json["context"]["conversation_id"];
 
 $data["context"] = array("conversation_id" => $conversation_id,
-      "system" => array("dialog_stack" => array(array("dialog_node" => "root")), 
+      "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
 
