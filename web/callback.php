@@ -5,6 +5,7 @@ $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 //ユーザーからのメッセージ取得
 $json_string = file_get_contents('php://input');
+error_log($jsonString);
 $jsonObj = json_decode($json_string);
 
 $type = $jsonObj->{"events"}[0]->{"message"}->{"type"};
@@ -72,7 +73,7 @@ $options = array(
 
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
-error_log($jsonString);
+//error_log($jsonString);
 $json = json_decode($jsonString, true);
 
 $mes = $json["output"]["text"][0];
