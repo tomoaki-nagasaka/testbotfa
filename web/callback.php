@@ -5,14 +5,18 @@ $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 //ユーザーからのメッセージ取得
 $json_string = file_get_contents('php://input');
-error_log($jsonString);
 $jsonObj = json_decode($json_string);
 
 $type = $jsonObj->{"events"}[0]->{"message"}->{"type"};
+$eventType = $jsonObj->{"events"}[0]->{"type"};
 //メッセージ取得
 $text = $jsonObj->{"events"}[0]->{"message"}->{"text"};
 //ReplyToken取得
 $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
+//ユーザーID取得
+$userID = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
+
+error_log($eventType);
 
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
@@ -36,7 +40,7 @@ $data["context"] = array("conversation_id" => "",
       "system" => array("dialog_stack" => array(array("dialog_node" => "")),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
-*/
+
 $curl = curl_init($url);
 
 $options = array(
@@ -51,15 +55,20 @@ $options = array(
 
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
+*/
+$jsonString = callWatson();
 $json = json_decode($jsonString, true);
 
 $conversation_id = $json["context"]["conversation_id"];
+$userArray = [$userID]["cid"] = $conversation_id;
+$userArray = [$userID]["time"] = date('Y/m/d H:i:s');
 
 $data["context"] = array("conversation_id" => $conversation_id,
       "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
 
+/*
 $curl = curl_init($url);
 $options = array(
     CURLOPT_HTTPHEADER => array(
@@ -73,6 +82,8 @@ $options = array(
 
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
+*/
+$jsonString = callWatson();
 //error_log($jsonString);
 $json = json_decode($jsonString, true);
 
@@ -100,3 +111,34 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     ));
 $result = curl_exec($ch);
 curl_close($ch);
+
+function makeOptions(){
+	global $username, $password, $data;
+	return array(
+			CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json',
+			),
+			CURLOPT_USERPWD => $username . ':' . $password,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => json_encode($data),
+			CURLOPT_RETURNTRANSFER => true,
+	);
+}
+
+function callWatson(){
+	global $curl, $url, $username, $password, $data, $options;
+	$curl = curl_init($url);
+
+	$options = array(
+			CURLOPT_HTTPHEADER => array(
+					'Content-Type: application/json',
+			),
+			CURLOPT_USERPWD => $username . ':' . $password,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => json_encode($data),
+			CURLOPT_RETURNTRANSFER => true,
+	);
+
+	curl_setopt_array($curl, $options);
+	return curl_exec($curl);
+}
