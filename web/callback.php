@@ -36,17 +36,17 @@ if($eventType == "follow"){
 							[
 									"type" => "postback",
 									"label" => "証明書",
-									"text" => "action=shomei"
+									"data" => "action=shomei"
 							],
 							[
 									"type" => "postback",
 									"label" => "施設予約",
-									"text" => "action=shisetsu"
+									"data" => "action=shisetsu"
 							],
 							[
 									"type" => "postback",
 									"label" => "ご利用方法",
-									"text" => "action=riyo"
+									"data" => "action=riyo"
 							]
 					]
 			]
