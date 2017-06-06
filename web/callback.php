@@ -29,22 +29,22 @@ if($eventType == "follow"){
 					"text" => "こんにちは。行政市のすいか太郎です。\\n皆さんの質問にはりきってお答えしますよ～",
 					"actions" => [
 							[
-									"type" => "message",
+									"type" => "postback",
 									"label" => "LINEで質問",
-									"text" => "action=qaline"
+									"data" => "action=qaline"
 							],
 							[
-									"type" => "message",
+									"type" => "postback",
 									"label" => "証明書",
 									"text" => "action=shomei"
 							],
 							[
-									"type" => "message",
+									"type" => "postback",
 									"label" => "施設予約",
 									"text" => "action=shisetsu"
 							],
 							[
-									"type" => "message",
+									"type" => "postback",
 									"label" => "ご利用方法",
 									"text" => "action=riyo"
 							]
@@ -54,42 +54,47 @@ if($eventType == "follow"){
 	goto lineSend;
 }
 
+if($eventType == "postback"){
+	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
+	if($bData== 'action=qaline') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "それでは、質問をお願いします。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=shomei') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "証明書についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=shisetsu') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "施設予約についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=riyo') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "ご利用方法についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
+}
+
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
 	exit;
 }
 
-if($text == 'action=qaline') {
-	$response_format_text = [
-			"type" => "text",
-			"text" => "質問をお願いします。"
-	];
-	goto lineSend;
-}
 
-if($text == 'action=shomei') {
-	$response_format_text = [
-			"type" => "text",
-			"text" => "証明書についてはこちらをごらんください。"
-	];
-	goto lineSend;
-}
-
-if($text == 'action=shisetsu') {
-	$response_format_text = [
-			"type" => "text",
-			"text" => "施設予約についてはこちらをごらんください。"
-	];
-	goto lineSend;
-}
-
-if($text == 'action=riyo') {
-	$response_format_text = [
-			"type" => "text",
-			"text" => "ご利用方法についてはこちらをごらんください。"
-	];
-	goto lineSend;
-}
 
 $classfier = "12d0fcx34-nlc-410";
 $workspace_id = "fa6f1b64-533d-4aaa-b181-b534fc0b3d1e";
