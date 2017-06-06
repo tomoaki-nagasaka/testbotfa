@@ -163,6 +163,7 @@ $response_format_text = [
 ];
 
 lineSend:
+error_log($response_format_text);
 $post_data = [
 	"replyToken" => $replyToken,
 	"messages" => [$response_format_text]
