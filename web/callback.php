@@ -219,7 +219,7 @@ $json = json_decode($jsonString, true);
 $mes = $json["output"]["text"][0];
 //$mes = $json["output"];
 
-if($mes = "usrChoise_1"){
+if($mes == "usrChoise_1"){
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
@@ -253,7 +253,7 @@ if($mes = "usrChoise_1"){
 	goto lineSend;
 }
 
-if($mes = "usrChoise_2"){
+if($mes == "usrChoise_2"){
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
