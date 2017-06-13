@@ -26,7 +26,7 @@ if($eventType == "follow"){
 					"thumbnailImageUrl" => "https://" . $_SERVER['SERVER_NAME'] . "/gyosei.jpg",
 					"title" => "行政市役所",
 					//"text" => "こんにちは。行政市のすいか太郎です。\\n皆さんの質問にはりきってお答えしますよ～\\nまずは、下のメニュータブをタップしてみてください",
-					"text" => "こんにちは。行政市のすいか太郎です。\\n皆さんの質問にはりきってお答えしますよ～",
+					"text" => "こんにちは。行政市のすいか太郎です。皆さんの質問にはりきってお答えしますよ～",
 					"actions" => [
 							[
 									"type" => "postback",
@@ -84,6 +84,62 @@ if($eventType == "postback"){
 		$response_format_text = [
 				"type" => "text",
 				"text" => "ご利用方法についてはこちらをごらんください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_1_1') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "①○○地区、△△地区、□□地区ですね。\\nその場合、最寄りの税務署は「行政第一税務署」になります。「行政第一税務署」の詳細はURLをご確認ください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_1_2') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "②●●地区、▲▲地区、■■地区ですね。\\nその場合、最寄りの税務署は「行政第二税務署」になります。「行政第二税務署」の詳細はURLをご確認ください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_1_3') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "③Ａ地区、Ｂ地区、Ｃ地区ですね。\\nその場合、最寄りの税務署は「行政第三税務署」になります。「行政第三税務署」の詳細はURLをご確認ください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_1_4') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "④あ地区、い地区、う地区ですね。\\nその場合、最寄りの税務署は「行政第四税務署」になります。「行政第四税務署」の詳細はURLをご確認ください。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_2_1') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "ありがとうございます。\\n個人番号カードをお持ちでコンビニエンスストアでの証明書交付の利用申請がお済の方は、下記のコンビニエンスストアでも住民票の写しが取れますよ～\\n\\n・セブンイレブン\\n・ローソン\\n・ファミリーマート\\n・サークルＫサンクス\\n\\nまた、コンビニエンスストアの証明交付サービスは、年末年始（12月29日～翌年1月3日）を除き、毎日6:30から23:00まで、ご利用いただけます。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_2_2') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。"
+		];
+		goto lineSend;
+	}
+
+	if($bData== 'action=uc_2_3') {
+		$response_format_text = [
+				"type" => "text",
+				"text" => "もし、個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。"
 		];
 		goto lineSend;
 	}
@@ -162,6 +218,69 @@ $json = json_decode($jsonString, true);
 
 $mes = $json["output"]["text"][0];
 //$mes = $json["output"];
+
+if($mes = "usrChoise_1"){
+	$response_format_text = [
+			"type" => "template",
+			"altText" => "this is a buttons template",
+			"template" => [
+					"type" => "buttons",
+					"text" => "お調べしますので、あなたのお住いの地区名を下記から選択してください。",
+					"actions" => [
+							[
+									"type" => "postback",
+									"label" => "①○○地区、△△地区、□□地区",
+									"data" => "action=uc_1_1"
+							],
+							[
+									"type" => "postback",
+									"label" => "②●●地区、▲▲地区、■■地区",
+									"data" => "action=uc_1_2"
+							],
+							[
+									"type" => "postback",
+									"label" => "③Ａ地区、Ｂ地区、Ｃ地区",
+									"data" => "action=uc_1_3"
+							],
+							[
+									"type" => "postback",
+									"label" => "④あ地区、い地区、う地区",
+									"data" => "action=uc_1_4"
+							]
+					]
+			]
+	];
+	goto lineSend;
+}
+
+if($mes = "usrChoise_2"){
+	$response_format_text = [
+			"type" => "template",
+			"altText" => "this is a buttons template",
+			"template" => [
+					"type" => "buttons",
+					"text" => "住民票の写しは行政市役所本庁舎、行政第一支所、行政第二支所の窓口で発行できます。受付時間は、月曜日～金曜日の午前8時30分～午後5時です。ちなみに個人番号カードはお持ちですか？",
+					"actions" => [
+							[
+									"type" => "postback",
+									"label" => "１．はい",
+									"data" => "action=uc_2_1"
+							],
+							[
+									"type" => "postback",
+									"label" => "２．いいえ",
+									"data" => "action=uc_2_2"
+							],
+							[
+									"type" => "postback",
+									"label" => "３．わからない",
+									"data" => "action=uc_2_3"
+							]
+					]
+			]
+	];
+	goto lineSend;
+}
 
 $response_format_text = [
     "type" => "text",
