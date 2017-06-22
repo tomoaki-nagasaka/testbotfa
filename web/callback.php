@@ -192,6 +192,21 @@ $conversation_id = $json["context"]["conversation_id"];
 $userArray[$userID]["cid"] = $conversation_id;
 $userArray[$userID]["time"] = date('Y/m/d H:i:s');
 
+//DB接続
+$conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
+$link = pg_connect($conn);
+if (!$link) {
+	error_log("接続失敗です。".pg_last_error());
+}else{
+	error_log("接続しました。");
+	$sql = "INSERT INTO botlog (userid, contents) VALUES (".$userID.",".$text.")";
+	$result_flag = pg_query($sql);
+	if (!$result_flag) {
+		error_log("インサートに失敗しました。".pg_last_error());
+	}
+}
+
+
 $data["context"] = array("conversation_id" => $conversation_id,
       "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
