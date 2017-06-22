@@ -199,7 +199,7 @@ if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
 	error_log("接続しました。");
-	$sql = "INSERT INTO botlog (userid, contents) VALUES (".$userID.",".$text.")";
+	$sql = "INSERT INTO botlog (userid, contents) VALUES ('".$userID."','".$text."')";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
