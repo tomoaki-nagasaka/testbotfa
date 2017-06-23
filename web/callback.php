@@ -157,13 +157,16 @@ $link = pg_connect($conn);
 if ($link) {
 	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
 	if (pg_num_rows($result) == 0) {
+		error_log("データなし");
 		$jsonString = callWatson();
 		$json = json_decode($jsonString, true);
 
 		$conversation_id = $json["context"]["conversation_id"];
 		$conversation_node = "root";
 		$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('".$userID."','".$conversation_id."','".$conversation_node."')";
+		$result_flag = pg_query($sql);
 	}else{
+		error_log("データあり");
 		$row = pg_fetch_row($result);
 		$conversation_id = $row[1];
 		$conversation_node= $row[2];
@@ -294,7 +297,8 @@ if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
 	$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('".$userID."','".$text."','".$resmess."')";
-	$sql .= "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}' WHERE userid = '{$userID}'";
+	$result_flag = pg_query($sql);
+	$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}' WHERE userid = '{$userID}'";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
