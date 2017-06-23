@@ -150,15 +150,31 @@ $options = array(
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
 */
-$jsonString = callWatson();
-$json = json_decode($jsonString, true);
+//DB接続
+$conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
+$link = pg_connect($conn);
 
-$conversation_id = $json["context"]["conversation_id"];
-$userArray[$userID]["cid"] = $conversation_id;
-$userArray[$userID]["time"] = date('Y/m/d H:i:s');
+if ($link) {
+	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
+	if (pg_num_rows($result) == 0) {
+		$jsonString = callWatson();
+		$json = json_decode($jsonString, true);
+
+		$conversation_id = $json["context"]["conversation_id"];
+		$conversation_node = "root";
+		$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('".$userID."','".$conversation_id."','".$conversation_node."')";
+	}else{
+		$row = pg_fetch_row($result);
+		$conversation_id = $row[1];
+		$conversation_node= $row[2];
+	}
+}
+
+
+
 
 $data["context"] = array("conversation_id" => $conversation_id,
-      "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
+		"system" => array("dialog_stack" => array(array("dialog_node" => $conversation_node)),
       "dialog_turn_counter" => 1,
       "dialog_request_counter" => 1));
 
@@ -182,6 +198,7 @@ $jsonString = callWatson();
 $json = json_decode($jsonString, true);
 
 $resmess= $json["output"]["text"][0];
+$conversation_node = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
 
 if($resmess== "usrChoise_1"){
 	$resmess = "お調べしますので、あなたのお住いの地区名を下記から選択してください。";
@@ -272,17 +289,18 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
 $result = curl_exec($ch);
 curl_close($ch);
 
-//DB接続
-$conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
-$link = pg_connect($conn);
+
 if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
-	error_log("接続しました。");
 	$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('".$userID."','".$text."','".$resmess."')";
+	$sql .= "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}' WHERE userid = '{$userID}'";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
+	}
+	if(!pg_close($conn)) {
+		error_log("切断に失敗しました。".pg_last_error());
 	}
 }
 
