@@ -15,9 +15,12 @@ $text = $jsonObj->{"events"}[0]->{"message"}->{"text"};
 $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
 //ユーザーID取得
 $userID = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
+//返信メッセージ
+$resmess = "";
 
 error_log($eventType);
 if($eventType == "follow"){
+	$resmess = "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～";
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
@@ -26,7 +29,7 @@ if($eventType == "follow"){
 					"thumbnailImageUrl" => "https://" . $_SERVER['SERVER_NAME'] . "/gyosei.jpg",
 					"title" => "行政市役所",
 					//"text" => "こんにちは。行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～\nまずは、下のメニュータブをタップしてみてください",
-					"text" => "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～",
+					"text" => $resmess,
 					"actions" => [
 							[
 									"type" => "postback",
@@ -57,92 +60,54 @@ if($eventType == "follow"){
 if($eventType == "postback"){
 	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
 	if($bData== 'action=qaline') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "それでは、質問をお願いします。"
-		];
-		goto lineSend;
+		$resmess = "それでは、質問をお願いします。";
 	}
 
 	if($bData== 'action=shomei') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "証明書についてはこちらをごらんください。"
-		];
-		goto lineSend;
+		$resmess = "証明書についてはこちらをごらんください。";
 	}
 
 	if($bData== 'action=shisetsu') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "施設予約についてはこちらをごらんください。"
-		];
-		goto lineSend;
+		$resmess = "施設予約についてはこちらをごらんください。";
 	}
 
 	if($bData== 'action=riyo') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "ご利用方法についてはこちらをごらんください。"
-		];
-		goto lineSend;
+		$resmess = "ご利用方法についてはこちらをごらんください。";
 	}
 
 	if($bData== 'action=uc_1_1') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "①○○地区、△△地区、□□地区ですね。\nその場合、最寄りの税務署は「行政第一税務署」になります。「行政第一税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "①○○地区、△△地区、□□地区ですね。\nその場合、最寄りの税務署は「行政第一税務署」になります。「行政第一税務署」の詳細はURLをご確認ください。\n他に質問はありますか？";
 	}
 
 	if($bData== 'action=uc_1_2') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "②●●地区、▲▲地区、■■地区ですね。\nその場合、最寄りの税務署は「行政第二税務署」になります。「行政第二税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "②●●地区、▲▲地区、■■地区ですね。\nその場合、最寄りの税務署は「行政第二税務署」になります。「行政第二税務署」の詳細はURLをご確認ください。\n他に質問はありますか？";
 	}
 
 	if($bData== 'action=uc_1_3') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "③Ａ地区、Ｂ地区、Ｃ地区ですね。\nその場合、最寄りの税務署は「行政第三税務署」になります。「行政第三税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "③Ａ地区、Ｂ地区、Ｃ地区ですね。\nその場合、最寄りの税務署は「行政第三税務署」になります。「行政第三税務署」の詳細はURLをご確認ください。\n他に質問はありますか？";
 	}
 
 	if($bData== 'action=uc_1_4') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "④あ地区、い地区、う地区ですね。\nその場合、最寄りの税務署は「行政第四税務署」になります。「行政第四税務署」の詳細はURLをご確認ください。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "④あ地区、い地区、う地区ですね。\nその場合、最寄りの税務署は「行政第四税務署」になります。「行政第四税務署」の詳細はURLをご確認ください。\n他に質問はありますか？";
 	}
 
 	if($bData== 'action=uc_2_1') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "ありがとうございます。\n個人番号カードをお持ちでコンビニエンスストアでの証明書交付の利用申請がお済の方は、下記のコンビニエンスストアでも住民票の写しが取れますよ～\n\n・セブンイレブン\n・ローソン\n・ファミリーマート\n・サークルＫサンクス\n\nまた、コンビニエンスストアの証明交付サービスは、年末年始（12月29日～翌年1月3日）を除き、毎日6:30から23:00まで、ご利用いただけます。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "ありがとうございます。\n個人番号カードをお持ちでコンビニエンスストアでの証明書交付の利用申請がお済の方は、下記のコンビニエンスストアでも住民票の写しが取れますよ～\n\n・セブンイレブン\n・ローソン\n・ファミリーマート\n・サークルＫサンクス\n\nまた、コンビニエンスストアの証明交付サービスは、年末年始（12月29日～翌年1月3日）を除き、毎日6:30から23:00まで、ご利用いただけます。\n他に質問はありますか？";
 	}
 
 	if($bData== 'action=uc_2_2') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？";
 	}
 
 	if($bData== 'action=uc_2_3') {
-		$response_format_text = [
-				"type" => "text",
-				"text" => "もし、個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？"
-		];
-		goto lineSend;
+		$resmess = "もし、個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？";
 	}
+
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+	goto lineSend;
 }
 
 //メッセージ以外のときは何も返さず終了
@@ -192,21 +157,6 @@ $conversation_id = $json["context"]["conversation_id"];
 $userArray[$userID]["cid"] = $conversation_id;
 $userArray[$userID]["time"] = date('Y/m/d H:i:s');
 
-//DB接続
-$conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
-$link = pg_connect($conn);
-if (!$link) {
-	error_log("接続失敗です。".pg_last_error());
-}else{
-	error_log("接続しました。");
-	$sql = "INSERT INTO botlog (userid, contents) VALUES ('".$userID."','".$text."')";
-	$result_flag = pg_query($sql);
-	if (!$result_flag) {
-		error_log("インサートに失敗しました。".pg_last_error());
-	}
-}
-
-
 $data["context"] = array("conversation_id" => $conversation_id,
       "system" => array("dialog_stack" => array(array("dialog_node" => "root")),
       "dialog_turn_counter" => 1,
@@ -231,16 +181,16 @@ $jsonString = callWatson();
 //error_log($jsonString);
 $json = json_decode($jsonString, true);
 
-$mes = $json["output"]["text"][0];
-//$mes = $json["output"];
+$resmess= $json["output"]["text"][0];
 
-if($mes == "usrChoise_1"){
+if($resmess== "usrChoise_1"){
+	$resmess = "お調べしますので、あなたのお住いの地区名を下記から選択してください。";
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
 			"template" => [
 					"type" => "buttons",
-					"text" => "お調べしますので、あなたのお住いの地区名を下記から選択してください。",
+					"text" => $resmess,
 					"actions" => [
 							[
 									"type" => "postback",
@@ -268,13 +218,14 @@ if($mes == "usrChoise_1"){
 	goto lineSend;
 }
 
-if($mes == "usrChoise_2"){
+if($resmess== "usrChoise_2"){
+	$resmess = "住民票の写しは行政市役所本庁舎、行政第一支所、行政第二支所の窓口で発行できます。\n受付時間は、月曜日～金曜日の午前8時30分～午後5時です。\nちなみに個人番号カードはお持ちですか？";
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
 			"template" => [
 					"type" => "buttons",
-					"text" => "住民票の写しは行政市役所本庁舎、行政第一支所、行政第二支所の窓口で発行できます。\n受付時間は、月曜日～金曜日の午前8時30分～午後5時です。\nちなみに個人番号カードはお持ちですか？",
+					"text" => $resmess,
 					"actions" => [
 							[
 									"type" => "postback",
@@ -299,7 +250,7 @@ if($mes == "usrChoise_2"){
 
 $response_format_text = [
     "type" => "text",
-    "text" => $mes
+	"text" => $resmess
 ];
 
 lineSend:
@@ -320,6 +271,20 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, array(
     ));
 $result = curl_exec($ch);
 curl_close($ch);
+
+//DB接続
+$conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
+$link = pg_connect($conn);
+if (!$link) {
+	error_log("接続失敗です。".pg_last_error());
+}else{
+	error_log("接続しました。");
+	$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('".$userID."','".$text."','".$resmess."')";
+	$result_flag = pg_query($sql);
+	if (!$result_flag) {
+		error_log("インサートに失敗しました。".pg_last_error());
+	}
+}
 
 function makeOptions(){
 	global $username, $password, $data;
