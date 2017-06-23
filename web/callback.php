@@ -298,13 +298,13 @@ if (!$link) {
 }else{
 	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$text}','{$resmess}')";
 	$result_flag = pg_query($sql);
-	$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
-	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
 	}
-	if(!pg_close($conn)) {
-		error_log("切断に失敗しました。".pg_last_error());
+	$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
+	$result_flag = pg_query($sql);
+	if (!$result_flag) {
+		error_log("アップデートに失敗しました。".pg_last_error());
 	}
 }
 
