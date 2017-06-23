@@ -1,5 +1,6 @@
 <?php
 //error_log("開始します");
+date_default_timezone_set('Asia/Tokyo');
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 
 
@@ -153,17 +154,16 @@ $jsonString = curl_exec($curl);
 //DB接続
 $conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
 $link = pg_connect($conn);
-
+$tdate = date("Ymdhis");
 if ($link) {
 	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
 	if (pg_num_rows($result) == 0) {
 		error_log("データなし");
 		$jsonString = callWatson();
 		$json = json_decode($jsonString, true);
-
 		$conversation_id = $json["context"]["conversation_id"];
 		$conversation_node = "root";
-		$sql = "INSERT INTO cvsdata (userid, conversationid, dnode) VALUES ('".$userID."','".$conversation_id."','".$conversation_node."')";
+		$sql = "INSERT INTO cvsdata (userid, conversationid, dnode, time) VALUES ('{$userID}','{$conversation_id}','{$conversation_node}','{$tdate}')";
 		$result_flag = pg_query($sql);
 	}else{
 		error_log("データあり");
@@ -296,9 +296,9 @@ curl_close($ch);
 if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
-	$sql = "INSERT INTO botlog (userid, contents, return) VALUES ('".$userID."','".$text."','".$resmess."')";
+	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$text}','{$resmess}')";
 	$result_flag = pg_query($sql);
-	$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}' WHERE userid = '{$userID}'";
+	$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
