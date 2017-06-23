@@ -154,7 +154,7 @@ $jsonString = curl_exec($curl);
 //DB接続
 $conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
 $link = pg_connect($conn);
-$tdate = date("Ymdhis");
+$tdate = date("YmdHis");
 if ($link) {
 	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
 	if (pg_num_rows($result) == 0) {
