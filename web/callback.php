@@ -267,9 +267,8 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
-error_log($resmess);
+//改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
-error_log($resmess);
 
 $response_format_text = [
     "type" => "text",
