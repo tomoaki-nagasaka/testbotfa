@@ -1,7 +1,17 @@
 <?php
 //error_log("開始します");
 date_default_timezone_set('Asia/Tokyo');
+
+//環境変数の取得
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
+$classfier = getenv('CLASSFIER');
+$workspace_id = getenv('CVS_WORKSPASE_ID');
+$username = getenv('CVS_USERNAME');
+$password = getenv('CVS_PASS');
+$db_host =  getenv('DB_HOST');
+$db_name =  getenv('DB_NAME');
+$db_pass =  getenv('DB_PASS');
+$db_user =  getenv('DB_USER');
 
 
 //ユーザーからのメッセージ取得
@@ -116,17 +126,9 @@ if($type != "text"){
 	exit;
 }
 
-
-
-$classfier = "12d0fcx34-nlc-410";
-$workspace_id = "fa6f1b64-533d-4aaa-b181-b534fc0b3d1e";
-
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
 $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
-
-$username = "bfeeeb55-a8a0-459b-9410-0eb1fa44a285";
-$password = "kR2NobNe1lkJ";
 
 //$data = array("text" => $text);
 $data = array('input' => array("text" => $text));
@@ -152,7 +154,7 @@ curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
 */
 //DB接続
-$conn = "host=ec2-184-73-167-43.compute-1.amazonaws.com dbname=dteildfsnr95j user=ytuzytzxmgtauy password=e74ae733b8a0d5481eb9b54d26af8db104f0df741d926c29fbf398d0c5e8bfcc";
+$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 $tdate = date("YmdHis");
 if ($link) {
@@ -172,9 +174,6 @@ if ($link) {
 		$conversation_node= $row[2];
 	}
 }
-
-
-
 
 $data["context"] = array("conversation_id" => $conversation_id,
 		"system" => array("dialog_stack" => array(array("dialog_node" => $conversation_node)),
