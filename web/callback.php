@@ -267,7 +267,10 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
+error_log($resmess);
 $resmess = str_replace("\n","★",$resmess);
+$resmess = str_replace("\\n","★",$resmess);
+error_log($resmess);
 
 $response_format_text = [
     "type" => "text",
