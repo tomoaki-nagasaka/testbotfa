@@ -267,7 +267,8 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
-$resmess = "\n テスト \\nテスト \\\nテスト";
+$resmess = str_replace("\n","★",$resmess);
+
 $response_format_text = [
     "type" => "text",
 	"text" => $resmess
