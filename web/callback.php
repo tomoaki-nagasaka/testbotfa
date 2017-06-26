@@ -267,6 +267,7 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
+$resmess = "\n テスト \\nテスト \\\nテスト";
 $response_format_text = [
     "type" => "text",
 	"text" => $resmess
