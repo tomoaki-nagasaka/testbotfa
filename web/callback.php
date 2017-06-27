@@ -298,6 +298,12 @@ curl_close($ch);
 if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
+	if(strlen($text) > 200){
+		$text = substr($text,199);
+	}
+	if(strlen($resmess) > 200){
+		$resmess= substr($resmess,199);
+	}
 	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$text}','{$resmess}')";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
