@@ -299,10 +299,10 @@ if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
 	if(strlen($text) > 200){
-		$text = substr($text,199);
+		$text = mb_substr($text,0,199,"utf-8");
 	}
 	if(strlen($resmess) > 200){
-		$resmess= substr($resmess,199);
+		$resmess= mb_substr($resmess,0,199,"utf-8");
 	}
 	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$text}','{$resmess}')";
 	$result_flag = pg_query($sql);
