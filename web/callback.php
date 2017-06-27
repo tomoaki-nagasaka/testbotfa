@@ -269,6 +269,7 @@ if($resmess== "usrChoise_2"){
 
 //改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
+$resmess = str_replace("0x100081",hex2bin("0x100081"),$resmess);
 
 $response_format_text = [
     "type" => "text",
