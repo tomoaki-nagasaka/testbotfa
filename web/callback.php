@@ -35,6 +35,7 @@ $resmess = "";
 $url = "https://gateway.watsonplatform.net/language-translator/api/v2/identify";
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
+error_log("LTテスト");
 error_log($json);
 error_log($json["languages"][0]["confidence"][0]);
 error_log($json["languages"][0]["language"][0]);
