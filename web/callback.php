@@ -363,7 +363,7 @@ function callWatsonLT1(){
 
 	$options = array(
 			CURLOPT_HTTPHEADER => array(
-					'content-type: text/plain',
+					'content-type: text/plain','accept: application/json'
 			),
 			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
 			CURLOPT_POST => true,
