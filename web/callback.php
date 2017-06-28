@@ -12,6 +12,8 @@ $db_host =  getenv('DB_HOST');
 $db_name =  getenv('DB_NAME');
 $db_pass =  getenv('DB_PASS');
 $db_user =  getenv('DB_USER');
+$LTuser = getenv('LT_USER');
+$LTpass = getenv('LT_PASS');
 
 
 //ユーザーからのメッセージ取得
@@ -29,7 +31,14 @@ $userID = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
 //返信メッセージ
 $resmess = "";
 
-error_log($eventType);
+//LTテスト
+$url = "https://gateway.watsonplatform.net/language-translator/api/v2/identify";
+$jsonString = callWatsonLT1();
+$json = json_decode($jsonString, true);
+error_log($json["languages"][0]["confidence"][0]);
+error_log($json["languages"][0]["language"][0]);
+//
+
 if($eventType == "follow"){
 	$resmess = "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～";
 	$response_format_text = [
@@ -340,6 +349,24 @@ function callWatson(){
 			CURLOPT_USERPWD => $username . ':' . $password,
 			CURLOPT_POST => true,
 			CURLOPT_POSTFIELDS => json_encode($data),
+			CURLOPT_RETURNTRANSFER => true,
+	);
+
+	curl_setopt_array($curl, $options);
+	return curl_exec($curl);
+}
+
+function callWatsonLT1(){
+	global $curl, $url, $LTuser, $LTpass, $text, $options;
+	$curl = curl_init($url);
+
+	$options = array(
+			CURLOPT_HTTPHEADER => array(
+					'content-type: text/plain',
+			),
+			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => $text,
 			CURLOPT_RETURNTRANSFER => true,
 	);
 
