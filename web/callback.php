@@ -31,14 +31,29 @@ $userID = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
 //返信メッセージ
 $resmess = "";
 
-//LTテスト
+//DB接続
+$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
+$link = pg_connect($conn);
+
+//LT問い合わせ
+$Ltext = $text;
+if (is_numeric($Ltext)) {
+	if ($link) {
+		$result = pg_query("SELECT contents FROM botlog WHERE userid = '{$userID}' ORDER BY no DESC");
+		while ($row = pg_fetch_row($result)) {
+			if(!is_numeric($row[0])){
+				$Ltext = $row[0];
+				break;
+			}
+		}
+	}
+}
+error_log($Ltext);
 $url = "https://gateway.watsonplatform.net/language-translator/api/v2/identify";
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
-error_log("LTテスト");
-error_log($json["languages"][0]["confidence"]);
-error_log($json["languages"][0]["language"]);
-//
+$language = $json["languages"][0]["language"];
+error_log($language);
 
 if($eventType == "follow"){
 	$resmess = "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～";
@@ -163,9 +178,7 @@ $options = array(
 curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
 */
-//DB接続
-$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
-$link = pg_connect($conn);
+
 $tdate = date("YmdHis");
 if ($link) {
 	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
@@ -357,7 +370,7 @@ function callWatson(){
 }
 
 function callWatsonLT1(){
-	global $curl, $url, $LTuser, $LTpass, $text, $options;
+	global $curl, $url, $LTuser, $LTpass, $Ltext, $options;
 	$curl = curl_init($url);
 
 	$options = array(
@@ -366,7 +379,7 @@ function callWatsonLT1(){
 			),
 			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
 			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $text,
+			CURLOPT_POSTFIELDS => $Ltext,
 			CURLOPT_RETURNTRANSFER => true,
 	);
 
