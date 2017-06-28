@@ -51,13 +51,14 @@ if (is_numeric($text)) {
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
 $language = $json["languages"][0]["language"];
+error_log($language);
 
 //日本語以外の場合は日本語に翻訳
 if($language != "ja"){
 	$data = array('text' => $text, 'source' => $language, 'target' => 'ja');
 	$text = callWatsonLT2();
+	error_log($text);
 }
-error_log($text);
 
 if($eventType == "follow"){
 	$resmess = "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～";
@@ -401,7 +402,7 @@ function callWatsonLT2(){
 			),
 			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
 			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_POSTFIELDS => json_encode($data),
 			CURLOPT_RETURNTRANSFER => true,
 	);
 
