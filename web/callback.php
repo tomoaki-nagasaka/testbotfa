@@ -35,6 +35,7 @@ $resmess = "";
 $url = "https://gateway.watsonplatform.net/language-translator/api/v2/identify";
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
+error_log($json);
 error_log($json["languages"][0]["confidence"][0]);
 error_log($json["languages"][0]["language"][0]);
 //
@@ -278,7 +279,6 @@ if($resmess== "usrChoise_2"){
 
 //改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
-$resmess = str_replace("0x100081",hex2bin("0x100081"),$resmess);
 
 $response_format_text = [
     "type" => "text",
