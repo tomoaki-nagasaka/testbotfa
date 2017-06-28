@@ -37,12 +37,13 @@ $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_
 $link = pg_connect($conn);
 
 //LT問い合わせ
-if (is_numeric($text)) {
+$Ltext = $text;
+if (is_numeric($Ltext)) {
 	if ($link) {
 		$result = pg_query("SELECT contents FROM botlog WHERE userid = '{$userID}' ORDER BY no DESC");
 		while ($row = pg_fetch_row($result)) {
 			if(!is_numeric($row[0])){
-				$text= $row[0];
+				$Ltext= $row[0];
 				break;
 			}
 		}
@@ -56,6 +57,10 @@ $language = $json["languages"][0]["language"];
 if($language != "ja"){
 	$data = array('text' => $text, 'source' => $language, 'target' => 'ja');
 	$text = callWatsonLT2();
+	if($text == ""){
+		$text = $Utext;
+		$language = "ja";
+	}
 }
 
 if($eventType == "follow"){
@@ -378,7 +383,7 @@ function callWatson(){
 }
 
 function callWatsonLT1(){
-	global $curl, $LTuser, $LTpass, $text, $options;
+	global $curl, $LTuser, $LTpass, $Ltext, $options;
 	$curl = curl_init("https://gateway.watsonplatform.net/language-translator/api/v2/identify");
 
 	$options = array(
@@ -387,7 +392,7 @@ function callWatsonLT1(){
 			),
 			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
 			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $text,
+			CURLOPT_POSTFIELDS => $Ltext,
 			CURLOPT_RETURNTRANSFER => true,
 	);
 
