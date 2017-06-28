@@ -51,13 +51,11 @@ if (is_numeric($text)) {
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
 $language = $json["languages"][0]["language"];
-error_log($language);
 
 //日本語以外の場合は日本語に翻訳
 if($language != "ja"){
 	$data = array('text' => $text, 'source' => $language, 'target' => 'ja');
 	$text = callWatsonLT2();
-	error_log($text);
 }
 
 if($eventType == "follow"){
@@ -297,6 +295,11 @@ if($resmess== "usrChoise_2"){
 
 //改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
+//日本語以外の場合は翻訳
+if($language != "ja"){
+	$data = array('text' => $resmess, 'source' => 'ja', 'target' => $language);
+	$resmess = callWatsonLT2();
+}
 
 $response_format_text = [
     "type" => "text",
