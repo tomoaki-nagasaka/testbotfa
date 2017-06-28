@@ -375,7 +375,7 @@ function callWatson(){
 }
 
 function callWatsonLT1(){
-	global $curl, $LTuser, $LTpass, $Ltext, $options;
+	global $curl, $LTuser, $LTpass, $text, $options;
 	$curl = curl_init("https://gateway.watsonplatform.net/language-translator/api/v2/identify");
 
 	$options = array(
@@ -384,7 +384,7 @@ function callWatsonLT1(){
 			),
 			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
 			CURLOPT_POST => true,
-			CURLOPT_POSTFIELDS => $Ltext,
+			CURLOPT_POSTFIELDS => $text,
 			CURLOPT_RETURNTRANSFER => true,
 	);
 
