@@ -24,6 +24,7 @@ $type = $jsonObj->{"events"}[0]->{"message"}->{"type"};
 $eventType = $jsonObj->{"events"}[0]->{"type"};
 //メッセージ取得
 $text = $jsonObj->{"events"}[0]->{"message"}->{"text"};
+$Utext = $text;
 //ReplyToken取得
 $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
 //ユーザーID取得
@@ -36,24 +37,27 @@ $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_
 $link = pg_connect($conn);
 
 //LT問い合わせ
-$Ltext = $text;
-if (is_numeric($Ltext)) {
+if (is_numeric($text)) {
 	if ($link) {
 		$result = pg_query("SELECT contents FROM botlog WHERE userid = '{$userID}' ORDER BY no DESC");
 		while ($row = pg_fetch_row($result)) {
 			if(!is_numeric($row[0])){
-				$Ltext = $row[0];
+				$text= $row[0];
 				break;
 			}
 		}
 	}
 }
-error_log($Ltext);
-$url = "https://gateway.watsonplatform.net/language-translator/api/v2/identify";
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
 $language = $json["languages"][0]["language"];
-error_log($language);
+
+//日本語以外の場合は日本語に翻訳
+if($language != "ja"){
+	$data = array('text' => $text, 'source' => $language, 'target' => 'ja');
+	$text = callWatsonLT2();
+}
+error_log($text);
 
 if($eventType == "follow"){
 	$resmess = "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～";
@@ -326,7 +330,7 @@ if (!$link) {
 	if(strlen($resmess) > 200){
 		$resmess= mb_substr($resmess,0,199,"utf-8");
 	}
-	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$text}','{$resmess}')";
+	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
@@ -370,8 +374,8 @@ function callWatson(){
 }
 
 function callWatsonLT1(){
-	global $curl, $url, $LTuser, $LTpass, $Ltext, $options;
-	$curl = curl_init($url);
+	global $curl, $LTuser, $LTpass, $Ltext, $options;
+	$curl = curl_init("https://gateway.watsonplatform.net/language-translator/api/v2/identify");
 
 	$options = array(
 			CURLOPT_HTTPHEADER => array(
@@ -385,4 +389,24 @@ function callWatsonLT1(){
 
 	curl_setopt_array($curl, $options);
 	return curl_exec($curl);
+}
+
+function callWatsonLT2(){
+	global $curl, $LTuser, $LTpass, $Ltext, $data, $options;
+	$curl = curl_init("https://gateway.watsonplatform.net/language-translator/api/v2/translate");
+
+	$options = array(
+			CURLOPT_HTTPHEADER => array(
+					'content-type: application/json','accept: application/json'
+			),
+			CURLOPT_USERPWD => $LTuser. ':' . $LTpass,
+			CURLOPT_POST => true,
+			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_RETURNTRANSFER => true,
+	);
+
+	curl_setopt_array($curl, $options);
+	$jsonString= curl_exec($curl);
+	$json = json_decode($jsonString, true);
+	return $json["translations"][0]["translation"];
 }
