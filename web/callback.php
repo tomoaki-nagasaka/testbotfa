@@ -207,6 +207,14 @@ if ($link) {
 		$row = pg_fetch_row($result);
 		$conversation_id = $row[1];
 		$conversation_node= $row[2];
+		$conversation_time= $row[3];
+		$timelag = $tdate - $conversation_time;
+		if($timelag > 1000){
+			$jsonString = callWatson();
+			$json = json_decode($jsonString, true);
+			$conversation_id = $json["context"]["conversation_id"];
+			$conversation_node = "root";
+		}
 	}
 }
 
