@@ -37,8 +37,10 @@ $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_
 $link = pg_connect($conn);
 
 //LT問い合わせ
+$bl_isNumeric = false;
 $Ltext = $text;
 if (is_numeric($Ltext)) {
+	$bl_isNumeric = true;
 	if ($link) {
 		$result = pg_query("SELECT contents FROM botlog WHERE userid = '{$userID}' ORDER BY no DESC");
 		while ($row = pg_fetch_row($result)) {
@@ -54,12 +56,14 @@ $json = json_decode($jsonString, true);
 $language = $json["languages"][0]["language"];
 
 //日本語以外の場合は日本語に翻訳
-if($language != "ja"){
-	$data = array('text' => $text, 'source' => $language, 'target' => 'ja');
-	$text = callWatsonLT2();
-	if($text == ""){
-		$text = $Utext;
-		$language = "ja";
+if(!$bl_isNumeric){
+	if($language != "ja"){
+		$data = array('text' => $text, 'source' => $language, 'target' => 'ja');
+		$text = callWatsonLT2();
+		if($text == ""){
+			$text = $Utext;
+			$language = "ja";
+		}
 	}
 }
 
