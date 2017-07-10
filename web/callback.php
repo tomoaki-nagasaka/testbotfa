@@ -352,8 +352,8 @@ if (!$link) {
 	if(strlen($resmess) > 200){
 		$resmess= mb_substr($resmess,0,199,"utf-8");
 	}
-	//改行コードを除去
-	$resmess = str_replace("\n","",$resmess);
+	//シングルコーテーションを除去
+	$resmess = str_replace("'","",$resmess);
 	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
