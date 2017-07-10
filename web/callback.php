@@ -54,6 +54,7 @@ if (is_numeric($Ltext)) {
 $jsonString = callWatsonLT1();
 $json = json_decode($jsonString, true);
 $language = $json["languages"][0]["language"];
+error_log($language);
 
 //日本語以外の場合は日本語に翻訳
 if(!$bl_isNumeric){
@@ -351,7 +352,7 @@ if (!$link) {
 	if(strlen($resmess) > 200){
 		$resmess= mb_substr($resmess,0,199,"utf-8");
 	}
-	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
+	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}',{$resmess})";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());
