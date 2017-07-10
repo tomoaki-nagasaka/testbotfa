@@ -310,13 +310,13 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
-//改行コードを置き換え
-$resmess = str_replace("\\n","\n",$resmess);
 //日本語以外の場合は翻訳
 if($language != "ja"){
 	$data = array('text' => $resmess, 'source' => 'ja', 'target' => $language);
 	$resmess = callWatsonLT2();
 }
+//改行コードを置き換え
+$resmess = str_replace("\\n","\n",$resmess);
 
 $response_format_text = [
     "type" => "text",
