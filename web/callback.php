@@ -14,6 +14,7 @@ $db_pass =  getenv('DB_PASS');
 $db_user =  getenv('DB_USER');
 $LTuser = getenv('LT_USER');
 $LTpass = getenv('LT_PASS');
+$VRkey = getenv('VR_KEY');
 
 
 //ユーザーからのメッセージ取得
@@ -161,6 +162,17 @@ if($eventType == "postback"){
 
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
+	if($type == "image"){
+		$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
+		$response = file_get_contents($api_url.'?api_key='.$VRkey.'&url='.$imagedata.'&version=2016-05-20');
+		$json = json_decode ( $response, true );
+
+		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
+		//error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
+		error_log("images:".count($json ["images"]));
+		error_log("images_processed:".$json ["images_processed"]);
+	}
 	exit;
 }
 
