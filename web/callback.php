@@ -163,15 +163,30 @@ if($eventType == "postback"){
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
 	if($type == "image"){
+		/*
 		$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
 		$response = file_get_contents($api_url.'?api_key='.$VRkey.'&url='.$imagedata.'&version=2016-05-20');
 		$json = json_decode ( $response, true );
+		*/
+
+		$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
+		$data = [
+				'images_file' => '@' . file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg")
+		];
 
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
-		//error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
+		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
 		error_log("images:".count($json ["images"]));
 		error_log("images_processed:".$json ["images_processed"]);
+
+		$resmess = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] . "の確率で「".$json ["images"][0]["classifiers"] [0]["classes"][0]["class"]."」です";
+		$response_format_text = [
+				"type" => "text",
+				"text" => $resmess
+		];
+
+		goto lineSend;
 	}
 	exit;
 }
@@ -446,4 +461,18 @@ function callWatsonLT2(){
 	$jsonString= curl_exec($curl);
 	$json = json_decode($jsonString, true);
 	return $json["translations"][0]["translation"];
+}
+
+function callVisual_recognition(){
+	global $curl,$url,$options;
+
+	$curl = curl_init($url);
+	$options = array (
+			CURLOPT_POST=> TRUE ,
+			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_RETURNTRANSFER =>TRUE
+	);
+
+	curl_setopt_array ( $curl, $options );
+	return curl_exec ( $curl );
 }
