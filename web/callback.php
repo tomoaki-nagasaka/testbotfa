@@ -206,6 +206,26 @@ if($type != "text"){
 	exit;
 }
 
+//山口スペシャル開始
+if($text == "私が投票できる場所はどこ。"){
+	$resmess = "あなたの住所を教えてください。";
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+	goto lineSend;
+}
+if($text == "立川市曙町２丁目です。"){
+	$resmess = "あなたの投票所は立川小学校です。\nまた、７月１９日から２５日までは市役所本庁、立川公民館で期日前投票ができます。";
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+	goto lineSend;
+}
+
+//山口スペシャル終了
+
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
 $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
