@@ -170,10 +170,25 @@ if($type != "text"){
 		$json = json_decode ( $response, true );
 		*/
 
+		$messageId = $jsonObj->{"events"} [0]->{"message"}->{"id"};
+
+		// 画像ファイルのバイナリ取得
+		$ch = curl_init ( "https://api.line.me/v2/bot/message/" . $messageId . "/content" );
+		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+				'Content-Type: application/json; charser=UTF-8',
+				'Authorization: Bearer ' . $accessToken
+		) );
+		$result = curl_exec ( $ch );
+
 		$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
-		$data = [
-				'images_file' => '@' . file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg")
-		];
+		//$data = [ 'images_file' => '@' . file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg") ];
+		$data = imagecreatefromstring($result);
+		if($data == false){
+			error_log("イメージ変換エラー");
+		}
+		$jsonString = callVisual_recognition();
+		$json = json_decode($jsonString, true);
 
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
@@ -464,7 +479,7 @@ function callWatsonLT2(){
 }
 
 function callVisual_recognition(){
-	global $curl,$url,$options;
+	global $curl,$url,$options,$data;
 
 	$curl = curl_init($url);
 	$options = array (
