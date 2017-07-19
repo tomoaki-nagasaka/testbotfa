@@ -181,12 +181,14 @@ if($type != "text"){
 		) );
 		$result = curl_exec ( $ch );
 
-		$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
 		//$data = [ 'images_file' => '@' . file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg") ];
-		$data = imagecreatefromstring($result);
+		$url = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+		$data= file_get_contents ( $url );
+		//$data = imagecreatefromstring($result);
 		if($data == false){
 			error_log("イメージ変換エラー");
 		}
+		$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
 		$jsonString = callVisual_recognition();
 		$json = json_decode($jsonString, true);
 
