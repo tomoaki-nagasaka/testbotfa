@@ -7,7 +7,6 @@ $db_pass =  getenv('DB_PASS');
 $db_user =  getenv('DB_USER');
 
 //DB接続
-/*
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 
@@ -18,16 +17,3 @@ if ($link) {
 		echo $row[0];
 	}
 }
-*/
-?>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8'>
-<title>Menu</title>
-</head>
-<body>
-<input type="button" onclick="location.href='botlog.php'" value="ログ参照" />
-</body>
-</html>
-
