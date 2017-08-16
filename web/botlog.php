@@ -9,18 +9,6 @@
 </head>
 <body>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.bootgrid.js"></script>
-<script>
-$(function() {
-	$("#grid-basic").bootgrid();
-});
-</script>
-</body>
-</html>
-
-
 <?php
 
 //環境変数の取得
@@ -63,4 +51,14 @@ if ($link) {
 }
 ?>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.bootgrid.js"></script>
+<script>
+$(function() {
+	$("#grid-basic").bootgrid();
+});
+</script>
+</body>
+</html>
 
