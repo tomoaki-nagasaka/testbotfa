@@ -1,3 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Bootgrid のデモでーす。">
+<title>Bootgrid - jQuery Plugin Demo</title>
+<link href="css/bootstrap.css" rel="stylesheet" />
+<link href="css/jquery.bootgrid.css" rel="stylesheet" />
+</head>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.bootgrid.js"></script>
+<script>
+$(function() {
+	$("#grid-basic").bootgrid();
+});
+</script>
+</body>
+</html>
+
+
 <?php
 
 //環境変数の取得
@@ -40,25 +63,4 @@ if ($link) {
 }
 ?>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="description" content="Bootgrid のデモでーす。">
-<title>Bootgrid - jQuery Plugin Demo</title>
-<link href="css/bootstrap.css" rel="stylesheet" />
-<link href="css/jquery.bootgrid.css" rel="stylesheet" />
-</head>
-<body>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.bootgrid.js"></script>
-<script>
-$(function() {
-	$("#grid-basic").bootgrid();
-});
-</script>
-</body>
-</html>
 
