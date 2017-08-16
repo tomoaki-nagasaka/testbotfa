@@ -26,7 +26,10 @@ $link = pg_connect($conn);
 if ($link) {
 	$result = pg_query("SELECT * FROM botlog");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
+	echo "<thead>";
 	echo "<tr><th data-column-id='no' data-type='numeric'>No</th><th  data-column-id='day' data-type='numeric'>日時</th><th data-column-id='user'>ユーザーID</th><th data-column-id='que' >質問内容</th><th data-column-id='ans'>回答内容</th></tr>";
+	echo "</thead>";
+	echo "<tbody>";
 	while ($row = pg_fetch_row($result)) {
 		echo "<tr>";
 		echo "<td>";
@@ -46,6 +49,7 @@ if ($link) {
 		echo "</td>";
 		echo "</tr>";
 	}
+	echo "</tbody>";
 	echo "</table>";
 	echo "<br>";
 }
