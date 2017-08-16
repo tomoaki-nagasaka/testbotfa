@@ -14,7 +14,7 @@ $link = pg_connect($conn);
 
 if ($link) {
 	$result = pg_query("SELECT * FROM botlog");
-	echo "<table border=1 style=border-collapse:collapse;>";
+	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<tr><th>No</th><th>日時</th><th>ユーザーID</th><th>質問内容</th><th>回答内容</th></tr>";
 	while ($row = pg_fetch_row($result)) {
 		echo "<tr>";
@@ -38,3 +38,27 @@ if ($link) {
 	echo "</table>";
 	echo "<br>";
 }
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="description" content="Bootgrid のデモでーす。">
+<title>Bootgrid - jQuery Plugin Demo</title>
+<link href="css/bootstrap.css" rel="stylesheet" />
+<link href="css/jquery.bootgrid.css" rel="stylesheet" />
+</head>
+<body>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/jquery.bootgrid.js"></script>
+<script>
+$(function() {
+	$("#grid-basic").bootgrid();
+});
+</script>
+</body>
+</html>
+
