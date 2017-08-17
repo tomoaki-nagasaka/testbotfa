@@ -61,6 +61,9 @@ if ($link) {
 <script>
 $(function() {
 	$("#grid-basic").bootgrid();
+	$("#grid-basic").resizableColumns({
+        store: store
+    });
 });
 </script>
 </body>
