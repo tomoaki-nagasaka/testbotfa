@@ -58,8 +58,12 @@ if ($link) {
 	echo "</table>";
 	echo "<br>";
 }
-?>
 
+function delete_row(){
+
+}
+?>
+<input type="button" value="選択行の削除" onclick="drow()">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
@@ -90,6 +94,12 @@ $(function() {
 	    //alert("Deselect: " + rowIds.join(","));
 	});
 });
+function drow() {
+	var myRet = confirm("選択行を削除しますか？");
+	if ( myRet == true ){
+
+	}
+}
 </script>
 </body>
 </html>
