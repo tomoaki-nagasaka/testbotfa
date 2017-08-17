@@ -27,8 +27,8 @@ if ($link) {
 	$result = pg_query("SELECT * FROM botlog");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='no' data-type='numeric' data-width='2%'>No</th>
-               <th data-column-id='day' data-type='numeric' data-width='8%'>日時</th>
+	echo "<tr><th data-column-id='no' data-type='numeric' data-width='3%'>No</th>
+               <th data-column-id='day' data-type='numeric' data-width='7%'>日時</th>
                <th data-column-id='user'  data-width='10%'>ユーザーID</th>
                <th data-column-id='que'  data-width='40%'>質問内容</th>
                <th data-column-id='ans'  data-width='40%'>回答内容</th>
@@ -41,7 +41,7 @@ if ($link) {
 		echo $row[0];
 		echo "</td>";
 		echo "<td>";
-		echo $row[1];
+		echo substr($row[1], 0,4)."/".substr($row[1], 4,2)."/".substr($row[1], 6,2)." ".substr($row[1], 8,2).":".substr($row[1], 10,2);
 		echo "</td>";
 		echo "<td>";
 		echo $row[2];
