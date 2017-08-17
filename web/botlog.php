@@ -64,8 +64,27 @@ if ($link) {
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
 <script>
+var rowIds = [];
 $(function() {
-	$("#grid-basic").bootgrid();
+	$("#grid-basic").bootgrid({
+		ajax: true,
+		selection: true,
+		multiSelect: true,
+	}).on("selected.rs.jquery.bootgrid", function(e, rows)
+		{
+		    for (var i = 0; i < rows.length; i++)
+		    {
+		        rowIds.push(rows[i].no);
+		    }
+		    alert("Select: " + rowIds.join(","));
+	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
+		{
+		    for (var i = 0; i < rows.length; i++)
+		    {
+		        rowIds.push(rows[i].no);
+		    }
+		    alert("Deselect: " + rowIds.join(","));
+	});
 });
 </script>
 </body>
