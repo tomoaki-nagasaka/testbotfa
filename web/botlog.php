@@ -67,7 +67,6 @@ if ($link) {
 var rowIds = [];
 $(function() {
 	$("#grid-basic").bootgrid({
-		ajax: true,
 		selection: true,
 		multiSelect: true,
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
