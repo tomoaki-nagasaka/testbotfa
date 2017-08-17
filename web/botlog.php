@@ -80,7 +80,10 @@ $(function() {
 	{
 	    for (var i = 0; i < rows.length; i++)
 	    {
-	        rowIds.push(rows[i].no);
+	    	rowIds.some(function(v, i){
+	    	    if (v==rows[i].no) array1.splice(i,1);
+	    	});
+	        //rowIds.push(rows[i].no);
 	    }
 	    alert("Deselect: " + rowIds.join(","));
 	});
