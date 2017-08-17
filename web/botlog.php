@@ -27,11 +27,11 @@ if ($link) {
 	$result = pg_query("SELECT * FROM botlog");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='no' data-type='numeric' data-width='10%'>No</th>
-               <th data-column-id='day' data-type='numeric' data-width='10%'>日時</th>
+	echo "<tr><th data-column-id='no' data-type='numeric' data-width='5%'>No</th>
+               <th data-column-id='day' data-type='numeric' data-width='5%'>日時</th>
                <th data-column-id='user'  data-width='10%'>ユーザーID</th>
-               <th data-column-id='que'  data-width='35%'>質問内容</th>
-               <th data-column-id='ans'  data-width='35%'>回答内容</th>
+               <th data-column-id='que'  data-width='40%'>質問内容</th>
+               <th data-column-id='ans'  data-width='40%'>回答内容</th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -63,9 +63,11 @@ if ($link) {
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
+<script src="js/jquery.resizableColumns.min.js"></script>
 <script>
 $(function() {
 	$("#grid-basic").bootgrid();
+	$("#grid-basic").resizableColumns();
 });
 </script>
 </body>
