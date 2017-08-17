@@ -28,7 +28,7 @@ if ($link) {
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
 	echo "<tr><th data-column-id='no' data-type='numeric' data-width='3%'>No</th>
-               <th data-column-id='day' data-type='numeric' data-width='7%'>日時</th>
+               <th data-column-id='day' data-width='7%'>日時</th>
                <th data-column-id='user'  data-width='10%'>ユーザーID</th>
                <th data-column-id='que'  data-width='40%'>質問内容</th>
                <th data-column-id='ans'  data-width='40%'>回答内容</th>
