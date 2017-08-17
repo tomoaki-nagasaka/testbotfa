@@ -81,7 +81,7 @@ $(function() {
 	    for (var i = 0; i < rows.length; i++)
 	    {
 	    	rowIds.some(function(v, ii){
-	    	    if (v==rows[i].no) array1.splice(ii,1);
+	    	    if (v==rows[i].no) rowIds.splice(ii,1);
 	    	});
 	        //rowIds.push(rows[i].no);
 	    }
