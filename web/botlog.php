@@ -27,7 +27,7 @@ if ($link) {
 	$result = pg_query("SELECT * FROM botlog");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='no' data-type='numeric' data-width='3%'>No</th>
+	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='day' data-width='7%'>日時</th>
                <th data-column-id='user'  data-width='10%'>ユーザーID</th>
                <th data-column-id='que'  data-width='40%'>質問内容</th>
@@ -68,21 +68,21 @@ var rowIds = [];
 $(function() {
 	$("#grid-basic").bootgrid({
 		selection: true,
-		multiSelect: true,
+		multiSelect: true
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
-		{
-		    for (var i = 0; i < rows.length; i++)
-		    {
-		        rowIds.push(rows[i].no);
-		    }
-		    alert("Select: " + rowIds.join(","));
+	{
+	    for (var i = 0; i < rows.length; i++)
+	    {
+	        rowIds.push(rows[i].no);
+	    }
+	    alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
-		{
-		    for (var i = 0; i < rows.length; i++)
-		    {
-		        rowIds.push(rows[i].no);
-		    }
-		    alert("Deselect: " + rowIds.join(","));
+	{
+	    for (var i = 0; i < rows.length; i++)
+	    {
+	        rowIds.push(rows[i].no);
+	    }
+	    alert("Deselect: " + rowIds.join(","));
 	});
 });
 </script>
