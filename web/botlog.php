@@ -4,10 +4,18 @@
 <meta charset="utf-8">
 <meta name="description" content="Bootgrid のデモでーす。">
 <title>Bootgrid - jQuery Plugin Demo</title>
+<link href="css/common.css" rel="stylesheet" />
 <link href="css/bootstrap.css" rel="stylesheet" />
 <link href="css/jquery.bootgrid.css" rel="stylesheet" />
 </head>
 <body>
+<div id="loader-bg">
+  <div id="loader">
+    <img src="img/loading.gif" width="80" height="80" alt="Now Loading..." />
+    <p>Now Loading...</p>
+  </div>
+</div>
+<div id="wrap">
 
 <?php
 
@@ -60,6 +68,7 @@ if ($link) {
 }
 
 ?>
+</div>
 <input type="button" value="選択行の削除" onclick="drow()">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
@@ -67,6 +76,10 @@ if ($link) {
 <script>
 var rowIds = [];
 $(function() {
+	var h = $(window).height();
+	$('#wrap').css('display','none');
+	$('#loader-bg ,#loader').height(h).css('display','block');
+
 	$("#grid-basic").bootgrid({
 		selection: true,
 		multiSelect: true,
@@ -90,6 +103,12 @@ $(function() {
 	    }
 	    //alert("Deselect: " + rowIds.join(","));
 	});
+});
+
+$(window).load(function () { //全ての読み込みが完了したら実行
+	  $('#loader-bg').delay(900).fadeOut(800);
+	  $('#loader').delay(600).fadeOut(300);
+	  $('#wrap').css('display', 'block');
 });
 
 function drow() {
