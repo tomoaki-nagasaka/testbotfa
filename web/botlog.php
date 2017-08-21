@@ -93,7 +93,7 @@ $(function() {
 });
 
 function drow() {
-	var successFlg[];
+	var successFlg = [];
 	var myRet = confirm("選択行を削除しますか？");
 	if ( myRet == true ){
 		for (var i = 0; i < rowIds.length; i++){
