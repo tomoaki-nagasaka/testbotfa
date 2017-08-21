@@ -93,21 +93,24 @@ $(function() {
 });
 
 function drow() {
-	var successFlg = [];
+	var successFlg = true;
 	var myRet = confirm("選択行を削除しますか？");
 	if ( myRet == true ){
 		for (var i = 0; i < rowIds.length; i++){
 			$.ajax({
 				type: "POST",
-				url: "./botlogdel.php",
+				url: "botlogdel.php",
 				data: "no=" + rowIds[i],
-				success: function(){
-					successFlg.push(true);
+			}).then(
+				function(){
+				},
+				function(){
+					successFlg = false;
 				}
-			});
+			);
 		}
 	}
-	if( rowIds.length == successFlg.length){
+	if( successFlg == true){
 		alert("削除しました");
 		location.reload();
 	}else{
