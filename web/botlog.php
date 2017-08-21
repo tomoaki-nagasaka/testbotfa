@@ -92,7 +92,6 @@ $(function() {
 	});
 });
 
-/*
 function drow() {
 	var successFlg = [];
 	var myRet = confirm("選択行を削除しますか？");
@@ -105,6 +104,7 @@ function drow() {
 				success: function(){
 					successFlg.push(true);
 				}
+			});
 		}
 	}
 	if( rowIds.length == successFlg.length){
@@ -114,7 +114,7 @@ function drow() {
 		alert("削除できませんでした");
 	}
 }
-*/
+
 
 </script>
 </body>
