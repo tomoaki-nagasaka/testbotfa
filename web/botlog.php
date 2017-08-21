@@ -59,9 +59,6 @@ if ($link) {
 	echo "<br>";
 }
 
-function delete_row(){
-
-}
 ?>
 <input type="button" value="選択行の削除" onclick="drow()">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
@@ -94,6 +91,7 @@ $(function() {
 	    //alert("Deselect: " + rowIds.join(","));
 	});
 });
+
 function drow() {
 	var successFlg[];
 	var myRet = confirm("選択行を削除しますか？");
