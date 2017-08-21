@@ -99,7 +99,7 @@ function drow() {
 		for (var i = 0; i < rowIds.length; i++){
 			$.ajax({
 				type: "POST",
-				url: "botlogdel.php",
+				url: "./botlogdel.php",
 				data: "no=" + rowIds[i],
 				success: function(){
 					successFlg.push(true);
