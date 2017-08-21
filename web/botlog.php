@@ -92,6 +92,7 @@ $(function() {
 	});
 });
 
+/*
 function drow() {
 	var successFlg = [];
 	var myRet = confirm("選択行を削除しますか？");
@@ -113,6 +114,8 @@ function drow() {
 		alert("削除できませんでした");
 	}
 }
+*/
+
 </script>
 </body>
 </html>
