@@ -15,7 +15,7 @@
     <p>Now Loading...</p>
   </div>
 </div>
-<div id="wrap">
+<div id="wrap" style="display:none">
 
 <?php
 
