@@ -69,7 +69,7 @@ if ($link) {
 
 ?>
 </div>
-<input type="button" value="選択行の削除" onclick="drow()">
+<input id="btn_del" type="button" value="選択行の削除" onclick="drow()"  style="display:none">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
@@ -109,6 +109,7 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#loader-bg').delay(900).fadeOut(800);
 	  $('#loader').delay(600).fadeOut(300);
 	  $('#wrap').css('display', 'block');
+	  $('#btn_del').css('display', 'block');
 });
 
 function drow() {
