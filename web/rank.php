@@ -41,7 +41,7 @@ if ($link) {
 		$row = pg_fetch_row($result);
 		error_log($row);
 		if($row){
-			if($row[0] == ""){
+			if(trim($row[0]) == ""){
 				$endFlg = true;
 			}else{
 				$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
