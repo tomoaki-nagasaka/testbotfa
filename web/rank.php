@@ -33,7 +33,6 @@ $link = pg_connect($conn);
 $ym = "99999999999999";
 $endFlg = false;
 
-
 if ($link) {
 
 	while ($endFlg == false){
@@ -42,7 +41,8 @@ if ($link) {
 		if($row){
 			$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
 			echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
-			$ym = substr($row[0], 0,6)."99999999";
+			$ym = substr($row[0], 0,6)."00000000";
+			$endFlg = true;
 		}else{
 			$endFlg = true;
 		}
