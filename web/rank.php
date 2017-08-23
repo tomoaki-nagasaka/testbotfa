@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="description" content="チャットボットのログを表示します。">
-<title>チャットボットログ</title>
+<meta name="description" content="回答ランキング">
+<title>回答のランキングを表示します。</title>
 <link href="css/common.css" rel="stylesheet" />
 <link href="css/bootstrap.css" rel="stylesheet" />
 <link href="css/jquery.bootgrid.css" rel="stylesheet" />
@@ -16,6 +16,7 @@
   </div>
 </div>
 <div id="wrap" style="display:none">
+<select name="ym">
 
 <?php
 
@@ -29,47 +30,26 @@ $db_user =  getenv('DB_USER');
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 
-
+$ym = "99999999999999";
+$endFlg = false;
 
 if ($link) {
-	$result = pg_query("SELECT * FROM botlog");
-	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
-	echo "<thead>";
-	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
-               <th data-column-id='day' data-width='7%'>日時</th>
-               <th data-column-id='user'  data-width='10%'>ユーザーID</th>
-               <th data-column-id='que'  data-width='40%'>質問内容</th>
-               <th data-column-id='ans'  data-width='40%'>回答内容</th>
-           </tr>";
-	echo "</thead>";
-	echo "<tbody>";
-	while ($row = pg_fetch_row($result)) {
-		echo "<tr>";
-		echo "<td>";
-		echo $row[0];
-		echo "</td>";
-		echo "<td>";
-		echo substr($row[1], 0,4)."/".substr($row[1], 4,2)."/".substr($row[1], 6,2)." ".substr($row[1], 8,2).":".substr($row[1], 10,2);
-		echo "</td>";
-		echo "<td>";
-		echo $row[2];
-		echo "</td>";
-		echo "<td>";
-		echo $row[3];
-		echo "</td>";
-		echo "<td>";
-		echo $row[4];
-		echo "</td>";
-		echo "</tr>";
+	while ($endFlg == false){
+		$result = pg_query("SELECT time FROM botlog WHERE TIME < '{$ym}' ORDER BY time DESC");
+		if(pg_fetch_row($result)){
+			$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
+			echo('<option value="' . $yyyymm. '">' . $yyyymm. '</option>');
+			$ym = substr($row[0], 0,6)."99999999";
+		}else{
+			$endFlg = true;
+		}
 	}
-	echo "</tbody>";
-	echo "</table>";
-	echo "<br>";
 }
 
 ?>
+</select>
+<input id="btn_hyoji" type="button" value="表示" onclick="draw()"  >
 </div>
-<input id="btn_del" type="button" value="選択行の削除" onclick="drow()"  style="display:none">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>

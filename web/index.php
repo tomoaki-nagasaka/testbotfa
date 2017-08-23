@@ -6,6 +6,7 @@
 </head>
 <body>
 <input type="button" onclick="location.href='botlog.php'" value="ログ参照" />
+<input type="button" onclick="location.href='rank.php'" value="ランキング" />
 <?php
 
 //環境変数の取得
