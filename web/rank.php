@@ -60,6 +60,7 @@ $(function() {
 	$('#wrap').css('display','none');
 	$('#loader-bg ,#loader').height(h).css('display','block');
 
+	/*
 	$("#grid-basic").bootgrid({
 		selection: true,
 		multiSelect: true,
@@ -83,6 +84,7 @@ $(function() {
 	    }
 	    //alert("Deselect: " + rowIds.join(","));
 	});
+	*/
 });
 
 $(window).load(function () { //全ての読み込みが完了したら実行
