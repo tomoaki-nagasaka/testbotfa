@@ -33,7 +33,6 @@ $link = pg_connect($conn);
 $ym = "99999999999999";
 //$ym = "20170800000000";
 $endFlg = false;
-$count = 0;
 
 if ($link) {
 
@@ -42,14 +41,14 @@ if ($link) {
 		$row = pg_fetch_row($result);
 		error_log($row);
 		if($row){
-			$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
-			echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
-			$ym = substr($row[0], 0,6)."00000000";
+			if($row[0] == ""){
+				$endFlg = true;
+			}else{
+				$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
+				echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
+				$ym = substr($row[0], 0,6)."00000000";
+			}
 		}else{
-			$endFlg = true;
-		}
-		$count++;
-		if($count > 5){
 			$endFlg = true;
 		}
 	}
