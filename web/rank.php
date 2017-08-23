@@ -33,6 +33,7 @@ $link = pg_connect($conn);
 $ym = "99999999999999";
 $endFlg = false;
 
+/*
 if ($link) {
 	while ($endFlg == false){
 		$result = pg_query("SELECT time FROM botlog WHERE TIME < '{$ym}' ORDER BY time DESC");
@@ -45,6 +46,7 @@ if ($link) {
 		}
 	}
 }
+*/
 
 ?>
 </select>
