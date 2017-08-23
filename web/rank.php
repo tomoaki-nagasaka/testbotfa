@@ -35,7 +35,7 @@ $endFlg = false;
 
 
 if ($link) {
-	/*
+
 	while ($endFlg == false){
 		$result = pg_query("SELECT time FROM botlog WHERE TIME < '{$ym}' ORDER BY time DESC");
 		$row = pg_fetch_row($result);
@@ -43,16 +43,17 @@ if ($link) {
 			$endFlg = true;
 		}else{
 			$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
-			echo('<option value="' . $yyyymm. '">' . $yyyymm. '</option>');
+			echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
 			$ym = substr($row[0], 0,6)."99999999";
 		}
 	}
-	*/
+	/*
 	$result = pg_query("SELECT time FROM botlog WHERE TIME < '{$ym}' ORDER BY time DESC");
 	$row = pg_fetch_row($result);
 	$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
-	echo('<option value="' . $yyyymm. '">' . $yyyymm. '</option>');
+	echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
 	$ym = substr($row[0], 0,6)."99999999";
+	*/
 }
 
 
