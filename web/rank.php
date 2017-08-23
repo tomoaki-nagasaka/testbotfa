@@ -30,7 +30,8 @@ $db_user =  getenv('DB_USER');
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 
-$ym = "99999999999999";
+//$ym = "99999999999999";
+$ym = "20170800000000";
 $endFlg = false;
 
 if ($link) {
@@ -42,6 +43,7 @@ if ($link) {
 			$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
 			echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
 			$ym = substr($row[0], 0,6)."00000000";
+			$endFlg = true;
 		}else{
 			$endFlg = true;
 		}
