@@ -31,7 +31,6 @@ $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_
 $link = pg_connect($conn);
 
 $ym = "99999999999999";
-//$ym = "20170800000000";
 $endFlg = false;
 
 if ($link) {
@@ -39,7 +38,7 @@ if ($link) {
 	while ($endFlg == false){
 		$result = pg_query("SELECT time FROM botlog WHERE TIME < '{$ym}' ORDER BY time DESC");
 		$row = pg_fetch_row($result);
-		error_log($row);
+		//error_log($row);
 		if($row){
 			if(trim($row[0]) == ""){
 				$endFlg = true;
@@ -52,13 +51,6 @@ if ($link) {
 			$endFlg = true;
 		}
 	}
-	/*
-	$result = pg_query("SELECT time FROM botlog WHERE TIME < '{$ym}' ORDER BY time DESC");
-	$row = pg_fetch_row($result);
-	$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
-	echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
-	$ym = substr($row[0], 0,6)."99999999";
-	*/
 }
 
 
@@ -110,30 +102,23 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#btn_del').css('display', 'block');
 });
 
-function drow() {
-	var successFlg = true;
-	var myRet = confirm("選択行を削除しますか？");
-	if ( myRet == true ){
-		for (var i = 0; i < rowIds.length; i++){
-			$.ajax({
-				type: "POST",
-				url: "botlogdel.php",
-				data: "no=" + rowIds[i],
-			}).then(
-				function(){
-				},
-				function(){
-					successFlg = false;
-				}
-			);
+function draw() {
+	var index = document.ym.selectedIndex;
+	var svalue = document.ym.options[index].value;
+	alert(svalue);
+	/*
+	$.ajax({
+		type: "POST",
+		url: "botlogdel.php",
+		data: "no=" + rowIds[i],
+	}).then(
+		function(){
+		},
+		function(){
+			successFlg = false;
 		}
-	}
-	if( successFlg == true){
-		alert("削除しました");
-		location.reload();
-	}else{
-		alert("削除できませんでした");
-	}
+	);
+	*/
 }
 
 
