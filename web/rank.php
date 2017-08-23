@@ -16,7 +16,7 @@
   </div>
 </div>
 <div id="wrap" style="display:none">
-<select name="ym">
+<select id="ym">
 
 <?php
 
@@ -103,8 +103,9 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 });
 
 function draw() {
-	var index = document.ym.selectedIndex;
-	var svalue = document.ym.options[index].value;
+	alert("押された");
+	var index = $('#ym').selectedIndex;
+	var svalue = $('#ym').options[index].value;
 	alert(svalue);
 	/*
 	$.ajax({
