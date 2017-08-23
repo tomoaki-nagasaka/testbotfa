@@ -42,7 +42,6 @@ if ($link) {
 			$yyyymm = substr($row[0], 0,4)."/".substr($row[0], 4,2);
 			echo('<option value="' . substr($row[0], 0,6). '">' . $yyyymm. '</option>');
 			$ym = substr($row[0], 0,6)."00000000";
-			$endFlg = true;
 		}else{
 			$endFlg = true;
 		}
