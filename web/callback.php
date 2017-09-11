@@ -184,7 +184,9 @@ if($type != "text"){
 		//$data = [ 'images_file' => '@' . file_get_contents("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg") ];
 		$url = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 		//$data= file_get_contents ( $url );
-		$data= $result;
+		//$data= $result;
+		//$data = array("images_file" => $result, "classifier_ids" => "garbage");
+		$data = array("images_file" => $result);
 		//$data = imagecreatefromstring($result);
 		if($data == false){
 			error_log("イメージ変換エラー");
