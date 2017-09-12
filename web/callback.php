@@ -194,7 +194,10 @@ if($type != "text"){
 		$json = json_decode($jsonString, true);
 
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
+		error_log($json ["images"][0]["classifiers"] [0]["classifier_id"]);
+		error_log($json ["images"][0]["classifiers"] [1]["classifier_id"]);
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
+		error_log("classifiers:".count($json ["images"][0]["classifiers"]));
 		error_log("images:".count($json ["images"]));
 		error_log("images_processed:".$json ["images_processed"]);
 
