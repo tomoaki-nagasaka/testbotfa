@@ -182,8 +182,9 @@ if($type != "text"){
 		$result = curl_exec ( $ch );
 
 		//$data= $result;
-		$data = array("images_file" => $result, "classifier_ids" => "garbage_2067461823");
+		//$data = array("images_file" => $result, "classifier_ids" => "garbage_2067461823");
 		//$data = array("images_file" => $result);
+		$data = array($result);
 		//$data = imagecreatefromstring($result);
 		if($data == false){
 			error_log("イメージ変換エラー");
