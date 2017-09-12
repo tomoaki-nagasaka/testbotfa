@@ -187,7 +187,8 @@ if($type != "text"){
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
 		//$data = imagecreatefromstring($result);
 
-		$cfile = new CURLFile(imagecreatefromstring($result),'image/jpeg','line_image');
+		//$cfile = new CURLFile(imagecreatefromstring($result),'image/jpeg','line_image');
+		$cfile = new CURLFile("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",'image/jpeg','line_image');
 		$data = array('images_file' => $cfile, 'classifier_ids' => 'garbage_2067461823');
 		if($data == false){
 			error_log("イメージ変換エラー");
