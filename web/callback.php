@@ -181,15 +181,15 @@ if($type != "text"){
 		) );
 		$result = curl_exec ( $ch );
 
-		//$data= $result;
+		$data= $result;
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
 		//$data = $result."&classifier_ids='garbage_2067461823'&threshold=0.0";
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
 		//$data = imagecreatefromstring($result);
 
 		//$cfile = new CURLFile(imagecreatefromstring($result),'image/jpeg','line_image');
-		$cfile = new CURLFile("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",'image/jpeg','line_image');
-		$data = array('images_file' => $cfile, 'classifier_ids' => 'garbage_2067461823');
+		//$cfile = new CURLFile("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",'image/jpeg','line_image');
+		//$data = array('images_file' => $cfile, 'classifier_ids' => 'garbage_2067461823');
 		if($data == false){
 			error_log("イメージ変換エラー");
 		}
@@ -201,6 +201,7 @@ if($type != "text"){
 		error_log($json ["images"][0]["classifiers"] [0]["classifier_id"]);
 		error_log($json ["images"][0]["classifiers"] [1]["classifier_id"]);
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
+		error_log($json ["images"][0]["image"]);
 		error_log("classifiers:".count($json ["images"][0]["classifiers"]));
 		error_log("images:".count($json ["images"]));
 		error_log("images_processed:".$json ["images_processed"]);
@@ -514,8 +515,8 @@ function callVisual_recognition(){
 	$curl = curl_init($url);
 	$options = array (
 			CURLOPT_POST=> TRUE ,
-			CURLOPT_POSTFIELDS => http_build_query($data),
-			//CURLOPT_POSTFIELDS => $data,
+			//CURLOPT_POSTFIELDS => http_build_query($data),
+			CURLOPT_POSTFIELDS => $data,
 			CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
