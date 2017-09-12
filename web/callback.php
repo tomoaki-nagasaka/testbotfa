@@ -507,7 +507,7 @@ function callVisual_recognition(){
 	$curl = curl_init($url);
 	$options = array (
 			CURLOPT_POST=> TRUE ,
-			CURLOPT_POSTFIELDS => $data,
+			CURLOPT_POSTFIELDS => http_build_query($data),
 			CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
