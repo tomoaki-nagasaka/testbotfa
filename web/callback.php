@@ -184,8 +184,11 @@ if($type != "text"){
 		//$data= $result;
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
 		//$data = $result."&classifier_ids='garbage_2067461823'&threshold=0.0";
-		$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
+		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
 		//$data = imagecreatefromstring($result);
+
+		$cfile = new CURLFile(imagecreatefromstring($result),'image/jpeg','line_image');
+		$data = array('images_file' => $cfile, 'classifier_ids' => 'garbage_2067461823');
 		if($data == false){
 			error_log("イメージ変換エラー");
 		}
@@ -510,8 +513,8 @@ function callVisual_recognition(){
 	$curl = curl_init($url);
 	$options = array (
 			CURLOPT_POST=> TRUE ,
-			CURLOPT_POSTFIELDS => http_build_query($data),
-			//CURLOPT_POSTFIELDS => $data,
+			//CURLOPT_POSTFIELDS => http_build_query($data),
+			CURLOPT_POSTFIELDS => $data,
 			CURLOPT_RETURNTRANSFER =>TRUE
 	);
 
