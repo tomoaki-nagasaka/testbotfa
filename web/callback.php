@@ -183,7 +183,7 @@ if($type != "text"){
 
 		//$data= $result;
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
-		$data = $result."&classifier_ids=garbage_2067461823";
+		$data = $result."&classifier_ids='garbage_2067461823'";
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823");
 		//$data = imagecreatefromstring($result);
 		if($data == false){
