@@ -210,7 +210,7 @@ if($type != "text"){
 		//$imgdata = base64_decode($result);
 		$cfile = new CURLFile("/tmp/test.jpg","image/jpeg","line_image.jpg");
 		//$cfile = new CURLFile("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",'image/jpeg','line_image');
-		$data = array("images_file" => $cfile);
+		$data = array("images_file" => $cfile,"classifier_ids" => "garbage_2067461823");
 		if($data == false){
 			error_log("イメージ変換エラー");
 		}
