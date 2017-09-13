@@ -210,6 +210,11 @@ if($type != "text"){
 		$jsonString = callVisual_recognition();
 		$json = json_decode($jsonString, true);
 
+		//分類
+		$class = $json ["images"][0]["classifiers"] [0]["classes"][0]["class"];
+		//確信度
+		$scoer = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] * 100;
+
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
 		error_log($json ["images"][0]["classifiers"] [0]["classifier_id"]);
 		error_log($json ["images"][0]["classifiers"] [1]["classifier_id"]);
@@ -219,7 +224,26 @@ if($type != "text"){
 		error_log("images:".count($json ["images"]));
 		error_log("images_processed:".$json ["images_processed"]);
 
-		$resmess = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] . "の確率で「".$json ["images"][0]["classifiers"] [0]["classes"][0]["class"]."」です";
+		$resmess = $scoer. "％の確率で「".$class."」です";
+		$setsuzoku = "";
+		if($scoer > 75){
+			$setsuzoku = "おそらく";
+		}
+		switch ($class){
+			//燃えるゴミ
+			case "burnable":
+				$resmess = "送信された画像は、".$setsuzoku."燃えるゴミです。燃えるゴミの日に出してください。\n※確信度：".$scoer."％";
+				break;
+			//燃えないゴミ
+			//資源ゴミ
+			//粗大ゴミ
+			case "resource":
+				break;
+			//その他
+			default:
+				$resmess = "分類できませんでした。お手数ですが、042-521-4192 までお問い合わせください。";
+				break;
+		}
 		$response_format_text = [
 				"type" => "text",
 				"text" => $resmess
