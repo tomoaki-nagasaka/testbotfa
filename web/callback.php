@@ -182,7 +182,7 @@ if($type != "text"){
 		$result = curl_exec ( $ch );
 
 		//$data= $result;
-		$data= array($result);
+		$data= array("images_file" => $result);
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
 		//$data = $result."&classifier_ids='garbage_2067461823'&threshold=0.0";
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
