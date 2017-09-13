@@ -181,11 +181,29 @@ if($type != "text"){
 		) );
 		$result = curl_exec ( $ch );
 
-		//$data= $result;
+		//画像を保存
+		$fp = fopen('/tmp/test.jpg', 'wb');
+		if ($fp){
+			if (flock($fp, LOCK_EX)){
+				if (fwrite($fp,  $result ) === FALSE){
+					error_log('ファイル書き込みに失敗しました');
+				}else{
+					error_log('ファイルに書き込みました');
+				}
+
+				flock($fp, LOCK_UN);
+			}else{
+				error_log('ファイルロックに失敗しました');
+			}
+		}
+
+		fclose($fp);
+
+		$data= $result;
 		//$data= array("images_file" => "@".$result);
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
 		//$data = "images_file=".$result."&classifier_ids='garbage_2067461823'&threshold=0.0";
-		$data = "images_file=@".$result;
+		//$data = "images_file=@".$result;
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
 		//$data = imagecreatefromstring($result);
 
