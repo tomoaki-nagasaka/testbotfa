@@ -185,7 +185,7 @@ if($type != "text"){
 		//$data= array("images_file" => "@".$result);
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
 		//$data = "images_file=".$result."&classifier_ids='garbage_2067461823'&threshold=0.0";
-		$data = "images_file=".$result;
+		$data = "images_file=@".$result;
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
 		//$data = imagecreatefromstring($result);
 
