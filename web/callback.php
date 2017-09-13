@@ -215,6 +215,7 @@ if($type != "text"){
 		//確信度
 		$scoer = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] * 100;
 
+		/*
 		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
 		error_log($json ["images"][0]["classifiers"] [0]["classifier_id"]);
 		error_log($json ["images"][0]["classifiers"] [1]["classifier_id"]);
@@ -223,21 +224,29 @@ if($type != "text"){
 		error_log("classifiers:".count($json ["images"][0]["classifiers"]));
 		error_log("images:".count($json ["images"]));
 		error_log("images_processed:".$json ["images_processed"]);
+		*/
 
-		$resmess = $scoer. "％の確率で「".$class."」です";
+		//$resmess = $scoer. "％の確率で「".$class."」です";
 		$setsuzoku = "";
-		if($scoer > 75){
+		if($scoer < 80){
 			$setsuzoku = "おそらく";
 		}
 		switch ($class){
 			//燃えるゴミ
 			case "burnable":
-				$resmess = "送信された画像は、".$setsuzoku."燃えるゴミです。燃えるゴミの日に出してください。\n※確信度：".$scoer."％";
+				$resmess = "送信された画像は、".$setsuzoku."『可燃ゴミ』です。可燃ゴミの日に出してください。\n※確信度：".$scoer."％";
 				break;
 			//燃えないゴミ
+			case "nonburnable":
+				$resmess = "送信された画像は、".$setsuzoku."『不燃ゴミ』です。不燃ゴミの日に出してください。\n※確信度：".$scoer."％";
+				break;
 			//資源ゴミ
-			//粗大ゴミ
 			case "resource":
+				$resmess = "送信された画像は、".$setsuzoku."『資源ゴミ』です。資源ゴミの日に出してください。\n※確信度：".$scoer."％";
+				break;
+			//粗大ゴミ
+			case "bulky":
+				$resmess = "送信された画像は、".$setsuzoku."『粗大ゴミ』です。粗大ゴミの日に出してください。\n※確信度：".$scoer."％";
 				break;
 			//その他
 			default:
