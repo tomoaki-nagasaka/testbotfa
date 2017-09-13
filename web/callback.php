@@ -184,14 +184,14 @@ if($type != "text"){
 		//$data= $result;
 		//$data= array("images_file" => "@".$result);
 		//$data = array('images_file' => $result, 'classifier_ids' => 'garbage_2067461823');
-		//$data = $result."&classifier_ids='garbage_2067461823'&threshold=0.0";
+		$data = "images_file=".$result."&classifier_ids='garbage_2067461823'&threshold=0.0";
 		//$data = array($result,  "classifier_ids" => "garbage_2067461823", "threshold" => 0.0);
 		//$data = imagecreatefromstring($result);
 
-		$imgdata = base64_decode($result);
-		$cfile = new CURLFile(imagecreatefromstring($imgdata),"image/jpeg","line_image.jpg");
+		//$imgdata = base64_decode($result);
+		//$cfile = new CURLFile(imagecreatefromstring($imgdata),"image/jpeg","line_image.jpg");
 		//$cfile = new CURLFile("https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg",'image/jpeg','line_image');
-		$data = array("images_file" => $cfile);
+		//$data = array("images_file" => $cfile);
 		if($data == false){
 			error_log("イメージ変換エラー");
 		}
