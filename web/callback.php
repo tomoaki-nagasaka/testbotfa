@@ -181,8 +181,12 @@ if($type != "text"){
 		) );
 		$result = curl_exec ( $ch );
 
+		$arrTime = explode('.',microtime(true));
+		$fdate = date("His").$arrTime[1];
+		$fname = "/tmp/".$fdate.".jpg";
+
 		//画像を保存
-		$fp = fopen('/tmp/test.jpg', 'wb');
+		$fp = fopen($fname, 'wb');
 		if ($fp){
 			if (flock($fp, LOCK_EX)){
 				if (fwrite($fp,  $result ) === FALSE){
@@ -201,7 +205,7 @@ if($type != "text"){
 
 		//$data= $result;
 
-		$cfile = new CURLFile("/tmp/test.jpg","image/jpeg","line_image.jpg");
+		$cfile = new CURLFile($fname,"image/jpeg","line_image.jpg");
 		$data = array("images_file" => $cfile,"classifier_ids" => "garbage_2067461823", "threshold" => 0.6);
 		if($data == false){
 			error_log("イメージ変換エラー");
@@ -209,6 +213,9 @@ if($type != "text"){
 		$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
 		$jsonString = callVisual_recognition();
 		$json = json_decode($jsonString, true);
+
+		//画像ファイル削除
+		unlink($fname);
 
 		//分類
 		$class = $json ["images"][0]["classifiers"] [0]["classes"][0]["class"];
