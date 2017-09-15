@@ -206,7 +206,7 @@ if($type != "text"){
 		//$data= $result;
 
 		$cfile = new CURLFile($fname,"image/jpeg","line_image.jpg");
-		$data = array("images_file" => $cfile,"classifier_ids" => "garbage_1929653930", "threshold" => 0.6);
+		$data = array("images_file" => $cfile,"classifier_ids" => "garbage_481154027", "threshold" => 0.6);
 		if($data == false){
 			error_log("イメージ変換エラー");
 		}
