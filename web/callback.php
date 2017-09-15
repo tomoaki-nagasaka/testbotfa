@@ -32,6 +32,8 @@ $replyToken = $jsonObj->{"events"}[0]->{"replyToken"};
 $userID = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
 //返信メッセージ
 $resmess = "";
+//画像判定
+$imageflg = false;
 
 //DB接続
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
@@ -163,6 +165,7 @@ if($eventType == "postback"){
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
 	if($type == "image"){
+		$imageflg = true;
 		/*
 		$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
 		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
@@ -179,7 +182,7 @@ if($type != "text"){
 				'Content-Type: application/json; charser=UTF-8',
 				'Authorization: Bearer ' . $accessToken
 		) );
-		$result = curl_exec ( $ch );
+		$bimage = curl_exec ( $ch );
 
 		$arrTime = explode('.',microtime(true));
 		$fdate = date("His").$arrTime[1];
@@ -189,7 +192,7 @@ if($type != "text"){
 		$fp = fopen($fname, 'wb');
 		if ($fp){
 			if (flock($fp, LOCK_EX)){
-				if (fwrite($fp,  $result ) === FALSE){
+				if (fwrite($fp,  $bimage) === FALSE){
 					error_log('ファイル書き込みに失敗しました');
 				}else{
 					error_log('ファイルに書き込みました');
@@ -472,24 +475,32 @@ curl_close($ch);
 if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
-	if(strlen($text) > 200){
-		$text = mb_substr($text,0,199,"utf-8");
-	}
-	if(strlen($resmess) > 200){
-		$resmess= mb_substr($resmess,0,199,"utf-8");
-	}
-	//シングルコーテーションを除去
-	$Utext= str_replace("'","",$Utext);
-	$resmess = str_replace("'","",$resmess);
-	$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
-	$result_flag = pg_query($sql);
-	if (!$result_flag) {
-		error_log("インサートに失敗しました。".pg_last_error());
-	}
-	$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
-	$result_flag = pg_query($sql);
-	if (!$result_flag) {
-		error_log("アップデートに失敗しました。".pg_last_error());
+	if($imageflg){
+		$sql = "INSERT INTO logimage (time, userid, image, scoer, class) VALUES ('{$tdate}','{$userID}','{$bimage}','{$scoer}','{$class}')";
+		$result_flag = pg_query($sql);
+		if (!$result_flag) {
+			error_log("インサートに失敗しました。".pg_last_error());
+		}
+	}else{
+		if(strlen($text) > 200){
+			$text = mb_substr($text,0,199,"utf-8");
+		}
+		if(strlen($resmess) > 200){
+			$resmess= mb_substr($resmess,0,199,"utf-8");
+		}
+		//シングルコーテーションを除去
+		$Utext= str_replace("'","",$Utext);
+		$resmess = str_replace("'","",$resmess);
+		$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
+		$result_flag = pg_query($sql);
+		if (!$result_flag) {
+			error_log("インサートに失敗しました。".pg_last_error());
+		}
+		$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
+		$result_flag = pg_query($sql);
+		if (!$result_flag) {
+			error_log("アップデートに失敗しました。".pg_last_error());
+		}
 	}
 }
 
