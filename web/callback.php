@@ -1,6 +1,7 @@
 <?php
 //error_log("開始します");
 date_default_timezone_set('Asia/Tokyo');
+$tdate = date("YmdHis");
 
 //環境変数の取得
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
@@ -321,7 +322,6 @@ curl_setopt_array($curl, $options);
 $jsonString = curl_exec($curl);
 */
 
-$tdate = date("YmdHis");
 if ($link) {
 	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
 	if (pg_num_rows($result) == 0) {
@@ -476,7 +476,9 @@ if (!$link) {
 	error_log("接続失敗です。".pg_last_error());
 }else{
 	if($imageflg){
-		$sql = "INSERT INTO logimage (time, userid, image, scoer, class) VALUES ('{$tdate}','{$userID}','{$bimage}','{$scoer}','{$class}')";
+		//バイナリデータをエスケープする
+		$esc = pg_escape_bytea( $bimage);
+		$sql = "INSERT INTO logimage (time, userid, image, scoer, class) VALUES ('{$tdate}','{$userID}','{$esc}','{$scoer}','{$class}')";
 		$result_flag = pg_query($sql);
 		if (!$result_flag) {
 			error_log("インサートに失敗しました。".pg_last_error());
