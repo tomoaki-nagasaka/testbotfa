@@ -24,8 +24,9 @@ if ($link) {
 	$result = pg_query("SELECT image FROM logimage ORDER BY no DESC");
 	while ($row = pg_fetch_row($result)) {
 		echo "<br>";
-		header('Content-type: image/jpeg');
+		//header('Content-type: image/jpeg');
 		$img_data=pg_unescape_bytea($row[0]);
+		print ($img_data);
 		//echo "<img src='".$img_data."' alt='' />";
 		echo $img_data;
 	}
