@@ -16,18 +16,19 @@ $db_pass =  getenv('DB_PASS');
 $db_user =  getenv('DB_USER');
 
 //DB接続
-/*
+
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 
 if ($link) {
-	$result = pg_query("SELECT contents FROM botlog ORDER BY no DESC");
+	$result = pg_query("SELECT image FROM logimage ORDER BY no DESC");
 	while ($row = pg_fetch_row($result)) {
 		echo "<br>";
-		echo $row[0];
+		$img_data=pg_unescape_bytea($row[0]);
+		echo $img_data;
 	}
 }
-*/
+
 ?>
 </body>
 </html>
