@@ -25,7 +25,7 @@ if ($link) {
 	while ($row = pg_fetch_row($result)) {
 		echo "<br>";
 		$img_data=pg_unescape_bytea($row[0]);
-		echo $img_data;
+		echo "<img src='".$img_data."' alt='' />";
 	}
 }
 
