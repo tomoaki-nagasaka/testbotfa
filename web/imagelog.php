@@ -35,13 +35,12 @@ if ($link) {
 	$result = pg_query("SELECT * FROM logimage");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
-               <th data-column-id='day' data-width='7%'>日時</th>
-               <th data-column-id='user'  data-width='10%'>ユーザーID</th>
-               <th data-column-id='imgsrc'   data-identifier='true' data-type='string' data-visible='false'>ダミー</th>
-               <th data-column-id='img'  data-width='40%'  data-formatter='image'>送信画像</th>
-               <th data-column-id='cls'  data-width='20%'>分類</th>
-               <th data-column-id='scr'  data-width='20%'>確信度</th>
+	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='10%'>No</th>
+               <th data-column-id='day' data-width='10%'>日時</th>
+               <th data-column-id='user'  data-width='20%'>ユーザーID</th>
+               <th data-column-id='img'  data-width='20%'  data-formatter='image'>送信画像</th>
+               <th data-column-id='cls'  data-width='15%'>分類</th>
+               <th data-column-id='scr'  data-width='15%'>確信度</th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -55,9 +54,6 @@ if ($link) {
 		echo "</td>";
 		echo "<td>";
 		echo $row[2];
-		echo "</td>";
-		echo "<td>";
-		echo "https://placeholdit.imgix.net/~text?txtsize=23&bg=F44336&txtclr=ffffff&w=50&h=50";
 		echo "</td>";
 		echo "<td>";
 		//echo "<img class='table-img' src='getimage.php?id=" . $row[0]. "'/>";
