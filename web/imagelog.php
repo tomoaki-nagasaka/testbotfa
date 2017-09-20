@@ -90,6 +90,10 @@ $(function() {
 		multiSelect: true,
 		rowSelect: true,
 	    keepSelection: true,
+	    formatters: {
+	        "image": function(column, row) {
+	              return "<img class='table-img' src='" + row.imgsrc + "' />";
+	         },
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
 	{
 	    for (var i = 0; i < rows.length; i++)
