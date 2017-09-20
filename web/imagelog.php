@@ -35,12 +35,13 @@ if ($link) {
 	$result = pg_query("SELECT * FROM logimage");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='10%'>No</th>
+	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='day' data-width='10%'>日時</th>
                <th data-column-id='user'  data-width='20%'>ユーザーID</th>
                <th data-column-id='img'  data-width='20%'  data-formatter='image'>送信画像</th>
                <th data-column-id='cls'  data-width='15%'>分類</th>
                <th data-column-id='scr'  data-width='15%'>確信度</th>
+               <th data-column-id='zoom'  data-width='7%' data-formatter='zoom' data-sortable='false'></th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -117,6 +118,9 @@ $(function() {
 	        "image": function($column, $row) {
 	              return "<img class='table-img' src='getimage.php?id=" + $row.no + "' />";
 	         }
+	        "zoom": function($column, $row) {
+                  return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
+             }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
 	{
