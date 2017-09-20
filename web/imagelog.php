@@ -59,10 +59,10 @@ if ($link) {
 		echo "<td>";
 		echo "https://placeholdit.imgix.net/~text?txtsize=23&bg=F44336&txtclr=ffffff&w=50&h=50";
 		echo "</td>";
-		//echo "<td>";
+		echo "<td>";
 		//echo "<img class='table-img' src='getimage.php?id=" . $row[0]. "'/>";
 		//echo "<img class='table-img' src='https://placeholdit.imgix.net/~text?txtsize=23&bg=F44336&txtclr=ffffff&w=50&h=50'/>";
-		//echo "</td>";
+		echo "</td>";
 		echo "<td>";
 		echo $row[5];
 		echo "</td>";
@@ -96,7 +96,7 @@ $(function() {
 	    keepSelection: true,
 	    formatters: {
 	        "image": function($column, $row) {
-	              return "<img class='table-img' src='" + $row.imgsrc + "' />";
+	              return "<img class='table-img' src='getimage.php?id=" + $row.no + "' />";
 	         }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
