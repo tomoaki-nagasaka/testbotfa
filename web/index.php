@@ -6,8 +6,9 @@
 </head>
 <body>
 <input type="button" onclick="location.href='botlog.php'" value="ログ参照" />
+<input type="button" onclick="location.href='imagelog.php'" value="画像ログ参照" />
 <input type="button" onclick="location.href='rank.php'" value="ランキング" />
-<img src="getimage.php" />
+<img src="getimage.php?id=1" />
 
 <?php
 
