@@ -38,9 +38,9 @@ if ($link) {
 	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='day' data-width='7%'>日時</th>
                <th data-column-id='user'  data-width='10%'>ユーザーID</th>
-               <th data-column-id='que'  data-width='40%'>送信画像</th>
-               <th data-column-id='ans'  data-width='20%'>分類</th>
-               <th data-column-id='ans'  data-width='20%'>確信度</th>
+               <th data-column-id='img'  data-width='40%'>送信画像</th>
+               <th data-column-id='cls'  data-width='20%'>分類</th>
+               <th data-column-id='scr'  data-width='20%'>確信度</th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -56,7 +56,7 @@ if ($link) {
 		echo $row[2];
 		echo "</td>";
 		echo "<td>";
-		echo "<img src=\"getimage.php?id=" . $row[0]. "\"/>";
+		echo "<img class=\"table-img\" src=\"getimage.php?id=" . $row[0]. "\"/>";
 		echo "</td>";
 		echo "<td>";
 		echo $row[5];
