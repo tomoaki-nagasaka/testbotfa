@@ -56,13 +56,13 @@ if ($link) {
 		echo $row[2];
 		echo "</td>";
 		echo "<td>";
-		echo "<img src=\"getimage.php?id=" . $row[0]. "\">"; //$row[3];
-		echo "</td>";
-		echo "<td>";
-		echo $row[4];
+		echo "<img src=\"getimage.php?id=" . $row[0]. "\"/>";
 		echo "</td>";
 		echo "<td>";
 		echo $row[5];
+		echo "</td>";
+		echo "<td>";
+		echo $row[4];
 		echo "</td>";
 		echo "</tr>";
 	}
