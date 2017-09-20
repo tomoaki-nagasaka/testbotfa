@@ -57,7 +57,7 @@ if ($link) {
 		echo "</td>";
 		echo "<td>";
 		//echo "<img class='table-img' src='getimage.php?id=" . $row[0]. "'/>";
-		echo "<img class='table-img' src='getimage.php?id=2'/>";
+		echo "<img class='table-img' src='https://placeholdit.imgix.net/~text?txtsize=23&bg=F44336&txtclr=ffffff&w=50&h=50'/>";
 		echo "</td>";
 		echo "<td>";
 		echo $row[5];
