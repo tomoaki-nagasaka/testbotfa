@@ -59,8 +59,31 @@ if ($link) {
 		//echo "<img class='table-img' src='getimage.php?id=" . $row[0]. "'/>";
 		//echo "<img class='table-img' src='https://placeholdit.imgix.net/~text?txtsize=23&bg=F44336&txtclr=ffffff&w=50&h=50'/>";
 		echo "</td>";
+		$bunrui = "";
+		switch ($row[5]){
+			//燃えるゴミ
+			case "burnable":
+				$bunrui = "可燃ゴミ";
+				break;
+			//燃えないゴミ
+			case "nonburnable":
+				$bunrui = "不燃ゴミ";
+				break;
+				//資源ゴミ
+			case "resource":
+				$bunrui = "資源ゴミ";
+				break;
+				//粗大ゴミ
+			case "bulky":
+				$bunrui = "粗大ゴミ";
+				break;
+				//その他
+			default:
+				$bunrui = "分類不可";
+				break;
+		}
 		echo "<td>";
-		echo $row[5];
+		echo $bunrui;
 		echo "</td>";
 		echo "<td>";
 		echo $row[4];
