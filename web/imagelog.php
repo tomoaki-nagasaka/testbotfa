@@ -198,12 +198,12 @@ function imgwin(imgno){
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
-		  alert(img);
+		  alert("myXX:" + img.width + " myYY:" + img.height);
 		});
 
     myXX = img.width; // ウィンドウ横幅
     myYY = img.height; // ウィンドウ縦幅
-    alert("myXX:" + img.width + " myYY:" + img.height);
+    //alert("myXX:" + img.width + " myYY:" + img.height);
     myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
