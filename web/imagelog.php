@@ -201,8 +201,24 @@ function imgwin(imgno){
 		  img = data;
 		});
 
+    myXX = img.width; // ウィンドウ横幅
+    myYY = img.height; // ウィンドウ縦幅
+    myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
+    myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
+
+    myWin.document.open();
+    myWin.document.write( "<html>" );
+    myWin.document.write( "<head>" );
+    myWin.document.write( "<title>", "拡大表示" , "</title>" );
+    myWin.document.write( "</head>" );
+    myWin.document.write( "<body style='margin:0px;padding:0px'>" );
+    myWin.document.write( "<img src='getimage.php?id=" + $row.no + "'>" );
+    myWin.document.write( "</body>" );
+    myWin.document.write( "</html>" );
+    myWin.document.close();
+
     //alert("クリックされた" + imgno);
-    window.open(img, "imgwindow", "width=866,height=580");
+    //window.open(img, "imgwindow", "width=866,height=580");
 }
 
 </script>
