@@ -182,6 +182,7 @@ function imgwin(imgno){
     //window.open("images/"+img, "imgwindow", "width=866,height=580");
     var successFlg = true;
     var img = new Image();
+    /*
     $.ajax({
 		type: "GET",
 		url: "getimage.php",
@@ -194,6 +195,7 @@ function imgwin(imgno){
 			successFlg = false;
 		}
 	);
+	*/
     alert("クリックされた");
     //window.open(img, "imgwindow", "width=866,height=580");
 }
