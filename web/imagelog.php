@@ -180,8 +180,22 @@ function drow() {
 
 function imgwin(imgno){
     //window.open("images/"+img, "imgwindow", "width=866,height=580");
-    alert("クリックされた");
-    //window.open("index.php", "imgwindow", "width=866,height=580");
+    var successFlg = true;
+    var img = new Image();
+    $.ajax({
+		type: "GET",
+		url: "getimage.php",
+		data: "id=" + imgno,
+		}).then(
+		function(data){
+			var img.src = data;
+		},
+		function(){
+			successFlg = false;
+		}
+	);
+    //alert("クリックされた");
+    window.open(img, "imgwindow", "width=866,height=580");
 }
 
 </script>
