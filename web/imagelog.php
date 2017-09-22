@@ -190,7 +190,7 @@ function imgwin(imgno){
 		function(data){
 			var img.src = data;
 		},
-		function(){
+		function(data){
 			successFlg = false;
 		}
 	);
