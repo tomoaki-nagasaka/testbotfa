@@ -224,7 +224,8 @@ function imgwin(imgno){
     myWin.onload = function(){
     	//var img = new Image();
     	var img = myWin.document.getElementById("image");
-    	alert("myXX:" + img.width + " myYY:" + img.height);
+    	//alert("myXX:" + img.width + " myYY:" + img.height);
+    	myWin.resizeBy(img.width, img.height);
     	//alert("winopen");
     };
 }
