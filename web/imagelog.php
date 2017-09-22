@@ -196,10 +196,11 @@ function imgwin(imgno){
 		}
 	);
 
-	$.get("getimage.php", id: imgno ,function(data){
+    */
+	$.get("getimage.php", {id: imgno} ,function(data){
 		  img = data;
 		});
-	*/
+
     alert("クリックされた" + imgno);
     //window.open(img, "imgwindow", "width=866,height=580");
 }
