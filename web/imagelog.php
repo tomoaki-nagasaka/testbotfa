@@ -180,7 +180,7 @@ function drow() {
 
 function imgwin(imgno){
     var img = new Image();
-    alert("myXX:" + img.width + " myYY:" + img.height);
+    //alert("myXX:" + img.width + " myYY:" + img.height);
     /*
     $.ajax({
 		type: "GET",
@@ -198,7 +198,7 @@ function imgwin(imgno){
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
-		  alert(data);
+		  alert(img);
 		});
 
     myXX = img.width; // ウィンドウ横幅
