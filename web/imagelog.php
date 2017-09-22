@@ -179,35 +179,8 @@ function drow() {
 }
 
 function imgwin(imgno){
-    //var img = new Image();
-    //alert("myXX:" + img.width + " myYY:" + img.height);
-    /*
-    $.ajax({
-		type: "GET",
-		url: "getimage.php",
-		data: "id=" + imgno,
-		}).then(
-		function(data){
-			var img.src = data;
-		},
-		function(data){
-			successFlg = false;
-		}
-	);
 
-
-	$.get("getimage.php", {id: imgno} ,function(data){
-		  img.src = data;
-		  //alert("myXX:" + img.width + " myYY:" + img.height);
-		});
-    */
-
-
-    //myXX = img.width; // ウィンドウ横幅
-    //myYY = img.height; // ウィンドウ縦幅
-    //alert("myXX:" + img.width + " myYY:" + img.height);
-    //myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
-    myWinSize = "resizable=yes,width=100,height=100"; // ウィンドウオプション
+    myWinSize = "resizable=yes,location=no,width=100,height=100"; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
     myWin.document.open();
@@ -222,11 +195,8 @@ function imgwin(imgno){
     myWin.document.close();
 
     myWin.onload = function(){
-    	//var img = new Image();
     	var img = myWin.document.getElementById("image");
-    	//alert("myXX:" + img.width + " myYY:" + img.height);
-    	myWin.resizeBy(img.width, img.height);
-    	//alert("winopen");
+    	myWin.resizeTo(img.width, img.height);
     };
 }
 
