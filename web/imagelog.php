@@ -180,7 +180,7 @@ function drow() {
 
 function imgwin(imgno){
 
-    myWinSize = "resizable=yes,location=no,width=100,height=100"; // ウィンドウオプション
+    myWinSize = "resizable=yes,location=no,menubar=no,toolbar=no,status=no,width=100,height=100"; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
     myWin.document.open();
