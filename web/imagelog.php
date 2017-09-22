@@ -179,7 +179,7 @@ function drow() {
 }
 
 function imgwin(imgno){
-    var img = new Image();
+    //var img = new Image();
     //alert("myXX:" + img.width + " myYY:" + img.height);
     /*
     $.ajax({
@@ -198,7 +198,7 @@ function imgwin(imgno){
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
-		  alert("myXX:" + img.width + " myYY:" + img.height);
+		  //alert("myXX:" + img.width + " myYY:" + img.height);
 		});
 
 
@@ -219,6 +219,12 @@ function imgwin(imgno){
     myWin.document.write( "</body>" );
     myWin.document.write( "</html>" );
     myWin.document.close();
+
+    myWin.onload = function(){
+    	//var img = new Image();
+    	var img = document.getElementById("image");
+    	alert("myXX:" + img.width + " myYY:" + img.height);
+    };
 }
 
 </script>
