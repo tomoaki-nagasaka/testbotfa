@@ -180,7 +180,7 @@ function drow() {
 
 function imgwin(imgno){
 
-    myWinSize = "resizable=yes,location=no,menubar=no,toolbar=no,status=no,width=100,height=100"; // ウィンドウオプション
+    myWinSize = "resizable=yes,width=100,height=100"; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
     myWin.document.open();
@@ -196,7 +196,7 @@ function imgwin(imgno){
 
     myWin.onload = function(){
     	var img = myWin.document.getElementById("image");
-    	myWin.resizeTo(img.width, img.height);
+    	myWin.resizeTo(img.width + 20, img.height + 20);
     };
 }
 
