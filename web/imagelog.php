@@ -198,7 +198,7 @@ function imgwin(imgno){
 
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
-		  img = data;
+		  img.src = data;
 		});
 
     myXX = img.width; // ウィンドウ横幅
