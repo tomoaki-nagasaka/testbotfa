@@ -117,10 +117,10 @@ $(function() {
 	    formatters: {
 	        "image": function($column, $row) {
 	              return "<img class='table-img' src='getimage.php?id=" + $row.no + "' />";
-	         }
+	         },
 	        "zoom": function($column, $row) {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
-	        	return "<button type=\"button\" >画像拡大</button> ";
+	        	return "<button type='button' >画像拡大</button> ";
              }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
