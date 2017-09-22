@@ -213,13 +213,15 @@ function imgwin(imgno){
     myWin.document.write( "<title>", "拡大表示" , "</title>" );
     myWin.document.write( "</head>" );
     myWin.document.write( "<body style='margin:0px;padding:0px'>" );
-    myWin.document.write( "<img src='getimage.php?id=" + imgno + "'>" );
+    myWin.document.write( "<img src='getimage.php?id=" + imgno + "' id='image'>" );
     myWin.document.write( "</body>" );
     myWin.document.write( "</html>" );
     myWin.document.close();
 
     //alert("クリックされた" + imgno);
     //window.open(img, "imgwindow", "width=866,height=580");
+
+    img = $('#image');
 
     alert("myXX:" + img.width + " myYY:" + img.height);
 }
