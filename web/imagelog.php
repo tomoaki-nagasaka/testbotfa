@@ -120,7 +120,7 @@ $(function() {
 	         },
 	        "zoom": function($column, $row) {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
-	        	return "<button type='button' >画像拡大</button> ";
+	        	return "<button type='button' onClick='window.open('" + getimage.php?id=$row.no + "','','width=250,height=100,');'>画像拡大</button> ";
              }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
