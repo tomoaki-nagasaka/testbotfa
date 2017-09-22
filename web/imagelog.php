@@ -121,7 +121,7 @@ $(function() {
 	        "zoom": function($column, $row) {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
 	        	//return "<Form><input type='button' value='画像拡大' onClick='window.open('" + getimage.php?id=$row.no + "','test','width=250,height=100,');'></Form> ";
-	        	return "<Form><input type='button' value='画像拡大' ></Form> ";
+	        	return "<Form><input type='button' value='画像拡大' onclick='imgwin('1')'></Form> ";
              }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
@@ -177,6 +177,10 @@ function drow() {
 	}
 }
 
+function imgwin(img){
+    //window.open("images/"+img, "imgwindow", "width=866,height=580");
+    window.open("index.php", "imgwindow", "width=866,height=580");
+}
 
 </script>
 </body>
