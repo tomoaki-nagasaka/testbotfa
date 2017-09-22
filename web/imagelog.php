@@ -198,7 +198,7 @@ function imgwin(imgno){
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
-		  alert("myXX:" + img.naturalWidth + " myYY:" + img.naturalHeight);
+		  alert("myXX:" + img.width + " myYY:" + img.height);
 		});
 
     myXX = img.width; // ウィンドウ横幅
@@ -220,6 +220,8 @@ function imgwin(imgno){
 
     //alert("クリックされた" + imgno);
     //window.open(img, "imgwindow", "width=866,height=580");
+
+    alert("myXX:" + img.width + " myYY:" + img.height);
 }
 
 </script>
