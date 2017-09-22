@@ -180,7 +180,7 @@ function drow() {
 
 function imgwin(imgno){
     var img = new Image();
-    alert("myXX:" + img.width + " myYY:" + myYY);
+    alert("myXX:" + img.width + " myYY:" + img.height);
     /*
     $.ajax({
 		type: "GET",
@@ -203,7 +203,7 @@ function imgwin(imgno){
 
     myXX = img.width; // ウィンドウ横幅
     myYY = img.height; // ウィンドウ縦幅
-    alert("myXX:" + img.width + " myYY:" + myYY);
+    alert("myXX:" + img.width + " myYY:" + img.height);
     myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
