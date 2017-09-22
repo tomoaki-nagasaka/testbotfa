@@ -212,7 +212,7 @@ function imgwin(imgno){
     myWin.document.write( "<title>", "拡大表示" , "</title>" );
     myWin.document.write( "</head>" );
     myWin.document.write( "<body style='margin:0px;padding:0px'>" );
-    myWin.document.write( "<img src='getimage.php?id=" + $row.no + "'>" );
+    myWin.document.write( "<img src='getimage.php?id=" + imgno + "'>" );
     myWin.document.write( "</body>" );
     myWin.document.write( "</html>" );
     myWin.document.close();
