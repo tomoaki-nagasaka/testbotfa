@@ -198,7 +198,7 @@ function imgwin(imgno){
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
-		  alert("myXX:" + img.width + " myYY:" + img.height);
+		  alert("myXX:" + img.naturalWidth + " myYY:" + img.naturalHeight);
 		});
 
     myXX = img.width; // ウィンドウ横幅
