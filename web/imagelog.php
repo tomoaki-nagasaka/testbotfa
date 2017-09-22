@@ -179,7 +179,7 @@ function drow() {
 
 function imgwin(img){
     //window.open("images/"+img, "imgwindow", "width=866,height=580");
-    var myRet = confirm("選択行を削除しますか？");
+    alert("クリックされた");
     //window.open("index.php", "imgwindow", "width=866,height=580");
 }
 
