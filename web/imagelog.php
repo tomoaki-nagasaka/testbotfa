@@ -201,9 +201,7 @@ function imgwin(imgno){
 		  alert("myXX:" + img.width + " myYY:" + img.height);
 		});
 
-	img.bind("load",function(){
-		alert("myXX:" + img.width + " myYY:" + img.height);
-	});
+
 
     myXX = img.width; // ウィンドウ横幅
     myYY = img.height; // ウィンドウ縦幅
@@ -221,9 +219,6 @@ function imgwin(imgno){
     myWin.document.write( "</body>" );
     myWin.document.write( "</html>" );
     myWin.document.close();
-
-    //alert("クリックされた" + imgno);
-    //window.open(img, "imgwindow", "width=866,height=580");
 }
 
 </script>
