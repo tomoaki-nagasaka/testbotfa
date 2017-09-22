@@ -179,9 +179,8 @@ function drow() {
 }
 
 function imgwin(imgno){
-    //window.open("images/"+img, "imgwindow", "width=866,height=580");
-    var successFlg = true;
     var img = new Image();
+    alert("myXX:" + img.width + " myYY:" + myYY);
     /*
     $.ajax({
 		type: "GET",
@@ -199,11 +198,12 @@ function imgwin(imgno){
     */
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
+		  alert(data);
 		});
 
     myXX = img.width; // ウィンドウ横幅
     myYY = img.height; // ウィンドウ縦幅
-    alert("myXX:" + myXX + " myYY:" + myYY);
+    alert("myXX:" + img.width + " myYY:" + myYY);
     myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
