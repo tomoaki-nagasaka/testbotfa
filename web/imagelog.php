@@ -201,6 +201,10 @@ function imgwin(imgno){
 		  alert("myXX:" + img.width + " myYY:" + img.height);
 		});
 
+	img.bind("load",function(){
+		alert("myXX:" + img.width + " myYY:" + img.height);
+	});
+
     myXX = img.width; // ウィンドウ横幅
     myYY = img.height; // ウィンドウ縦幅
     //alert("myXX:" + img.width + " myYY:" + img.height);
@@ -220,10 +224,6 @@ function imgwin(imgno){
 
     //alert("クリックされた" + imgno);
     //window.open(img, "imgwindow", "width=866,height=580");
-
-    img = $('#image');
-
-    alert("myXX:" + img.width + " myYY:" + img.height);
 }
 
 </script>
