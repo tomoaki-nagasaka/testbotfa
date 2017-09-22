@@ -194,9 +194,9 @@ function imgwin(imgno){
     myWin.document.write( "</html>" );
     myWin.document.close();
 
-    myWin.onload = function(){
+    myWin.onpageshow = function(){
     	var img = myWin.document.getElementById("image");
-    	myWin.resizeTo(img.width + 100, img.height + 100);
+    	myWin.resizeTo(img.width + 70, img.height + 80);
     };
 }
 
