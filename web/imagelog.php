@@ -194,8 +194,8 @@ function imgwin(imgno){
 			successFlg = false;
 		}
 	);
-    //alert("クリックされた");
-    window.open(img, "imgwindow", "width=866,height=580");
+    alert("クリックされた");
+    //window.open(img, "imgwindow", "width=866,height=580");
 }
 
 </script>
