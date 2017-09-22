@@ -201,8 +201,8 @@ function imgwin(imgno){
 		  img = data;
 		});
 
-    alert("クリックされた" + imgno);
-    //window.open(img, "imgwindow", "width=866,height=580");
+    //alert("クリックされた" + imgno);
+    window.open(img, "imgwindow", "width=866,height=580");
 }
 
 </script>
