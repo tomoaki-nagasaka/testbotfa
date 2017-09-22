@@ -195,18 +195,19 @@ function imgwin(imgno){
 		}
 	);
 
-    */
+
 	$.get("getimage.php", {id: imgno} ,function(data){
 		  img.src = data;
 		  //alert("myXX:" + img.width + " myYY:" + img.height);
 		});
+    */
 
 
-
-    myXX = img.width; // ウィンドウ横幅
-    myYY = img.height; // ウィンドウ縦幅
+    //myXX = img.width; // ウィンドウ横幅
+    //myYY = img.height; // ウィンドウ縦幅
     //alert("myXX:" + img.width + " myYY:" + img.height);
-    myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
+    //myWinSize = "resizable=yes,width=" + myXX + ",height=" + myYY; // ウィンドウオプション
+    myWinSize = "resizable=yes,width=100,height=100"; // ウィンドウオプション
     myWin = window.open("" , "imgwindow" , myWinSize); // ウィンドウを開く
 
     myWin.document.open();
