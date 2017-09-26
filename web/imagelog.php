@@ -159,7 +159,7 @@ function drow() {
 		for (var i = 0; i < rowIds.length; i++){
 			$.ajax({
 				type: "POST",
-				url: "botlogdel.php",
+				url: "imagedel.php",
 				data: "no=" + rowIds[i],
 			}).then(
 				function(){
