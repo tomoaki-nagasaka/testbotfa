@@ -61,7 +61,7 @@ if ($link) {
 		//echo "<img class='table-img' src='https://placeholdit.imgix.net/~text?txtsize=23&bg=F44336&txtclr=ffffff&w=50&h=50'/>";
 		echo "</td>";
 		$bunrui = "";
-		switch ($row[5]){
+		switch (trim($row[5])){
 			//燃えるゴミ
 			case "burnable":
 				$bunrui = "可燃ゴミ";
@@ -84,8 +84,8 @@ if ($link) {
 				break;
 		}
 		echo "<td>";
-		//echo $bunrui;
-		echo $row[5];
+		echo $bunrui;
+		//echo $row[5];
 		echo "</td>";
 		echo "<td>";
 		echo $row[4];
