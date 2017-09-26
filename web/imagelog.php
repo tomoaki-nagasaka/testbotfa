@@ -84,7 +84,8 @@ if ($link) {
 				break;
 		}
 		echo "<td>";
-		echo $bunrui;
+		//echo $bunrui;
+		echo $row[5];
 		echo "</td>";
 		echo "<td>";
 		echo $row[4];
