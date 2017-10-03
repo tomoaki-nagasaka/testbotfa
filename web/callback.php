@@ -77,6 +77,10 @@ if(!$bl_isNumeric){
 
 if($eventType == "follow"){
 	$resmess = "こんにちは。\n行政市のすいか太郎です。\nまずは画面下の問い合わせメニューから、ご希望のメニューを選択してくださいね～";
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
 	/*
 	$response_format_text = [
 			"type" => "template",
