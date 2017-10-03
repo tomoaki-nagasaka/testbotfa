@@ -35,6 +35,9 @@ $userID = $jsonObj->{"events"}[0]->{"source"}->{"userId"};
 $resmess = "";
 //画像判定
 $imageflg = false;
+//DB更新可否フラグ
+$dbupdateflg = true;
+
 
 //DB接続
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
@@ -73,7 +76,8 @@ if(!$bl_isNumeric){
 }
 
 if($eventType == "follow"){
-	$resmess = "こんにちは。\n行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～";
+	$resmess = "こんにちは。\n行政市のすいか太郎です。\nまずは画面下の問い合わせメニューから、ご希望のメニューを選択してくださいね～";
+	/*
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
@@ -107,6 +111,8 @@ if($eventType == "follow"){
 					]
 			]
 	];
+	*/
+	$dbupdateflg = false;
 	goto lineSend;
 }
 
@@ -274,25 +280,6 @@ if($type != "text"){
 	exit;
 }
 
-//山口スペシャル開始
-if($text == "私が投票できる場所はどこ。"){
-	$resmess = "あなたの住所を教えてください。";
-	$response_format_text = [
-			"type" => "text",
-			"text" => $resmess
-	];
-	goto lineSend;
-}
-if($text == "立川市曙町2丁目です。"){
-	$resmess = "あなたの投票所は立川小学校です。\nまた、７月１９日から２５日までは市役所本庁、立川公民館で期日前投票ができます。";
-	$response_format_text = [
-			"type" => "text",
-			"text" => $resmess
-	];
-	goto lineSend;
-}
-
-//山口スペシャル終了
 
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify?text=".$text;
 //$url = "https://gateway.watson-j.jp/natural-language-classifier/api/v1/classifiers/".$classfier."/classify";
@@ -484,24 +471,26 @@ if (!$link) {
 			error_log("インサートに失敗しました。".pg_last_error());
 		}
 	}else{
-		if(strlen($text) > 200){
-			$text = mb_substr($text,0,199,"utf-8");
-		}
-		if(strlen($resmess) > 200){
-			$resmess= mb_substr($resmess,0,199,"utf-8");
-		}
-		//シングルコーテーションを除去
-		$Utext= str_replace("'","",$Utext);
-		$resmess = str_replace("'","",$resmess);
-		$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
-		$result_flag = pg_query($sql);
-		if (!$result_flag) {
-			error_log("インサートに失敗しました。".pg_last_error());
-		}
-		$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
-		$result_flag = pg_query($sql);
-		if (!$result_flag) {
-			error_log("アップデートに失敗しました。".pg_last_error());
+		if($dbupdateflg){
+			if(strlen($text) > 200){
+				$text = mb_substr($text,0,199,"utf-8");
+			}
+			if(strlen($resmess) > 200){
+				$resmess= mb_substr($resmess,0,199,"utf-8");
+			}
+			//シングルコーテーションを除去
+			$Utext= str_replace("'","",$Utext);
+			$resmess = str_replace("'","",$resmess);
+			$sql = "INSERT INTO botlog (time, userid, contents, return) VALUES ('{$tdate}','{$userID}','{$Utext}','{$resmess}')";
+			$result_flag = pg_query($sql);
+			if (!$result_flag) {
+				error_log("インサートに失敗しました。".pg_last_error());
+			}
+			$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
+			$result_flag = pg_query($sql);
+			if (!$result_flag) {
+				error_log("アップデートに失敗しました。".pg_last_error());
+			}
 		}
 	}
 }
