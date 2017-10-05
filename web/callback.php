@@ -117,6 +117,8 @@ if($shorimode == "01" or $shorimode == "04"){
 	$json = json_decode($jsonString, true);
 	$conversation_id = $json["context"]["conversation_id"];
 	$resmess= $json["output"]["text"][0];
+	//改行コードを置き換え
+	$resmess = str_replace("\\n","\n",$resmess);
 	$conversation_node = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
 	error_log("$conversation_node=".$conversation_node);
 	if ($link) {
@@ -349,6 +351,7 @@ goto lineSend;
 PROC04:
 
 //LT問い合わせ
+/*TODO 多言語対応は保留
 $bl_isNumeric = false;
 $Ltext = $text;
 if (is_numeric($Ltext)) {
@@ -379,6 +382,7 @@ if(!$bl_isNumeric){
 		}
 	}
 }
+*/
 
 
 
@@ -550,11 +554,14 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
+/*TODO 多言語対応は保留
 //日本語以外の場合は翻訳
 if($language != "ja"){
 	$data = array('text' => $resmess, 'source' => 'ja', 'target' => $language);
 	$resmess = callWatsonLT2();
 }
+*/
+
 //改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
 
