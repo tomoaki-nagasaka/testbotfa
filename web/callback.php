@@ -108,7 +108,7 @@ if($text == "図書検索"){
 if($text == "その他のお問い合わせ"){
 	$shorimode = "04";
 	//$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
-	$data = array('input' => array("text" => $text));
+	$data = array('input' => array("text" => "初回発話"));
 }
 if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
