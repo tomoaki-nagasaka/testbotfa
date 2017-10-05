@@ -108,7 +108,7 @@ if($text == "その他のお問い合わせ"){
 	$shorimode = "04";
 	//$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
 }
-if($shorimode == "01" or "04"){
+if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
 	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
 	$data = array('input' => array("text" => $text));
@@ -117,6 +117,7 @@ if($shorimode == "01" or "04"){
 	$conversation_id = $json["context"]["conversation_id"];
 	$resmess= $json["output"]["text"][0];
 	$conversation_node = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
+	error_log("$conversation_node=".$conversation_node);
 	if ($link) {
 		$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
 		if (pg_num_rows($result) == 0) {
