@@ -125,6 +125,10 @@ if($shorimode != ""){
 		}
 	}
 	$dbupdateflg = false;
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
 	goto lineSend;
 }
 
