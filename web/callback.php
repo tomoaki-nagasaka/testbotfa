@@ -7,6 +7,7 @@ $tdate = date("YmdHis");
 $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 $classfier = getenv('CLASSFIER');
 $workspace_id = getenv('CVS_WORKSPASE_ID');
+$workspace_id_ken = getenv('CVS_WORKSPASE_ID_KEN');
 $username = getenv('CVS_USERNAME');
 $password = getenv('CVS_PASS');
 $db_host =  getenv('DB_HOST');
@@ -93,7 +94,7 @@ $link = pg_connect($conn);
 //処理モード変更時
 if($text == "健診相談"){
 	$shorimode = "01";
-	$resmess = "現在準備中です。他のメニューを選択してください。";
+	$workspace_id = $workspace_id_ken;
 }
 if($text == "ごみの分別"){
 	$shorimode = "02";
@@ -105,8 +106,30 @@ if($text == "図書検索"){
 }
 if($text == "その他のお問い合わせ"){
 	$shorimode = "04";
-	$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
+	//$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
 }
+if($shorimode == "01" or "04"){
+	//CVSの初回呼び出し
+	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
+	$data = array('input' => array("text" => $text));
+	$jsonString = callWatson();
+	$json = json_decode($jsonString, true);
+	$conversation_id = $json["context"]["conversation_id"];
+	$resmess= $json["output"]["text"][0];
+	$conversation_node = $json["context"]["system"]["dialog_stack"][0]["dialog_node"];
+	if ($link) {
+		$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
+		if (pg_num_rows($result) == 0) {
+			$sql = "INSERT INTO cvsdata (userid, conversationid, dnode, time) VALUES ('{$userID}','{$conversation_id}','{$conversation_node}','{$tdate}')";
+			$result_flag = pg_query($sql);
+		}else{
+			error_log("データあり");
+			$sql = "UPDATE cvsdata SET conversationid = '{$conversation_id}', dnode = '{$conversation_node}', time = '{$tdate}' WHERE userid = '{$userID}'";
+			$result_flag = pg_query($sql);
+		}
+	}
+}
+
 if($shorimode != ""){
 	if ($link) {
 		$result = pg_query("SELECT userid FROM userinfo WHERE userid = '{$userID}' ");
@@ -182,6 +205,7 @@ switch ($shorimode){
 
 //健診相談
 PROC01:
+/*
 $resmess = "現在準備中です。他のメニューを選択してください。";
 $response_format_text = [
 		"type" => "text",
@@ -189,6 +213,9 @@ $response_format_text = [
 ];
 $dbupdateflg = false;
 goto lineSend;
+*/
+$workspace_id = $workspace_id_ken;
+goto PROC04;
 
 //ゴミ分別
 PROC02:
@@ -420,52 +447,13 @@ $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$wor
 
 //$data = array("text" => $text);
 $data = array('input' => array("text" => $text));
-/*
-$data["context"] = array("conversation_id" => "",
-      "system" => array("dialog_stack" => array(array("dialog_node" => "")),
-      "dialog_turn_counter" => 1,
-      "dialog_request_counter" => 1));
-
-$curl = curl_init($url);
-
-$options = array(
-    CURLOPT_HTTPHEADER => array(
-     'Content-Type: application/json',
-    ),
-    CURLOPT_USERPWD => $username . ':' . $password,
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => json_encode($data),
-    CURLOPT_RETURNTRANSFER => true,
-);
-
-curl_setopt_array($curl, $options);
-$jsonString = curl_exec($curl);
-*/
 
 if ($link) {
 	$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
-	if (pg_num_rows($result) == 0) {
-		error_log("データなし");
-		$jsonString = callWatson();
-		$json = json_decode($jsonString, true);
-		$conversation_id = $json["context"]["conversation_id"];
-		$conversation_node = "root";
-		$sql = "INSERT INTO cvsdata (userid, conversationid, dnode, time) VALUES ('{$userID}','{$conversation_id}','{$conversation_node}','{$tdate}')";
-		$result_flag = pg_query($sql);
-	}else{
-		error_log("データあり");
-		$row = pg_fetch_row($result);
-		$conversation_id = $row[1];
-		$conversation_node= $row[2];
-		$conversation_time= $row[3];
-		$timelag = $tdate - $conversation_time;
-		if($timelag > 1000){
-			$jsonString = callWatson();
-			$json = json_decode($jsonString, true);
-			$conversation_id = $json["context"]["conversation_id"];
-			$conversation_node = "root";
-		}
-	}
+	$row = pg_fetch_row($result);
+	$conversation_id = $row[1];
+	$conversation_node= $row[2];
+	$conversation_time= $row[3];
 }
 
 $data["context"] = array("conversation_id" => $conversation_id,
