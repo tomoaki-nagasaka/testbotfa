@@ -95,6 +95,7 @@ $link = pg_connect($conn);
 if($text == "健診相談"){
 	$shorimode = "01";
 	$workspace_id = $workspace_id_ken;
+	$data = array('input' => array("text" => "健診相談"));
 }
 if($text == "ごみの分別"){
 	$shorimode = "02";
@@ -107,11 +108,11 @@ if($text == "図書検索"){
 if($text == "その他のお問い合わせ"){
 	$shorimode = "04";
 	//$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
+	$data = array('input' => array("text" => $text));
 }
 if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
 	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
-	$data = array('input' => array("text" => $text));
 	$jsonString = callWatson();
 	$json = json_decode($jsonString, true);
 	$conversation_id = $json["context"]["conversation_id"];
