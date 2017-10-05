@@ -37,11 +37,283 @@ $resmess = "";
 $imageflg = false;
 //DB更新可否フラグ
 $dbupdateflg = true;
+//処理モード
+$shorimode = "";
 
+//友達追加時の処理
+if($eventType == "follow"){
+	$resmess = "こんにちは。\n行政市のすいか太郎です。\nまずは画面下の問い合わせメニューから、ご希望のメニューを選択してくださいね～";
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+	/*
+	 $response_format_text = [
+	 "type" => "template",
+	 "altText" => "this is a buttons template",
+	 "template" => [
+	 "type" => "buttons",
+	 "thumbnailImageUrl" => "https://" . $_SERVER['SERVER_NAME'] . "/gyosei.jpg",
+	 "title" => "行政市役所",
+	 //"text" => "こんにちは。行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～\nまずは、下のメニュータブをタップしてみてください",
+	 "text" => $resmess,
+	 "actions" => [
+	 [
+	 "type" => "postback",
+	 "label" => "LINEで質問",
+	 "data" => "action=qaline"
+	 ],
+	 [
+	 "type" => "postback",
+	 "label" => "証明書",
+	 "data" => "action=shomei"
+	 ],
+	 [
+	 "type" => "postback",
+	 "label" => "施設予約",
+	 "data" => "action=shisetsu"
+	 ],
+	 [
+	 "type" => "postback",
+	 "label" => "ご利用方法",
+	 "data" => "action=riyo"
+	 ]
+	 ]
+	 ]
+	 ];
+	 */
+	$dbupdateflg = false;
+	goto lineSend;
+}
 
 //DB接続
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
+
+//処理モード変更時
+if($text == "健診相談"){
+	$shorimode = "01";
+	$resmess = "現在準備中です。他のメニューを選択してください。";
+}
+if($text == "ごみの分別"){
+	$shorimode = "02";
+	$resmess = "捨てたいごみの写真を撮って送ってください。まわりに何も写真の方が正確に判定できますよ～♪";
+}
+if($text == "図書検索"){
+	$shorimode = "03";
+	$resmess = "現在準備中です。他のメニューを選択してください。";
+}
+if($text == "その他のお問い合わせ"){
+	$shorimode = "04";
+	$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
+}
+if($shorimode != ""){
+	if ($link) {
+		$result = pg_query("SELECT userid FROM userinfo WHERE userid = '{$userID}' ");
+		if (pg_num_rows($result) == 0) {
+			$sql = "INSERT INTO userinfo (userid, sposi, time) VALUES ('{$userID}','{$shorimode}','{$tdate}')";
+			$result_flag = pg_query($sql);
+			if (!$result_flag) {
+				error_log("インサートに失敗しました。".pg_last_error());
+			}
+		}else{
+			$sql = "UPDATE userinfo SET sposi = '{$shorimode}', time = '{$tdate}' WHERE userid = '{$userID}'";
+			$result_flag = pg_query($sql);
+			if (!$result_flag) {
+				error_log("アップデートに失敗しました。".pg_last_error());
+			}
+		}
+	}
+	$dbupdateflg = false;
+	goto lineSend;
+}
+
+//処理モード確認
+if ($link) {
+	$result = pg_query("SELECT sposi,time FROM userinfo WHERE userid = '{$userID}' ");
+	if (pg_num_rows($result) == 0) {
+		$shorimode = "00";
+	}else{
+		$row = pg_fetch_row($result);
+		$timelag = $tdate - $row[1];
+		if($timelag > 1000){
+			$shorimode = "00";
+		}else{
+			$shorimode = $row[0];
+		}
+	}
+	if($shorimode == "00" ){
+		$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、メニューを選択してください。";
+		$response_format_text = [
+				"type" => "text",
+				"text" => $resmess
+		];
+		$dbupdateflg = false;
+		goto lineSend;
+	}
+}
+
+//処理モードによる振り分け
+switch ($shorimode){
+	//健診相談
+	case "01":
+		goto PROC01;
+		break;
+	//ゴミ分別
+	case "02":
+		goto PROC02;
+		break;
+	//図書検索
+	case "03":
+		goto PROC03;
+		break;
+	//その他
+	case "04":
+		goto PROC04;
+		break;
+	//その他
+	default:
+		break;
+}
+
+//健診相談
+PROC01:
+$resmess = "現在準備中です。他のメニューを選択してください。";
+$response_format_text = [
+		"type" => "text",
+		"text" => $resmess
+];
+$dbupdateflg = false;
+goto lineSend;
+
+//ゴミ分別
+PROC02:
+if($type == "image"){
+	$imageflg = true;
+	/*
+	 $imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
+	 $api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
+	 $response = file_get_contents($api_url.'?api_key='.$VRkey.'&url='.$imagedata.'&version=2016-05-20');
+	 $json = json_decode ( $response, true );
+	 */
+
+	$messageId = $jsonObj->{"events"} [0]->{"message"}->{"id"};
+
+	// 画像ファイルのバイナリ取得
+	$ch = curl_init ( "https://api.line.me/v2/bot/message/" . $messageId . "/content" );
+	curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
+			'Content-Type: application/json; charser=UTF-8',
+			'Authorization: Bearer ' . $accessToken
+	) );
+	$bimage = curl_exec ( $ch );
+
+	$arrTime = explode('.',microtime(true));
+	$fdate = date("His").$arrTime[1];
+	$fname = "/tmp/".$fdate.".jpg";
+
+	//画像を保存
+	$fp = fopen($fname, 'wb');
+	if ($fp){
+		if (flock($fp, LOCK_EX)){
+			if (fwrite($fp,  $bimage) === FALSE){
+				error_log('ファイル書き込みに失敗しました');
+			}else{
+				error_log('ファイルに書き込みました');
+			}
+
+			flock($fp, LOCK_UN);
+		}else{
+			error_log('ファイルロックに失敗しました');
+		}
+	}
+
+	fclose($fp);
+
+	//$data= $result;
+
+	$cfile = new CURLFile($fname,"image/jpeg","line_image.jpg");
+	$data = array("images_file" => $cfile,"classifier_ids" => "garbage_481154027", "threshold" => 0.6);
+	if($data == false){
+		error_log("イメージ変換エラー");
+	}
+	$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
+	$jsonString = callVisual_recognition();
+	$json = json_decode($jsonString, true);
+
+	//画像ファイル削除
+	unlink($fname);
+
+	//分類
+	$class = $json ["images"][0]["classifiers"] [0]["classes"][0]["class"];
+	//確信度
+	$scoer = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] * 100;
+
+	/*
+	 error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
+	 error_log($json ["images"][0]["classifiers"] [0]["classifier_id"]);
+	 error_log($json ["images"][0]["classifiers"] [1]["classifier_id"]);
+	 error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
+	 error_log($json ["images"][0]["image"]);
+	 error_log("classifiers:".count($json ["images"][0]["classifiers"]));
+	 error_log("images:".count($json ["images"]));
+	 error_log("images_processed:".$json ["images_processed"]);
+	 */
+
+	//$resmess = $scoer. "％の確率で「".$class."」です";
+	$setsuzoku = "";
+	if($scoer < 80){
+		$setsuzoku = "おそらく";
+	}
+	switch ($class){
+		//燃えるゴミ
+		case "burnable":
+			$resmess = "送信された画像は、".$setsuzoku."『可燃ゴミ』です。可燃ゴミの日に出してください。\n※確信度：".$scoer."％";
+			break;
+			//燃えないゴミ
+		case "nonburnable":
+			$resmess = "送信された画像は、".$setsuzoku."『不燃ゴミ』です。不燃ゴミの日に出してください。\n※確信度：".$scoer."％";
+			break;
+			//資源ゴミ
+		case "resource":
+			$resmess = "送信された画像は、".$setsuzoku."『資源ゴミ』です。資源ゴミの日に出してください。\n※確信度：".$scoer."％";
+			break;
+			//粗大ゴミ
+		case "bulky":
+			$resmess = "送信された画像は、".$setsuzoku."『粗大ゴミ』です。粗大ゴミの日に出してください。\n※確信度：".$scoer."％";
+			break;
+			//その他
+		default:
+			$resmess = "分類できませんでした。お手数ですが、042-521-4192 までお問い合わせください。";
+			break;
+	}
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+}else{
+	$resmess = "捨てたいごみの写真を撮って送ってください。まわりに何も写真の方が正確に判定できますよ～♪";
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+	$dbupdateflg = false;
+}
+
+goto lineSend;
+
+//図書検索
+PROC03:
+$resmess = "現在準備中です。他のメニューを選択してください。";
+$response_format_text = [
+		"type" => "text",
+		"text" => $resmess
+];
+$dbupdateflg = false;
+goto lineSend;
+
+//その他の問い合わせ
+PROC04:
 
 //LT問い合わせ
 $bl_isNumeric = false;
@@ -75,50 +347,7 @@ if(!$bl_isNumeric){
 	}
 }
 
-if($eventType == "follow"){
-	$resmess = "こんにちは。\n行政市のすいか太郎です。\nまずは画面下の問い合わせメニューから、ご希望のメニューを選択してくださいね～";
-	$response_format_text = [
-			"type" => "text",
-			"text" => $resmess
-	];
-	/*
-	$response_format_text = [
-			"type" => "template",
-			"altText" => "this is a buttons template",
-			"template" => [
-					"type" => "buttons",
-					"thumbnailImageUrl" => "https://" . $_SERVER['SERVER_NAME'] . "/gyosei.jpg",
-					"title" => "行政市役所",
-					//"text" => "こんにちは。行政市のすいか太郎です。\n皆さんの質問にはりきってお答えしますよ～\nまずは、下のメニュータブをタップしてみてください",
-					"text" => $resmess,
-					"actions" => [
-							[
-									"type" => "postback",
-									"label" => "LINEで質問",
-									"data" => "action=qaline"
-							],
-							[
-									"type" => "postback",
-									"label" => "証明書",
-									"data" => "action=shomei"
-							],
-							[
-									"type" => "postback",
-									"label" => "施設予約",
-									"data" => "action=shisetsu"
-							],
-							[
-									"type" => "postback",
-									"label" => "ご利用方法",
-									"data" => "action=riyo"
-							]
-					]
-			]
-	];
-	*/
-	$dbupdateflg = false;
-	goto lineSend;
-}
+
 
 if($eventType == "postback"){
 	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
@@ -175,113 +404,9 @@ if($eventType == "postback"){
 
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
-	if($type == "image"){
-		$imageflg = true;
-		/*
-		$imagedata = "https://" . $_SERVER ['SERVER_NAME'] . "/gyosei.jpg";
-		$api_url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify';
-		$response = file_get_contents($api_url.'?api_key='.$VRkey.'&url='.$imagedata.'&version=2016-05-20');
-		$json = json_decode ( $response, true );
-		*/
-
-		$messageId = $jsonObj->{"events"} [0]->{"message"}->{"id"};
-
-		// 画像ファイルのバイナリ取得
-		$ch = curl_init ( "https://api.line.me/v2/bot/message/" . $messageId . "/content" );
-		curl_setopt ( $ch, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt ( $ch, CURLOPT_HTTPHEADER, array (
-				'Content-Type: application/json; charser=UTF-8',
-				'Authorization: Bearer ' . $accessToken
-		) );
-		$bimage = curl_exec ( $ch );
-
-		$arrTime = explode('.',microtime(true));
-		$fdate = date("His").$arrTime[1];
-		$fname = "/tmp/".$fdate.".jpg";
-
-		//画像を保存
-		$fp = fopen($fname, 'wb');
-		if ($fp){
-			if (flock($fp, LOCK_EX)){
-				if (fwrite($fp,  $bimage) === FALSE){
-					error_log('ファイル書き込みに失敗しました');
-				}else{
-					error_log('ファイルに書き込みました');
-				}
-
-				flock($fp, LOCK_UN);
-			}else{
-				error_log('ファイルロックに失敗しました');
-			}
-		}
-
-		fclose($fp);
-
-		//$data= $result;
-
-		$cfile = new CURLFile($fname,"image/jpeg","line_image.jpg");
-		$data = array("images_file" => $cfile,"classifier_ids" => "garbage_481154027", "threshold" => 0.6);
-		if($data == false){
-			error_log("イメージ変換エラー");
-		}
-		$url = 'https://gateway-a.watsonplatform.net/visual-recognition/api/v3/classify?api_key='.$VRkey.'&version=2016-05-20';
-		$jsonString = callVisual_recognition();
-		$json = json_decode($jsonString, true);
-
-		//画像ファイル削除
-		unlink($fname);
-
-		//分類
-		$class = $json ["images"][0]["classifiers"] [0]["classes"][0]["class"];
-		//確信度
-		$scoer = $json ["images"][0]["classifiers"] [0]["classes"][0]["score"] * 100;
-
-		/*
-		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["class"]);
-		error_log($json ["images"][0]["classifiers"] [0]["classifier_id"]);
-		error_log($json ["images"][0]["classifiers"] [1]["classifier_id"]);
-		error_log($json ["images"][0]["classifiers"] [0]["classes"][0]["score"]);
-		error_log($json ["images"][0]["image"]);
-		error_log("classifiers:".count($json ["images"][0]["classifiers"]));
-		error_log("images:".count($json ["images"]));
-		error_log("images_processed:".$json ["images_processed"]);
-		*/
-
-		//$resmess = $scoer. "％の確率で「".$class."」です";
-		$setsuzoku = "";
-		if($scoer < 80){
-			$setsuzoku = "おそらく";
-		}
-		switch ($class){
-			//燃えるゴミ
-			case "burnable":
-				$resmess = "送信された画像は、".$setsuzoku."『可燃ゴミ』です。可燃ゴミの日に出してください。\n※確信度：".$scoer."％";
-				break;
-			//燃えないゴミ
-			case "nonburnable":
-				$resmess = "送信された画像は、".$setsuzoku."『不燃ゴミ』です。不燃ゴミの日に出してください。\n※確信度：".$scoer."％";
-				break;
-			//資源ゴミ
-			case "resource":
-				$resmess = "送信された画像は、".$setsuzoku."『資源ゴミ』です。資源ゴミの日に出してください。\n※確信度：".$scoer."％";
-				break;
-			//粗大ゴミ
-			case "bulky":
-				$resmess = "送信された画像は、".$setsuzoku."『粗大ゴミ』です。粗大ゴミの日に出してください。\n※確信度：".$scoer."％";
-				break;
-			//その他
-			default:
-				$resmess = "分類できませんでした。お手数ですが、042-521-4192 までお問い合わせください。";
-				break;
-		}
-		$response_format_text = [
-				"type" => "text",
-				"text" => $resmess
-		];
-
-		goto lineSend;
-	}
-	exit;
+	$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
+	$dbupdateflg = false;
+	goto lineSend;
 }
 
 
