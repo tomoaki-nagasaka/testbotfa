@@ -127,6 +127,7 @@ if($shorimode == "01"){
 			$row = pg_fetch_row($result);
 			$sex = $row[2];
 			$age = $row[3];
+			error_log("送信データ：".$age."の".$sex);
 			$data = array('input' => array("text" => $age."の".$sex));
 			if($sex == "" or $age == 0){
 				$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
