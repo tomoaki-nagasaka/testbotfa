@@ -5,7 +5,7 @@
 <title>属性登録</title>
 </head>
 <body>
-<p>年齢を選択してください</p>
+<p>年齢を選択してください。</p>
 <select name="age">
 <option value="" selected>年齢</option>
 <option value="0">0歳</option>
@@ -145,6 +145,7 @@
 <option value="南地区">南地区</option>
 <option value="北地区">北地区</option>
 </select>
+<br>
 <input type="button" onclick="clear()'" value="クリア" />
 <input type="button" onclick="update()" value="更新" />
 <input type="button" onclick="del()" value="削除" />
@@ -160,12 +161,15 @@ $user = $_POST['user'];
 
 //クリア
 function clear(){
-
+	document.age.selectedIndex = 0;
+	document.sex.selectedIndex = 0;
+	document.region.selectedIndex = 0;
 }
 
 //更新
 function update(){
-
+	alert("更新しました");
+	window.open('about:blank','_self').close();
 }
 
 //削除
