@@ -6,7 +6,7 @@
 </head>
 <body>
 <p>年齢を選択してください。</p>
-<select name="age">
+<select id="age">
 <option value="" selected>年齢</option>
 <option value="0">0歳</option>
 <option value="1">1歳</option>
@@ -131,13 +131,13 @@
 <option value="120">120歳</option>
 </select>
 <p>性別を選択してください。</p>
-<select name="sex">
+<select id="sex">
 <option value="" selected>性別</option>
 <option value="男">男性</option>
 <option value="女">女性</option>
 </select>
 <p>お住いの地域を選択してください。</p>
-<select name="region">
+<select id="region">
 <option value="" selected>地域</option>
 <option value="東地区">東地区</option>
 <option value="西地区">西地区</option>
@@ -161,10 +161,10 @@ $user = $_GET['user'];
 
 //クリア
 function clearform(){
-	alert(document.getElementsByName('age').value);
-	document.getElementsByName('age').selectedIndex = 0;
-	document.getElementsByName('sex').selectedIndex = 0;
-	document.getElementsByName('region').selectedIndex = 0;
+	alert(document.getElementById('age').value);
+	document.getElementById('age').selectedIndex = 0;
+	document.getElementById('sex').selectedIndex = 0;
+	document.getElementById('region').selectedIndex = 0;
 }
 
 //更新
