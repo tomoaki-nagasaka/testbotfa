@@ -161,10 +161,13 @@ $user = $_GET['user'];
 
 //クリア
 function clear(){
+	alert("押された");
+	/*
 	document.getElementsByName('age').selectedIndex = 0;
 	document.getElementsByName('sex').selectedIndex = 0;
 	document.getElementsByName('region').selectedIndex = 0;
 	alert(document.getElementsByName('age').selectedValue);
+	*/
 }
 
 //更新
