@@ -40,6 +40,10 @@ $imageflg = false;
 $dbupdateflg = true;
 //処理モード
 $shorimode = "";
+//年齢
+$age = "";
+//性別
+$sex = "";
 
 //友達追加時の処理
 if($eventType == "follow"){
@@ -113,6 +117,30 @@ if($text == "その他のお問い合わせ"){
 if($text == "属性登録"){
 	$shorimode = "00";
 	$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$userID;
+}
+//検診相談の場合は年齢、性別が登録されているかを確認
+if($shorimode == "01"){
+	if ($link) {
+		$result = pg_query("SELECT * FROM userid WHERE userid = '{$userID}'");
+		if (pg_num_rows($result) == 0) {
+			$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
+		}else{
+			$row = pg_fetch_row($result);
+			$sex = $row[2];
+			$age = $row[3];
+			if($sex == "" or $age == 0){
+				$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
+			}
+		}
+		if($resmess != ""){
+			$dbupdateflg = false;
+			$response_format_text = [
+					"type" => "text",
+					"text" => $resmess
+			];
+			goto lineSend;
+		}
+	}
 }
 if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
