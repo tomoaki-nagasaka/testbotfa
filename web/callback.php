@@ -110,6 +110,10 @@ if($text == "その他のお問い合わせ"){
 	//$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
 	$data = array('input' => array("text" => "初回発話"));
 }
+if($text == "属性登録"){
+	$shorimode = "00";
+	$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$userID;
+}
 if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
 	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";

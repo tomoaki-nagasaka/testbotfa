@@ -161,7 +161,6 @@ $user = $_GET['user'];
 
 //クリア
 function clearform(){
-	alert(document.getElementById('age').value);
 	document.getElementById('age').selectedIndex = 0;
 	document.getElementById('sex').selectedIndex = 0;
 	document.getElementById('region').selectedIndex = 0;
@@ -170,6 +169,7 @@ function clearform(){
 //更新
 function update(){
 	var user = <?php echo json_encode($user); ?>;
+	var age = document.getElementById('age').value
 	alert(user);
 	window.open('about:blank','_self').close();
 }
