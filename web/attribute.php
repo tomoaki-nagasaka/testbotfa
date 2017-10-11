@@ -161,7 +161,7 @@ $user = $_GET['user'];
 
 //クリア
 function clearform(){
-	alert(document.getElementsByName('age').selectedValue);
+	alert(document.getElementsByName('age').value);
 	document.getElementsByName('age').selectedIndex = 0;
 	document.getElementsByName('sex').selectedIndex = 0;
 	document.getElementsByName('region').selectedIndex = 0;
