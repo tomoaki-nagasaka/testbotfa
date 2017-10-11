@@ -158,6 +158,7 @@ $user = $_GET['user'];
 
 
 ?>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
 
 //クリア
@@ -171,13 +172,30 @@ function clearform(){
 function update(){
 	var user = <?php echo json_encode($user); ?>;
 	var age = document.getElementById('age').value
-	alert(user);
-	window.open('about:blank','_self').close();
+	var sex = document.getElementById('sex').value
+	var region = document.getElementById('region').value
+	$.ajax({
+		type: "POST",
+		url: "userinfoup.php",
+		data: {
+			"user" : user,
+			"age" : age,
+			"sex" : sex,
+			"region" : region
+		}
+	}).then(
+		function(){
+			alert("登録が完了しました。画面を閉じてください。");
+		},
+		function(){
+			alert("登録ができませんでした。");
+		}
+	);
 }
 
 //削除
 function del(){
-
+	alert("削除が完了しました。画面を閉じてください。");
 }
 </script>
 </body>
