@@ -99,7 +99,6 @@ $link = pg_connect($conn);
 if($text == "健診相談"){
 	$shorimode = "01";
 	$workspace_id = $workspace_id_ken;
-	$data = array('input' => array("text" => "健診相談"));
 }
 if($text == "ごみの分別"){
 	$shorimode = "02";
@@ -128,6 +127,7 @@ if($shorimode == "01"){
 			$row = pg_fetch_row($result);
 			$sex = $row[2];
 			$age = $row[3];
+			$data = array('input' => array("text" => $age."の".$sex));
 			if($sex == "" or $age == 0){
 				$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
 			}
