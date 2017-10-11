@@ -153,7 +153,7 @@
 <?php
 
 //引数
-$user = $_POST['user'];
+$user = $_GET['user'];
 
 
 ?>
@@ -161,14 +161,15 @@ $user = $_POST['user'];
 
 //クリア
 function clear(){
-	document.age.selectedIndex = 0;
-	document.sex.selectedIndex = 0;
-	document.region.selectedIndex = 0;
+	document.getElementsByTagName('age').selectedIndex = 0;
+	document.getElementsByTagName('sex').selectedIndex = 0;
+	document.getElementsByTagName('region').selectedIndex = 0;
 }
 
 //更新
 function update(){
-	alert("更新しました");
+	var user = <?php echo json_encode($user); ?>;
+	alert(user);
 	window.open('about:blank','_self').close();
 }
 
