@@ -20,7 +20,7 @@ $region= $_POST['region'];
 //error_log("user:".$user." age:".$age." sex:".$sex." region:".$region);
 
 if ($link) {
-	$result = pg_query("SELECT * FROM userid WHERE userid = '{$user}'");
+	$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$user}'");
 	if (pg_num_rows($result) == 0) {
 		$sql = "INSERT INTO userinfo (userid, sex, age, region) VALUES ('{$user}','{$sex}','{$age}','{$region}')";
 		$result_flag = pg_query($sql);

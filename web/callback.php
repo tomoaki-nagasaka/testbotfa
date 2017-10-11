@@ -121,7 +121,7 @@ if($text == "属性登録"){
 //検診相談の場合は年齢、性別が登録されているかを確認
 if($shorimode == "01"){
 	if ($link) {
-		$result = pg_query("SELECT * FROM userid WHERE userid = '{$userID}'");
+		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
 		if (pg_num_rows($result) == 0) {
 			$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
 		}else{
