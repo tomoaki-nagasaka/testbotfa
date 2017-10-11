@@ -146,7 +146,7 @@
 <option value="北地区">北地区</option>
 </select>
 <br>
-<input type="button" onclick="clear()'" value="クリア" />
+<input type="button" onclick="clear()" value="クリア" />
 <input type="button" onclick="update()" value="更新" />
 <input type="button" onclick="del()" value="削除" />
 
