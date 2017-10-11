@@ -161,9 +161,10 @@ $user = $_GET['user'];
 
 //クリア
 function clear(){
-	document.getElementsByTagName('age').selectedIndex = 0;
-	document.getElementsByTagName('sex').selectedIndex = 0;
-	document.getElementsByTagName('region').selectedIndex = 0;
+	document.getElementsByName('age').selectedIndex = 0;
+	document.getElementsByName('sex').selectedIndex = 0;
+	document.getElementsByName('region').selectedIndex = 0;
+	alert(document.getElementsByName('age').selectedValue);
 }
 
 //更新
