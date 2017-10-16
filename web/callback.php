@@ -495,6 +495,17 @@ if ($link) {
 	$conversation_time= $row[3];
 }
 
+error_log("CVノード:".$conversation_node);
+if($conversation_node == "初回"){
+	if ($link) {
+		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
+		$row = pg_fetch_row($result);
+		$sex = $row[2];
+		$age = $row[3];
+		$data = array('input' => array("text" => $age."の".$sex));
+	}
+}
+
 $data["context"] = array("conversation_id" => $conversation_id,
 		"system" => array("dialog_stack" => array(array("dialog_node" => $conversation_node)),
       "dialog_turn_counter" => 1,
