@@ -496,7 +496,7 @@ if ($link) {
 }
 
 error_log("CVノード:".$conversation_node);
-if($conversation_node == "初回"){
+if($conversation_node == "root"){
 	if ($link) {
 		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
 		$row = pg_fetch_row($result);
