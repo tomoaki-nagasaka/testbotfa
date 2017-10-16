@@ -96,7 +96,7 @@ $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_
 $link = pg_connect($conn);
 
 //処理モード変更時
-if($text == "健診相談"){
+if($text == "検診相談"){
 	$shorimode = "01";
 	$workspace_id = $workspace_id_ken;
 }
@@ -219,7 +219,7 @@ if ($link) {
 
 //処理モードによる振り分け
 switch ($shorimode){
-	//健診相談
+	//検診相談
 	case "01":
 		goto PROC01;
 		break;
@@ -240,7 +240,7 @@ switch ($shorimode){
 		break;
 }
 
-//健診相談
+//検診相談
 PROC01:
 /*
 $resmess = "現在準備中です。他のメニューを選択してください。";
