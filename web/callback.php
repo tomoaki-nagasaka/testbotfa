@@ -518,6 +518,12 @@ if($conversation_node == "root"){
 		$row = pg_fetch_row($result);
 		$sex = $row[2];
 		$age = $row[3];
+		if($sex == "1"){
+			$sex = "男";
+		}
+		if($sex == "2"){
+			$sex = "女";
+		}
 		$data = array('input' => array("text" => $age."の".$sex));
 	}
 }

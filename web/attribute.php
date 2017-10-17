@@ -8,7 +8,7 @@
 <body>
 <p>年齢を選択してください。</p>
 <select id="age">
-<option value="" selected>年齢</option>
+<option value="999" selected>年齢</option>
 <option value="0">0歳</option>
 <option value="1">1歳</option>
 <option value="2">2歳</option>
@@ -133,13 +133,13 @@
 </select>
 <p>性別を選択してください。</p>
 <select id="sex">
-<option value="" selected>性別</option>
+<option value="0" selected>性別</option>
 <option value="1">男性</option>
 <option value="2">女性</option>
 </select>
 <p>お住いの地域を選択してください。</p>
 <select id="region">
-<option value="" selected>地域</option>
+<option value="000" selected>地域</option>
 <option value="001">東地区</option>
 <option value="002">西地区</option>
 <option value="003">中地区</option>
