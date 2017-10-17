@@ -129,6 +129,12 @@ if($shorimode == "01" or $shorimode == "00"){
 			$sex = $row[2];
 			$age = $row[3];
 			$region = $row[4];
+			if($sex == "1"){
+				$sex = "男";
+			}
+			if($sex == "2"){
+				$sex = "女";
+			}
 			error_log("送信データ：".$age."の".$sex);
 			$data = array('input' => array("text" => $age."の".$sex));
 			if($sex == "" or $age == 0){
