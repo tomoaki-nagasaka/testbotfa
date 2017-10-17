@@ -174,7 +174,7 @@ $(function() {
 	region = param.substr(7,3);
 	age = Number(age);
 
-	alert("sex:" + sex + " age:" + age + " region:" + region);
+	//alert("sex:" + sex + " age:" + age + " region:" + region);
 
 	document.getElementById('age').value = age;
 	document.getElementById('sex').value = sex;
@@ -207,14 +207,27 @@ function update(){
 			alert("登録が完了しました。画面を閉じてください。");
 		},
 		function(){
-			alert("登録ができませんでした。");
+			alert("登録できませんでした。");
 		}
 	);
 }
 
 //削除
 function del(){
-	alert("削除が完了しました。画面を閉じてください。");
+	$.ajax({
+		type: "POST",
+		url: "userinfodel.php",
+		data: {
+			"user" : user
+		}
+	}).then(
+		function(){
+			alert("削除が完了しました。画面を閉じてください。");
+		},
+		function(){
+			alert("削除できませんでした。");
+		}
+	);
 }
 </script>
 </body>
