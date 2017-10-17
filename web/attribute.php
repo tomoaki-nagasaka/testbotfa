@@ -134,17 +134,17 @@
 <p>性別を選択してください。</p>
 <select id="sex">
 <option value="" selected>性別</option>
-<option value="男">男性</option>
-<option value="女">女性</option>
+<option value="1">男性</option>
+<option value="2">女性</option>
 </select>
 <p>お住いの地域を選択してください。</p>
 <select id="region">
 <option value="" selected>地域</option>
-<option value="東地区">東地区</option>
-<option value="西地区">西地区</option>
-<option value="中地区">中地区</option>
-<option value="南地区">南地区</option>
-<option value="北地区">北地区</option>
+<option value="001">東地区</option>
+<option value="002">西地区</option>
+<option value="003">中地区</option>
+<option value="004">南地区</option>
+<option value="005">北地区</option>
 </select>
 <br>
 <input type="button" onclick="clearform()" value="クリア" />
@@ -160,6 +160,26 @@ $user = $_GET['user'];
 ?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
+var param = "";
+var user = "";
+var age = "";
+var sex = "";
+var region = "";
+
+$(function() {
+	var param = <?php echo json_encode($user); ?>;
+	user = param.substr(0,1) + param.substr(2,1) + param.substr(6,1) + param.substr(10)
+	sex = param.substr(1,1);
+	age = param.substr(3,3);
+	region = param.substr(7,3);
+	age = Number(age);
+
+	alert("sex:" + sex + " age:" + age + " region:" + region);
+
+	document.getElementById('age').value = age;
+	document.getElementById('sex').value = sex;
+	document.getElementById('region').value = region;
+});
 
 //クリア
 function clearform(){
@@ -170,10 +190,9 @@ function clearform(){
 
 //更新
 function update(){
-	var user = <?php echo json_encode($user); ?>;
-	var age = document.getElementById('age').value
-	var sex = document.getElementById('sex').value
-	var region = document.getElementById('region').value
+	age = document.getElementById('age').value;
+	sex = document.getElementById('sex').value;
+	region = document.getElementById('region').value;
 	$.ajax({
 		type: "POST",
 		url: "userinfoup.php",

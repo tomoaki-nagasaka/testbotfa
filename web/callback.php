@@ -41,9 +41,11 @@ $dbupdateflg = true;
 //処理モード
 $shorimode = "";
 //年齢
-$age = "";
+$age = "999";
 //性別
-$sex = "";
+$sex = "0";
+//地域
+$region = "000";
 
 //友達追加時の処理
 if($eventType == "follow"){
@@ -115,10 +117,9 @@ if($text == "その他のお問い合わせ"){
 }
 if($text == "属性登録"){
 	$shorimode = "00";
-	$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$userID;
 }
-//検診相談の場合は年齢、性別が登録されているかを確認
-if($shorimode == "01"){
+//検診相談、属性登録の場合は年齢、性別が登録されているかを確認
+if($shorimode == "01" or $shorimode == "00"){
 	if ($link) {
 		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
 		if (pg_num_rows($result) == 0) {
@@ -127,6 +128,7 @@ if($shorimode == "01"){
 			$row = pg_fetch_row($result);
 			$sex = $row[2];
 			$age = $row[3];
+			$region = $row[4];
 			error_log("送信データ：".$age."の".$sex);
 			$data = array('input' => array("text" => $age."の".$sex));
 			if($sex == "" or $age == 0){
@@ -142,6 +144,18 @@ if($shorimode == "01"){
 			goto lineSend;
 		}
 	}
+}
+//属性登録のリンク生成
+if($shorimode == "00"){
+	if($age < 10){
+		$age = "00".$age;
+	}else{
+		if($age < 100){
+			$age = "0".$age;
+		}
+	}
+	$link = mb_substr($userID,0,1).$sex.mb_substr($userID,1,1).$age.mb_substr($userID,2,1).$region.mb_substr($userID,3);
+	$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$link;
 }
 if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
