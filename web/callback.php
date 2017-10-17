@@ -141,7 +141,9 @@ if($shorimode == "01" or $shorimode == "00"){
 					"type" => "text",
 					"text" => $resmess
 			];
-			goto lineSend;
+			if($shorimode == "01"){
+				goto lineSend;
+			}
 		}
 	}
 }
