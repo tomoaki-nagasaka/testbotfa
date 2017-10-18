@@ -454,7 +454,7 @@ if(!$bl_isNumeric){
 }
 */
 
-
+translationJa();
 
 if($eventType == "postback"){
 	$bData = $jsonObj->{"events"}[0]->{"postback"}->{"data"};
@@ -794,5 +794,14 @@ function translation(){
 	if($lang == "02"){
 		$data = array('text' => $resmess, 'source' => 'ja', 'target' => 'en');
 		$resmess = callWatsonLT2();
+	}
+}
+
+function translationJa(){
+	global $text,$lang,$data;
+	//日本語以外の場合は翻訳
+	if($lang == "02"){
+		$data = array('text' => $resmess, 'source' => 'en', 'target' => 'ja');
+		$text = callWatsonLT2();
 	}
 }
