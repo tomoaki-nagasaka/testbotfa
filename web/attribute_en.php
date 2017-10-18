@@ -180,7 +180,7 @@ $(function() {
 	region = param.substr(7,3);
 	age = Number(age);
 
-	alert("user:" + user);
+	//alert("param:" + param + " user:" + user);
 
 	document.getElementById('age').value = age;
 	document.getElementById('sex').value = sex;
@@ -189,7 +189,7 @@ $(function() {
 
 //言語選択
 function lchange(){
-	alert("param:" + param);
+	//alert("param:" + param);
 	if(document.getElementById('language').value == "01"){
 		location.href = "https://gyoseibot.herokuapp.com/attribute.php?user=" + param;
 	}
@@ -209,7 +209,6 @@ function update(){
 	age = document.getElementById('age').value;
 	sex = document.getElementById('sex').value;
 	region = document.getElementById('region').value;
-	alert("user:" + user);
 	$.ajax({
 		type: "POST",
 		url: "userinfoup.php",

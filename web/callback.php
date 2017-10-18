@@ -126,9 +126,9 @@ if($shorimode == "01" or $shorimode == "00"){
 			$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
 		}else{
 			$row = pg_fetch_row($result);
-			$sex = $row[2];
-			$age = $row[3];
-			$region = $row[4];
+			$sex = $row[3];
+			$age = $row[4];
+			$region = $row[5];
 			$sexN = "";
 			if($sex == "1"){
 				$sexN= "男";
@@ -524,8 +524,8 @@ if($conversation_node == "root" and $shorimode == "01"){
 	if ($link) {
 		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
 		$row = pg_fetch_row($result);
-		$sex = $row[2];
-		$age = $row[3];
+		$sex = $row[3];
+		$age = $row[4];
 		if($sex == "1"){
 			$sex = "男";
 		}
