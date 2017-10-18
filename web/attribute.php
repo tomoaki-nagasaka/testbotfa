@@ -190,8 +190,9 @@ $(function() {
 
 //言語選択
 function lchange(){
-	alert("言語変更");
-	location.href = "https://gyoseibot.herokuapp.com/";
+	if(document.getElementById('language').value == "02"){
+		location.href = "https://gyoseibot.herokuapp.com/attribute_en.php";
+	}
 }
 
 //クリア
