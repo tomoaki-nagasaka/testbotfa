@@ -174,7 +174,7 @@ var sex = "";
 var region = "";
 
 $(function() {
-	var param = <?php echo json_encode($user); ?>;
+	param = <?php echo json_encode($user); ?>;
 	user = param.substr(0,1) + param.substr(2,1) + param.substr(6,1) + param.substr(10)
 	sex = param.substr(1,1);
 	age = param.substr(3,3);
@@ -191,7 +191,7 @@ $(function() {
 //言語選択
 function lchange(){
 	if(document.getElementById('language').value == "02"){
-		location.href = "https://gyoseibot.herokuapp.com/attribute_en.php?user=" + user;
+		location.href = "https://gyoseibot.herokuapp.com/attribute_en.php?user=" + param;
 	}
 }
 
