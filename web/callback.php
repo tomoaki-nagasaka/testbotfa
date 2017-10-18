@@ -801,7 +801,7 @@ function translationJa(){
 	global $text,$lang,$data;
 	//日本語以外の場合は翻訳
 	if($lang == "02"){
-		$data = array('text' => $resmess, 'source' => 'en', 'target' => 'ja');
+		$data = array('text' => $text, 'source' => 'en', 'target' => 'ja');
 		$text = callWatsonLT2();
 	}
 }
