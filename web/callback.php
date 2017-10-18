@@ -49,6 +49,11 @@ $region = "000";
 //言語
 $lang = "01";
 
+
+//DB接続
+$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
+$link = pg_connect($conn);
+
 //属性情報の読み込み
 if ($link) {
 	$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
@@ -106,10 +111,6 @@ if($eventType == "follow"){
 	$dbupdateflg = false;
 	goto lineSend;
 }
-
-//DB接続
-$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
-$link = pg_connect($conn);
 
 //処理モード変更時
 if($text == "検診相談"){
