@@ -8,7 +8,7 @@
 <body>
 <p>言語を選択してください。</p>
 <p>Please select a language.</p>
-<select id="language">
+<select id="language" onChange="lchange()">
 <option value="99" selected>言語</option>
 <option value="01">日本語</option>
 <option value="02">English</option>
@@ -188,8 +188,15 @@ $(function() {
 	document.getElementById('region').value = region;
 });
 
+//言語選択
+function lchange(){
+	alert("言語変更");
+	location.href = "https://gyoseibot.herokuapp.com/";
+}
+
 //クリア
 function clearform(){
+	document.getElementById('language').selectedIndex = 0;
 	document.getElementById('age').selectedIndex = 0;
 	document.getElementById('sex').selectedIndex = 0;
 	document.getElementById('region').selectedIndex = 0;
