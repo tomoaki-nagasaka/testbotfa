@@ -191,7 +191,7 @@ $(function() {
 //言語選択
 function lchange(){
 	if(document.getElementById('language').value == "02"){
-		location.href = "https://gyoseibot.herokuapp.com/attribute_en.php";
+		location.href = "https://gyoseibot.herokuapp.com/attribute_en.php?user=" + user;
 	}
 }
 
