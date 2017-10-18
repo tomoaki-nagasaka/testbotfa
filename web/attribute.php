@@ -168,6 +168,7 @@ $user = $_GET['user'];
 <script>
 var param = "";
 var user = "";
+var lang = "";
 var age = "";
 var sex = "";
 var region = "";
@@ -204,6 +205,7 @@ function clearform(){
 
 //更新
 function update(){
+	lang = document.getElementById('language').value;
 	age = document.getElementById('age').value;
 	sex = document.getElementById('sex').value;
 	region = document.getElementById('region').value;
@@ -212,6 +214,7 @@ function update(){
 		url: "userinfoup.php",
 		data: {
 			"user" : user,
+			"lang" : lang,
 			"age" : age,
 			"sex" : sex,
 			"region" : region

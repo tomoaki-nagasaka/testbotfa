@@ -12,6 +12,7 @@ $link = pg_connect($conn);
 
 //引数
 $user = $_POST['user'];
+$lang = $_POST['lang'];
 $age= $_POST['age'];
 $sex= $_POST['sex'];
 $region= $_POST['region'];
@@ -22,13 +23,13 @@ $region= $_POST['region'];
 if ($link) {
 	$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$user}'");
 	if (pg_num_rows($result) == 0) {
-		$sql = "INSERT INTO userinfo (userid, sex, age, region) VALUES ('{$user}','{$sex}','{$age}','{$region}')";
+		$sql = "INSERT INTO userinfo (userid, language, sex, age, region) VALUES ('{$user}','{$lang}','{$sex}','{$age}','{$region}')";
 		$result_flag = pg_query($sql);
 		if (!$result_flag) {
 			error_log("インサートに失敗しました。".pg_last_error());
 		}
 	}else{
-		$sql = "UPDATE userinfo SET sex = '{$sex}', age = '{$age}' , region = '{$region}' WHERE userid = '{$user}'";
+		$sql = "UPDATE userinfo SET language = '{$lang}', sex = '{$sex}', age = '{$age}' , region = '{$region}' WHERE userid = '{$user}'";
 		$result_flag = pg_query($sql);
 		if (!$result_flag) {
 			error_log("アップデートに失敗しました。".pg_last_error());
