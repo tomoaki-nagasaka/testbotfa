@@ -104,7 +104,7 @@ if($text == "検診相談"){
 }
 if($text == "ごみの分別"){
 	$shorimode = "02";
-	$resmess = "捨てたいごみの写真を撮って送ってください。まわりに何も写真の方が正確に判定できますよ～♪";
+	$resmess = "捨てたいごみの写真を撮って送ってください。まわりに何もない写真の方が正確に判定できますよ～♪";
 }
 if($text == "図書検索"){
 	$shorimode = "03";
@@ -517,8 +517,9 @@ if ($link) {
 	$conversation_time= $row[3];
 }
 
-error_log("CVノード:".$conversation_node);
-if($conversation_node == "root"){
+//error_log("CVノード:".$conversation_node);
+//検診相談でrootの場合は年齢、性別をセット
+if($conversation_node == "root" and $shorimode == "01"){
 	if ($link) {
 		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
 		$row = pg_fetch_row($result);
