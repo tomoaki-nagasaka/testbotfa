@@ -129,14 +129,15 @@ if($shorimode == "01" or $shorimode == "00"){
 			$sex = $row[2];
 			$age = $row[3];
 			$region = $row[4];
+			$sexN = "";
 			if($sex == "1"){
-				$sex = "男";
+				$sexN= "男";
 			}
 			if($sex == "2"){
-				$sex = "女";
+				$sexN= "女";
 			}
-			error_log("送信データ：".$age."の".$sex);
-			$data = array('input' => array("text" => $age."の".$sex));
+			error_log("送信データ：".$age."の".$sexN);
+			$data = array('input' => array("text" => $age."の".$sexN));
 			if($sex == "" or $age == 0){
 				$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
 			}
