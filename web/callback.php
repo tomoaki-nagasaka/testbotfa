@@ -194,7 +194,7 @@ if($shorimode != ""){
 	if ($link) {
 		$result = pg_query("SELECT userid FROM userinfo WHERE userid = '{$userID}' ");
 		if (pg_num_rows($result) == 0) {
-			$sql = "INSERT INTO userinfo (userid, sposi, time) VALUES ('{$userID}','{$shorimode}','{$tdate}')";
+			$sql = "INSERT INTO userinfo (userid, sex, age, region, sposi, time) VALUES ('{$userID}','0','999','000','{$shorimode}','{$tdate}')";
 			$result_flag = pg_query($sql);
 			if (!$result_flag) {
 				error_log("インサートに失敗しました。".pg_last_error());
