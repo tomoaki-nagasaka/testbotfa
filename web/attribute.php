@@ -6,6 +6,13 @@
 <title>属性登録</title>
 </head>
 <body>
+<p>言語を選択してください。</p>
+<p>Please select a language.</p>
+<select id="language">
+<option value="99" selected>言語</option>
+<option value="01">日本語</option>
+<option value="02">English</option>
+</select>
 <p>年齢を選択してください。</p>
 <select id="age">
 <option value="999" selected>年齢</option>
