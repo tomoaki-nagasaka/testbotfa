@@ -9,8 +9,7 @@
 <p>言語を選択してください。</p>
 <p>Please select a language.</p>
 <select id="language" onChange="lchange()">
-<option value="99" selected>言語</option>
-<option value="01">日本語</option>
+<option value="01" selected>日本語</option>
 <option value="02">English</option>
 </select>
 <p>年齢を選択してください。</p>

@@ -8,9 +8,8 @@
 <body>
 <p>Please select a language.</p>
 <select id="language" onChange="lchange()">
-<option value="99" selected>Language</option>
 <option value="01">日本語</option>
-<option value="02">English</option>
+<option value="02" selected>English</option>
 </select>
 <p>Please select your age.</p>
 <select id="age">
