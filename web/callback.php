@@ -46,6 +46,20 @@ $age = "999";
 $sex = "0";
 //地域
 $region = "000";
+//言語
+$lang = "01";
+
+//属性情報の読み込み
+if ($link) {
+	$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
+	if (pg_num_rows($result) != 0) {
+		$row = pg_fetch_row($result);
+		$lang = $row[2];
+		$sex = $row[3];
+		$age = $row[4];
+		$region = $row[5];
+	}
+}
 
 //友達追加時の処理
 if($eventType == "follow"){
@@ -120,37 +134,25 @@ if($text == "属性登録"){
 }
 //検診相談、属性登録の場合は年齢、性別が登録されているかを確認
 if($shorimode == "01" or $shorimode == "00"){
-	if ($link) {
-		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
-		if (pg_num_rows($result) == 0) {
-			$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
-		}else{
-			$row = pg_fetch_row($result);
-			$sex = $row[3];
-			$age = $row[4];
-			$region = $row[5];
-			$sexN = "";
-			if($sex == "1"){
-				$sexN= "男";
-			}
-			if($sex == "2"){
-				$sexN= "女";
-			}
-			error_log("送信データ：".$age."の".$sexN);
-			$data = array('input' => array("text" => $age."の".$sexN));
-			if($sex == "" or $age == 0){
-				$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
-			}
-		}
-		if($resmess != ""){
-			$dbupdateflg = false;
-			$response_format_text = [
-					"type" => "text",
-					"text" => $resmess
-			];
-			if($shorimode == "01"){
-				goto lineSend;
-			}
+	if($sex == "1"){
+		$sexN= "男";
+	}
+	if($sex == "2"){
+		$sexN= "女";
+	}
+	error_log("送信データ：".$age."の".$sexN);
+	$data = array('input' => array("text" => $age."の".$sexN));
+	if($sex == "0" or $age == "999"){
+		$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、属性登録を選択して、年齢と性別を登録してください。";
+	}
+	if($resmess != ""){
+		$dbupdateflg = false;
+		$response_format_text = [
+				"type" => "text",
+				"text" => $resmess
+		];
+		if($shorimode == "01"){
+			goto lineSend;
 		}
 	}
 }
@@ -164,7 +166,11 @@ if($shorimode == "00"){
 		}
 	}
 	$link = mb_substr($userID,0,1).$sex.mb_substr($userID,1,1).$age.mb_substr($userID,2,1).$region.mb_substr($userID,3);
-	$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$link;
+	if($lang == "02"){
+		$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute_en.php?user=".$link;
+	}else{
+		$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$link;
+	}
 }
 if($shorimode == "01" or $shorimode == "04"){
 	//CVSの初回呼び出し
@@ -521,19 +527,13 @@ if ($link) {
 //error_log("CVノード:".$conversation_node);
 //検診相談でrootの場合は年齢、性別をセット
 if($conversation_node == "root" and $shorimode == "01"){
-	if ($link) {
-		$result = pg_query("SELECT * FROM userinfo WHERE userid = '{$userID}'");
-		$row = pg_fetch_row($result);
-		$sex = $row[3];
-		$age = $row[4];
-		if($sex == "1"){
-			$sex = "男";
-		}
-		if($sex == "2"){
-			$sex = "女";
-		}
-		$data = array('input' => array("text" => $age."の".$sex));
+	if($sex == "1"){
+		$sexN= "男";
 	}
+	if($sex == "2"){
+		$sexN= "女";
+	}
+	$data = array('input' => array("text" => $age."の".$sexN));
 }
 
 $data["context"] = array("conversation_id" => $conversation_id,
@@ -628,14 +628,6 @@ if($resmess== "usrChoise_2"){
 	goto lineSend;
 }
 
-/*TODO 多言語対応は保留
-//日本語以外の場合は翻訳
-if($language != "ja"){
-	$data = array('text' => $resmess, 'source' => 'ja', 'target' => $language);
-	$resmess = callWatsonLT2();
-}
-*/
-
 //改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
 
@@ -645,6 +637,11 @@ $response_format_text = [
 ];
 
 lineSend:
+//日本語以外の場合は翻訳
+if($lang == "02"){
+	$data = array('text' => $resmess, 'source' => 'ja', 'target' => 'en');
+	$resmess = callWatsonLT2();
+}
 $post_data = [
 	"replyToken" => $replyToken,
 	"messages" => [$response_format_text]
