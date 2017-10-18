@@ -69,6 +69,7 @@ if ($link) {
 //友達追加時の処理
 if($eventType == "follow"){
 	$resmess = "こんにちは。\n行政市のすいか太郎です。\nまずは画面下の問い合わせメニューから、ご希望のメニューを選択してくださいね～";
+	translation();
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess
@@ -148,6 +149,7 @@ if($shorimode == "01" or $shorimode == "00"){
 	}
 	if($resmess != ""){
 		$dbupdateflg = false;
+		translation();
 		$response_format_text = [
 				"type" => "text",
 				"text" => $resmess
@@ -215,6 +217,7 @@ if($shorimode != ""){
 		}
 	}
 	$dbupdateflg = false;
+	translation();
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess
@@ -238,6 +241,7 @@ if ($link) {
 	}
 	if($shorimode == "00" ){
 		$resmess = "申し訳ありませんが、先に画面下の「問い合わせメニュー」より、メニューを選択してください。";
+		translation();
 		$response_format_text = [
 				"type" => "text",
 				"text" => $resmess
@@ -385,12 +389,14 @@ if($type == "image"){
 			$resmess = "分類できませんでした。お手数ですが、042-521-4192 までお問い合わせください。";
 			break;
 	}
+	translation();
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess
 	];
 }else{
 	$resmess = "捨てたいごみの写真を撮って送ってください。まわりに何も写真の方が正確に判定できますよ～♪";
+	translation();
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess
@@ -403,6 +409,7 @@ goto lineSend;
 //図書検索
 PROC03:
 $resmess = "現在準備中です。他のメニューを選択してください。";
+translation();
 $response_format_text = [
 		"type" => "text",
 		"text" => $resmess
@@ -495,6 +502,7 @@ if($eventType == "postback"){
 		$resmess = "もし、個人番号カードを持っていればコンビニで住民票が発行できて便利ですよ。\n他に質問はありますか？";
 	}
 
+	translation();
 	$response_format_text = [
 			"type" => "text",
 			"text" => $resmess
@@ -566,6 +574,7 @@ $conversation_node = $json["context"]["system"]["dialog_stack"][0]["dialog_node"
 
 if($resmess== "usrChoise_1"){
 	$resmess = "お調べしますので、あなたのお住いの地区名を下記から選択してください。";
+	translation();
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
@@ -601,6 +610,7 @@ if($resmess== "usrChoise_1"){
 
 if($resmess== "usrChoise_2"){
 	$resmess = "住民票の写しは行政市役所本庁舎、行政第一支所、行政第二支所の窓口で発行できます。\n受付時間は、月曜日～金曜日の午前8時30分～午後5時です。\nちなみに個人番号カードはお持ちですか？";
+	translation();
 	$response_format_text = [
 			"type" => "template",
 			"altText" => "this is a buttons template",
@@ -632,17 +642,14 @@ if($resmess== "usrChoise_2"){
 //改行コードを置き換え
 $resmess = str_replace("\\n","\n",$resmess);
 
+translation();
 $response_format_text = [
     "type" => "text",
 	"text" => $resmess
 ];
 
 lineSend:
-//日本語以外の場合は翻訳
-if($lang == "02"){
-	$data = array('text' => $resmess, 'source' => 'ja', 'target' => 'en');
-	$resmess = callWatsonLT2();
-}
+
 $post_data = [
 	"replyToken" => $replyToken,
 	"messages" => [$response_format_text]
@@ -779,4 +786,13 @@ function callVisual_recognition(){
 
 	curl_setopt_array ( $curl, $options );
 	return curl_exec ( $curl );
+}
+
+function translation(){
+	global $resmess,$lang,$data;
+	//日本語以外の場合は翻訳
+	if($lang == "02"){
+		$data = array('text' => $resmess, 'source' => 'ja', 'target' => 'en');
+		$resmess = callWatsonLT2();
+	}
 }
