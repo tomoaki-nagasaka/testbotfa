@@ -418,11 +418,12 @@ $response_format_text = [
 */
 $response_format_text = [
 		"type" => "template",
+		"altText" => "this is a carousel template",
 		"template" => [
 		"type" => "carousel",
 		"columns" => [
 		[
-			"thumbnailImageUrl" => "http://www.city.tachikawa.lg.jp/koenryokuchi/kanko/kanko/kankospot/koen/documents/0000000131_0000004164.jpg",
+			"thumbnailImageUrl" => "https://" . $_SERVER['SERVER_NAME'] . "/gyosei.jpg",
 			"title" =>  "諏訪の森公園",
 			"text" =>  "東京都立川市柴崎町1丁目",
 			"actions" => [
@@ -434,7 +435,7 @@ $response_format_text = [
 			]
 		],
 		[
-			"thumbnailImageUrl" =>  "http://www.city.tachikawa.lg.jp/sangyoshinko/kanko/kanko/kankospot/koen/images/0000000075_0000033119l.jpg",
+			"thumbnailImageUrl" =>  "https://" . $_SERVER['SERVER_NAME'] . "/gyosei.jpg",
 			"title" =>  "国営昭和記念公園",
 			"text" =>  "東京都立川市緑町3173",
 				"actions" => [
