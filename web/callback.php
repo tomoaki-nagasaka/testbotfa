@@ -487,7 +487,8 @@ if($type == "location"){
 	curl_setopt($curlAED, CURLOPT_SSL_VERIFYPEER, false);
 	$responseAED = curl_exec($curlAED);
 	$responseAED = "{\"naiyo\":".$responseAED."}";
-	$resultAED = json_decode($responseAED, true);
+	//$resultAED = json_decode($responseAED, true);
+	$resultAED = json_decode($responseAED);
 
 	error_log(json_last_error());
 	error_log("返却された文字列:".$responseAED);
