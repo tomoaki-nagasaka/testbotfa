@@ -490,10 +490,6 @@ if($type == "location"){
 	//$resultAED = json_decode($responseAED, true);
 	$resultAED = json_decode($responseAED);
 
-	error_log(json_last_error());
-	error_log("返却された文字列:".$responseAED);
-	error_log("施設名:".$resultAED->{"naiyo"}[0]->{"LocationName"});
-
 	$AEDkyori = $resultAED->{"naiyo"}[0]->{"DIST"};
 	$AEDsisetsu = $resultAED->{"naiyo"}[0]->{"LocationName"};
 	$AEDjusho = $resultAED->{"naiyo"}[0]->{"AddressArea"};
