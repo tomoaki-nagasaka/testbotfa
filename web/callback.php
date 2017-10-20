@@ -134,6 +134,10 @@ if($text == "その他のお問い合わせ"){
 if($text == "属性登録"){
 	$shorimode = "00";
 }
+if($text == "AED検索"){
+	$shorimode = "05";
+	$resmess = "最寄りのAEDを検索します。\n位置情報を送信してください。";
+}
 //検診相談、属性登録の場合は年齢、性別が登録されているかを確認
 if($shorimode == "01" or $shorimode == "00"){
 	if($sex == "1"){
@@ -268,6 +272,10 @@ switch ($shorimode){
 	//その他
 	case "04":
 		goto PROC04;
+		break;
+	//AED検索
+	case "05":
+		goto PROC05;
 		break;
 	//その他
 	default:
@@ -460,6 +468,37 @@ $response_format_text = [
 		]
 ];
 
+$dbupdateflg = false;
+goto lineSend;
+
+//AED検索
+PROC05:
+if($type == "location"){
+	//位置情報の取得
+	$latitude= $jsonObj->{"events"}[0]->{"message"}->{"latitude"};
+	$longitude= $jsonObj->{"events"}[0]->{"message"}->{"longitude"};
+
+	$curlAED = curl_init("https://aed.azure-mobile.net/api/AEDSearch?lat=" . $latitude . "&lng=" . $longitude);
+	curl_setopt($curlAED, CURLOPT_CUSTOMREQUEST, 'GET');
+	curl_setopt($curlAED, CURLOPT_RETURNTRANSFER, true);
+	curl_setopt($curlAED, CURLOPT_SSL_VERIFYPEER, false);
+	$responseAED = curl_exec($curlAED);
+	$resultAED = json_decode($responseAED, true);
+
+	$AEDkyori = $resultAED->{"DIST"};
+	$AEDsisetsu = $resultAED->{"LocationName"};
+	$AEDjusho = $resultAED->{"AddressArea"};
+
+	$resmess = "最寄りのAEDは、『".$AEDsisetsu."』にあります。現在地から直線距離で".$AEDkyori."mです。下のリンクから地図を表示できます。\n\nhttps://www.google.com/maps/place/".$AEDjusho;
+
+}else{
+	$resmess = "申し訳ありませんが、位置情報を送信してください。";
+}
+translation();
+$response_format_text = [
+		"type" => "text",
+		"text" => $resmess
+];
 $dbupdateflg = false;
 goto lineSend;
 
