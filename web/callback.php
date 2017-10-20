@@ -487,6 +487,7 @@ if($type == "location"){
 	$responseAED = curl_exec($curlAED);
 	$resultAED = json_decode($responseAED[0], true);
 
+	error_log("返却された文字列:".$responseAED);
 	error_log("返却された配列:".count($responseAED));
 
 	$AEDkyori = $resultAED->{"DIST"};
