@@ -478,6 +478,8 @@ if($type == "location"){
 	$latitude= $jsonObj->{"events"}[0]->{"message"}->{"latitude"};
 	$longitude= $jsonObj->{"events"}[0]->{"message"}->{"longitude"};
 
+	error_log("latitude:".$latitude." longitude:".$longitude);
+
 	$curlAED = curl_init("https://aed.azure-mobile.net/api/AEDSearch?lat=" . $latitude . "&lng=" . $longitude);
 	curl_setopt($curlAED, CURLOPT_CUSTOMREQUEST, 'GET');
 	curl_setopt($curlAED, CURLOPT_RETURNTRANSFER, true);
@@ -485,9 +487,9 @@ if($type == "location"){
 	$responseAED = curl_exec($curlAED);
 	$resultAED = json_decode($responseAED, true);
 
-	$AEDkyori = $resultAED->{"DIST"};
-	$AEDsisetsu = $resultAED->{"LocationName"};
-	$AEDjusho = $resultAED->{"AddressArea"};
+	$AEDkyori = $resultAED[0]->{"DIST"};
+	$AEDsisetsu = $resultAED[0]->{"LocationName"};
+	$AEDjusho = $resultAED[0]->{"AddressArea"};
 
 	$resmess = "最寄りのAEDは、『".$AEDsisetsu."』にあります。現在地から直線距離で".$AEDkyori."mです。下のリンクから地図を表示できます。\n\nhttps://www.google.com/maps/place/".$AEDjusho;
 
