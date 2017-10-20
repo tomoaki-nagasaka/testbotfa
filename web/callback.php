@@ -21,6 +21,7 @@ $VRkey = getenv('VR_KEY');
 
 //ユーザーからのメッセージ取得
 $json_string = file_get_contents('php://input');
+error_log("LINEからの戻り:".$json_string);
 $jsonObj = json_decode($json_string);
 
 $type = $jsonObj->{"events"}[0]->{"message"}->{"type"};
