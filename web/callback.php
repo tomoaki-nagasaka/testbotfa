@@ -21,7 +21,7 @@ $VRkey = getenv('VR_KEY');
 
 //ユーザーからのメッセージ取得
 $json_string = file_get_contents('php://input');
-error_log("LINEからの戻り:".$json_string);
+//error_log("LINEからの戻り:".$json_string);
 $jsonObj = json_decode($json_string);
 
 $type = $jsonObj->{"events"}[0]->{"message"}->{"type"};
@@ -489,6 +489,7 @@ if($type == "location"){
 	$responseAED = "{\"naiyo\":".$responseAED."}";
 	$resultAED = json_decode($responseAED, true);
 
+	error_log(json_last_error());
 	error_log("返却された文字列:".$responseAED);
 	error_log("施設名:".$resultAED->{"naiyo"}[0]->{"LocationName"});
 
