@@ -485,11 +485,13 @@ if($type == "location"){
 	curl_setopt($curlAED, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curlAED, CURLOPT_SSL_VERIFYPEER, false);
 	$responseAED = curl_exec($curlAED);
-	$resultAED = json_decode($responseAED, true);
+	$resultAED = json_decode($responseAED[0], true);
 
-	$AEDkyori = $resultAED[0]->{"DIST"};
-	$AEDsisetsu = $resultAED[0]->{"LocationName"};
-	$AEDjusho = $resultAED[0]->{"AddressArea"};
+	error_log("返却された配列:".count($responseAED));
+
+	$AEDkyori = $resultAED->{"DIST"};
+	$AEDsisetsu = $resultAED->{"LocationName"};
+	$AEDjusho = $resultAED->{"AddressArea"};
 
 	$resmess = "最寄りのAEDは、『".$AEDsisetsu."』にあります。現在地から直線距離で".$AEDkyori."mです。下のリンクから地図を表示できます。\n\nhttps://www.google.com/maps/place/".$AEDjusho;
 
