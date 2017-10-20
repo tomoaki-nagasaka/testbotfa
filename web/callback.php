@@ -431,6 +431,11 @@ $response_format_text = [
 				"type" =>  "uri",
 				"label" => "詳細",
 				"uri" =>  "http://www.city.tachikawa.lg.jp/koenryokuchi/kanko/kanko/kankospot/koen/suwanomori.html"
+			],
+			[
+					"type" =>  "uri",
+					"label" => "地図",
+					"uri" =>  "https://www.google.co.jp/maps/place/%E8%AB%8F%E8%A8%AA%E3%81%AE%E6%A3%AE%E5%85%AC%E5%9C%92/@35.6964168,139.4042302,17z/data=!3m1!4b1!4m5!3m4!1s0x6018e1780899fc1d:0xfe48e5da3b5e3ee0!8m2!3d35.6964125!4d139.4064189"
 			]
 			]
 		],
@@ -443,7 +448,12 @@ $response_format_text = [
 				"type" =>  "uri",
 				"label" =>  "詳細",
 				"uri" =>  "http://www.showakinen-koen.jp/"
-			]
+			],
+				[
+						"type" =>  "uri",
+						"label" => "地図",
+						"uri" =>  "https://www.google.co.jp/maps/place/%E5%9B%BD%E5%96%B6%E6%98%AD%E5%92%8C%E8%A8%98%E5%BF%B5%E5%85%AC%E5%9C%92/@35.6964383,139.3976641,15z/data=!4m8!1m2!2m1!1z5Zu95Za25pit5ZKM6KiY5b-15YWs5ZyS!3m4!1s0x6018e1ace14bd40b:0xd7da4db683b53513!8m2!3d35.7033599!4d139.4078879"
+				]
 			]
 		]
 		]
