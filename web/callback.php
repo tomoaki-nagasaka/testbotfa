@@ -489,7 +489,7 @@ if($type == "location"){
 	$resultAED = json_decode($responseAED, true);
 
 	error_log("返却された文字列:".$responseAED);
-	error_log("返却された配列:".count($responseAED));
+	error_log("施設名:".$resultAED->{"naiyo"}[0]->{"LocationName"});
 
 	$AEDkyori = $resultAED->{"naiyo"}[0]->{"DIST"};
 	$AEDsisetsu = $resultAED->{"naiyo"}[0]->{"LocationName"};
