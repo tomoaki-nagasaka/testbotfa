@@ -16,7 +16,8 @@
 <input id="jusho" maxlength="14" placeholder="000-0000-0000"  style="width: 100px;">
 <br><br>
 <p style="display:inline;">ジャンル１</p>
-<select id="j1">
+<select id="j1"  onChange="j1change()">
+<option value="" selected></option>
 <option value="グルメ" selected>グルメ</option>
 <option value="レジャー・観光・スポーツ">レジャー・観光・スポーツ</option>
 <option value="ホテル・旅館">ホテル・旅館</option>
@@ -29,9 +30,6 @@
 <br><br>
 <p style="display:inline;">ジャンル２</p>
 <select id="j2">
-<option value="0" selected>性別</option>
-<option value="1">男性</option>
-<option value="2">女性</option>
 </select>
 <br><br>
 <p style="display:inline;">　　　緯度</p>
@@ -83,11 +81,73 @@ $(function() {
 	document.getElementById('region').value = region;
 });
 
-//言語選択
-function lchange(){
-	if(document.getElementById('language').value == "02"){
-		location.href = "https://gyoseibot.herokuapp.com/attribute_en.php?user=" + param;
+//ジャンル選択
+function j1change(){
+	var select = document.getElementById('j2');
+	while (0 < select.childNodes.length) {
+		select.removeChild(select.childNodes[0]);
 	}
+
+	switch (document.getElementById('j1').value){
+	  case "グルメ":
+		  j1_s1();
+	    break;
+	  case "レジャー・観光・スポーツ":
+		  j1_s2();
+	    break;
+	  case "ホテル・旅館":
+		  j1_s3();
+	    break;
+	  case "駅・バス・車・交通":
+		  j1_s4();
+	    break;
+	  case "公共・病院・銀行・学校":
+		  j1_s5();
+	    break;
+	  case "ショッピング":
+		  j1_s6();
+	    break;
+	  case "生活・不動産":
+		  j1_s7();
+	    break;
+	  case "ビジネス・企業間取引":
+		  j1_s8();
+	    break;
+	  default:
+	    break;
+	}
+}
+
+function j1_s1(){
+	var select = document.getElementById('j2');
+
+	var option = document.createElement('option');
+	option.setAttribute('value', '和食');
+	var text = document.createTextNode('和食');
+	option.appendChild(text);
+	select.appendChild(option);
+
+	option = document.createElement('option');
+	option.setAttribute('value', '寿司');
+	text = document.createTextNode('寿司');
+	option.appendChild(text);
+	select.appendChild(option);
+}
+
+function j1_s2(){
+	var select = document.getElementById('j2');
+
+	var option = document.createElement('option');
+	option.setAttribute('value', 'レジャー施設');
+	var text = document.createTextNode('レジャー施設');
+	option.appendChild(text);
+	select.appendChild(option);
+
+	option = document.createElement('option');
+	option.setAttribute('value', '美術館');
+	text = document.createTextNode('美術館');
+	option.appendChild(text);
+	select.appendChild(option);
 }
 
 //クリア
