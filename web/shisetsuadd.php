@@ -88,39 +88,35 @@ function j1change(){
 		select.removeChild(select.childNodes[0]);
 	}
 
+	var janru = [];
 	switch (document.getElementById('j1').value){
 	  case "グルメ":
-		  j1_s1();
+		  janru = ["和食","寿司","洋食"];
 	    break;
 	  case "レジャー・観光・スポーツ":
-		  j1_s2();
+		  janru = ["レジャー施設","美術館","温泉"];
 	    break;
 	  case "ホテル・旅館":
-		  j1_s3();
+		  janru = ["ホテル","旅館","民宿"];
 	    break;
 	  case "駅・バス・車・交通":
-		  j1_s4();
+		  janru = ["駅","バス停","駐車場"];
 	    break;
 	  case "公共・病院・銀行・学校":
-		  j1_s5();
+		  janru = ["役所","病院","学校"];
 	    break;
 	  case "ショッピング":
-		  j1_s6();
+		  janru = ["コンビニ","薬局","スーパー"];
 	    break;
 	  case "生活・不動産":
-		  j1_s7();
+		  janru = ["レンタルショップ","クリーニング","不動産"];
 	    break;
 	  case "ビジネス・企業間取引":
-		  j1_s8();
+		  janru = ["農業","建設","食品"];
 	    break;
 	  default:
 	    break;
 	}
-}
-
-function j1_s1(){
-	var select = document.getElementById('j2');
-	var janru = ["和食","寿司","洋食"]
 
 	janru.forEach(function (item, index, array) {
 		var option = document.createElement('option');
@@ -129,22 +125,6 @@ function j1_s1(){
 		option.appendChild(text);
 		select.appendChild(option);
 	});
-}
-
-function j1_s2(){
-	var select = document.getElementById('j2');
-
-	var option = document.createElement('option');
-	option.setAttribute('value', 'レジャー施設');
-	var text = document.createTextNode('レジャー施設');
-	option.appendChild(text);
-	select.appendChild(option);
-
-	option = document.createElement('option');
-	option.setAttribute('value', '美術館');
-	text = document.createTextNode('美術館');
-	option.appendChild(text);
-	select.appendChild(option);
 }
 
 //クリア
