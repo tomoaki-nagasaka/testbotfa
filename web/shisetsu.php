@@ -161,7 +161,7 @@ function drow() {
 }
 
 function irow(){
-	alert("施設追加");
+	window.location.href = "./shisetsuadd.php";
 }
 </script>
 </body>
