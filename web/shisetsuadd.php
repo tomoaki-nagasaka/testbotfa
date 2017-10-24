@@ -18,7 +18,7 @@
 <p style="display:inline;">ジャンル１</p>
 <select id="j1"  onChange="j1change()">
 <option value="" selected></option>
-<option value="グルメ" selected>グルメ</option>
+<option value="グルメ">グルメ</option>
 <option value="レジャー・観光・スポーツ">レジャー・観光・スポーツ</option>
 <option value="ホテル・旅館">ホテル・旅館</option>
 <option value="駅・バス・車・交通">駅・バス・車・交通</option>
@@ -120,18 +120,15 @@ function j1change(){
 
 function j1_s1(){
 	var select = document.getElementById('j2');
+	var janru = ["和食","寿司","洋食"]
 
-	var option = document.createElement('option');
-	option.setAttribute('value', '和食');
-	var text = document.createTextNode('和食');
-	option.appendChild(text);
-	select.appendChild(option);
-
-	option = document.createElement('option');
-	option.setAttribute('value', '寿司');
-	text = document.createTextNode('寿司');
-	option.appendChild(text);
-	select.appendChild(option);
+	janru.forEach(function (item, index, array) {
+		var option = document.createElement('option');
+		option.setAttribute('value', item);
+		var text = document.createTextNode(item);
+		option.appendChild(text);
+		select.appendChild(option);
+	});
 }
 
 function j1_s2(){
