@@ -9,6 +9,7 @@
 <input type="button" onclick="location.href='imagelog.php'" value="画像ログ参照" />
 <input type="button" onclick="location.href='rank.php'" value="ランキング" />
 <input type="button" onclick="location.href='attribute.php'" value="属性登録" />
+<input type="button" onclick="location.href='shisetsu.php'" value="施設情報" />
 <img src="getimage.php?id=2" />
 
 <?php
