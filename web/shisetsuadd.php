@@ -8,10 +8,13 @@
 <body>
 <p  style="display:inline;">　施設名称</p>
 <input id="meisho" maxlength="40" placeholder="施設名称を入力してください" style="width: 500px;">
+<br><br>
 <p style="display:inline;">　　　住所</p>
 <input id="jusho" maxlength="128" placeholder="施設の住所を入力してください"  style="width: 500px;">
+<br><br>
 <p style="display:inline;">　電話番号</p>
 <input id="jusho" maxlength="14" placeholder="000-0000-0000"  style="width: 100px;">
+<br><br>
 <p style="display:inline;">ジャンル１</p>
 <select id="j1">
 <option value="グルメ" selected>グルメ</option>
@@ -23,23 +26,28 @@
 <option value="生活・不動産">生活・不動産</option>
 <option value="ビジネス・企業間取引">ビジネス・企業間取引</option>
 </select>
+<br><br>
 <p style="display:inline;">ジャンル２</p>
 <select id="j2">
 <option value="0" selected>性別</option>
 <option value="1">男性</option>
 <option value="2">女性</option>
 </select>
+<br><br>
 <p style="display:inline;">　　　緯度</p>
 <input id="lat" maxlength="14" placeholder="999.99999" style="width: 100px;">
+<br><br>
 <p style="display:inline;">　　　経度</p>
 <input id="lng" maxlength="14" placeholder="999.99999" style="width: 100px;">
-</select>
+<br><br>
 <p style="display:inline;">画像ＵＲＬ</p>
 <input id="iurl" maxlength="300" placeholder="https://www.yyy.zzz.jpg" style="width: 500px;">
+<br>
 ※必ずhttpsから始まるURLを指定してください
+<br><br>
 <p style="display:inline;">詳細ＵＲＬ</p>
 <input id="iurl" maxlength="300" placeholder="http://www.yyy.zzz.html" style="width: 500px;">
-<br>
+<br><br>
 <input type="button" onclick="clearform()" value="クリア" />
 <input type="button" onclick="update()" value="更新" />
 <input type="button" onclick="back()" value="もどる" />
