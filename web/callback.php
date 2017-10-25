@@ -419,12 +419,37 @@ goto lineSend;
 PROC03:
 $resmess = "現在準備中です。他のメニューを選択してください。";
 translation();
-/*
+
+if($type == "location"){
+	//位置情報の取得
+	$latitude= $jsonObj->{"events"}[0]->{"message"}->{"latitude"};
+	$longitude= $jsonObj->{"events"}[0]->{"message"}->{"longitude"};
+
+	//現在地から近い順に検索
+	if ($link) {
+		$result = pg_query("SELECT meisho,jusho,tel,imageurl,url,distance_spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+        'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE distance_spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
+        ORDER BY GISX.KYORI ");
+		if (pg_num_rows($result) == 0) {
+			$resmess = "半径1Km以内にお探しの施設はありませんでした。";
+		}else{
+			while ($row = pg_fetch_row($result)) {
+				error_log("★★★★★★★★★★meisho:".$row[0]);
+				error_log("★★★★★★★★★★距離:".$row[5]);
+			}
+			$resmess = "検索しました。";
+		}
+	}
+}else{
+	$resmess = "申し訳ありませんが、位置情報を送信してください。";
+}
+
 $response_format_text = [
 		"type" => "text",
 		"text" => $resmess
 ];
-*/
+
+/*
 $response_format_text = [
 		"type" => "template",
 		"altText" => "this is a carousel template",
@@ -468,6 +493,7 @@ $response_format_text = [
 		]
 		]
 ];
+*/
 
 $dbupdateflg = false;
 goto lineSend;
