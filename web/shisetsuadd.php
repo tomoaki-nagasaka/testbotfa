@@ -47,6 +47,7 @@
 <br><br>
 <input type="button" onclick="clearform()" value="クリア" />
 <input type="button" onclick="update()" value="更新" />
+<input type="button" onclick="map()" value="地図の確認" />
 <input type="button" onclick="back()" value="もどる" />
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
@@ -156,6 +157,13 @@ function update(){
 //もどる
 function back(){
 	window.location.href = "./shisetsu.php";
+}
+
+//地図の確認
+function map(){
+	lat = document.getElementById('lat').value;
+	lng = document.getElementById('lng').value;
+	window.location.open( "http://maps.google.com/maps?q=" + lat + "," + lng + "+(ココ)", '_blank');
 }
 </script>
 </body>
