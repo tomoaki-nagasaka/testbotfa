@@ -13,7 +13,7 @@
 <input id="jusho" maxlength="128" placeholder="施設の住所を入力してください"  style="width: 500px;">
 <br><br>
 <p style="display:inline;">　電話番号</p>
-<input id="jusho" maxlength="14" placeholder="000-0000-0000"  style="width: 100px;">
+<input id="tel" maxlength="14" placeholder="000-0000-0000"  style="width: 100px;">
 <br><br>
 <p style="display:inline;">ジャンル１</p>
 <select id="j1"  onChange="j1change()">
@@ -25,7 +25,6 @@
 <option value="公共・病院・銀行・学校">公共・病院・銀行・学校</option>
 <option value="ショッピング">ショッピング</option>
 <option value="生活・不動産">生活・不動産</option>
-<option value="ビジネス・企業間取引">ビジネス・企業間取引</option>
 </select>
 <br><br>
 <p style="display:inline;">ジャンル２</p>
@@ -44,42 +43,23 @@
 ※必ずhttpsから始まるURLを指定してください
 <br><br>
 <p style="display:inline;">詳細ＵＲＬ</p>
-<input id="iurl" maxlength="300" placeholder="http://www.yyy.zzz.html" style="width: 500px;">
+<input id="url" maxlength="300" placeholder="http://www.yyy.zzz.html" style="width: 500px;">
 <br><br>
 <input type="button" onclick="clearform()" value="クリア" />
 <input type="button" onclick="update()" value="更新" />
 <input type="button" onclick="back()" value="もどる" />
 
-<?php
-
-//引数
-$user = $_GET['user'];
-
-
-?>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
-var param = "";
-var user = "";
-var lang = "";
-var age = "";
-var sex = "";
-var region = "";
-
-$(function() {
-	param = <?php echo json_encode($user); ?>;
-	user = param.substr(0,1) + param.substr(2,1) + param.substr(6,1) + param.substr(10)
-	sex = param.substr(1,1);
-	age = param.substr(3,3);
-	region = param.substr(7,3);
-	age = Number(age);
-
-	//alert("sex:" + sex + " age:" + age + " region:" + region);
-
-	document.getElementById('age').value = age;
-	document.getElementById('sex').value = sex;
-	document.getElementById('region').value = region;
-});
+var meisho = "";
+var jusho = "";
+var tel = "";
+var j1 = "";
+var j2 = "";
+var lat = "";
+var lng = "";
+var iurl = "";
+var url = "";
 
 //ジャンル選択
 function j1change(){
@@ -91,28 +71,26 @@ function j1change(){
 	var janru = [];
 	switch (document.getElementById('j1').value){
 	  case "グルメ":
-		  janru = ["和食","寿司","洋食"];
+		  janru = ["和食","寿司","洋食","中華","多国籍"];
 	    break;
 	  case "レジャー・観光・スポーツ":
-		  janru = ["レジャー施設","美術館","温泉"];
+		  janru = ["レジャー施設","美術館","温泉","公園","緑地","庭園","神社","寺","協会","スポーツ","アウトドア","ゴルフ場","釣堀","動物園","遊園地","博物館"];
 	    break;
 	  case "ホテル・旅館":
 		  janru = ["ホテル","旅館","民宿"];
 	    break;
 	  case "駅・バス・車・交通":
-		  janru = ["駅","バス停","駐車場"];
+		  janru = ["駅","バス停","駐車場","ガソリンスタンド","レンタカー","ディーラー","空港","道の駅"];
 	    break;
 	  case "公共・病院・銀行・学校":
-		  janru = ["役所","病院","学校"];
+		  janru = ["役所","病院","幼稚園","保育園","小学校","中学校","高校","大学","専門学校","図書館","銀行"];
 	    break;
 	  case "ショッピング":
-		  janru = ["コンビニ","薬局","スーパー"];
+		  janru = ["コンビニ","薬局","スーパー","家電","ホームセンター","本屋","洋服"];
 	    break;
 	  case "生活・不動産":
 		  janru = ["レンタルショップ","クリーニング","不動産"];
 	    break;
-	  case "ビジネス・企業間取引":
-		  janru = ["農業","建設","食品"];
 	    break;
 	  default:
 	    break;
@@ -129,27 +107,41 @@ function j1change(){
 
 //クリア
 function clearform(){
-	document.getElementById('language').selectedIndex = 0;
-	document.getElementById('age').selectedIndex = 0;
-	document.getElementById('sex').selectedIndex = 0;
-	document.getElementById('region').selectedIndex = 0;
+	document.getElementById('meisho').value = "";
+	document.getElementById('jusho').value = "";
+	document.getElementById('tel').value = "";
+	document.getElementById('j1').selectedIndex = 0;
+	document.getElementById('j2').selectedIndex = 0;
+	document.getElementById('lat').value = "";
+	document.getElementById('lng').value = "";
+	document.getElementById('iurl').value = "";
+	document.getElementById('url').value = "";
 }
 
 //更新
 function update(){
-	lang = document.getElementById('language').value;
-	age = document.getElementById('age').value;
-	sex = document.getElementById('sex').value;
-	region = document.getElementById('region').value;
+	meisho = document.getElementById('meisho').value;
+	jusho = document.getElementById('jusho').value;
+	tel = document.getElementById('tel').value;
+	j1 = document.getElementById('j1').value;
+	j2 = document.getElementById('j2').value;
+	lat = document.getElementById('lat').value;
+	lng = document.getElementById('lng').value;
+	iurl = document.getElementById('iurl').value;
+	url = document.getElementById('url').value;
 	$.ajax({
 		type: "POST",
-		url: "userinfoup.php",
+		url: "shisetsuup.php",
 		data: {
-			"user" : user,
-			"lang" : lang,
-			"age" : age,
-			"sex" : sex,
-			"region" : region
+			"meisho" : meisho,
+			"jusho" : jusho,
+			"tel" : tel,
+			"j1" : j1,
+			"j2" : j2,
+			"lat" : lat,
+			"lng" : lng,
+			"iurl" : iurl,
+			"url" : url
 		}
 	}).then(
 		function(){
@@ -161,7 +153,7 @@ function update(){
 	);
 }
 
-//削除
+//もどる
 function back(){
 	window.location.href = "./shisetsu.php";
 }
