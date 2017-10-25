@@ -427,7 +427,7 @@ if($type == "location"){
 
 	//現在地から近い順に検索
 	if ($link) {
-		$result = pg_query("SELECT meisho,jusho,tel,imageurl,url,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+		$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
         'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
         ORDER BY GISX.KYORI ");
 		if (pg_num_rows($result) == 0) {
