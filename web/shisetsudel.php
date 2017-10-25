@@ -15,7 +15,7 @@ $delid = $_POST['id'];
 
 
 if ($link) {
-	$result = pg_query("DELETE FROM botlog WHERE ID = ".$delid);
+	$result = pg_query("DELETE FROM shisetsu WHERE ID = ".$delid);
 
 }
 
