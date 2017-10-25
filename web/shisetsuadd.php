@@ -163,7 +163,7 @@ function back(){
 function map(){
 	lat = document.getElementById('lat').value;
 	lng = document.getElementById('lng').value;
-	window.location.open( "http://maps.google.com/maps?q=" + lat + "," + lng + "+(ココ)", '_blank');
+	window.open( "http://maps.google.com/maps?q=" + lat + "," + lng + "+(ココ)", '_blank');
 }
 </script>
 </body>
