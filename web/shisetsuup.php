@@ -26,7 +26,7 @@ $url= $_POST['url'];
 
 if ($link) {
 	$sql = "INSERT INTO shisetsu (meisho, jusho, tel, genre1, genre2, genre3, lat, lng, imageurl, url, geom) VALUES
-                                 ('{$meisho}','{$jusho}','{$tel}','{$j1}','{$j2}','','{$lat}','{$lng}','{$iurl}','{$url}','GeometryFromText('POINT({$lat} {$lng})',4326)')";
+                                 ('{$meisho}','{$jusho}','{$tel}','{$j1}','{$j2}','','{$lat}','{$lng}','{$iurl}','{$url}',GeometryFromText('POINT(35.69641 139.40641'),4326))";
 	$result_flag = pg_query($sql);
 	if (!$result_flag) {
 		error_log("インサートに失敗しました。".pg_last_error());

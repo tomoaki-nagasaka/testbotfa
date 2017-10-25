@@ -7,10 +7,10 @@
 </head>
 <body>
 <p  style="display:inline;">　施設名称</p>
-<input id="meisho" maxlength="40" placeholder="施設名称を入力してください" style="width: 500px;">
+<input id="meisho" maxlength="40" placeholder="行政公園" style="width: 500px;">
 <br><br>
 <p style="display:inline;">　　　住所</p>
-<input id="jusho" maxlength="128" placeholder="施設の住所を入力してください"  style="width: 500px;">
+<input id="jusho" maxlength="128" placeholder="行政市行政1-1-1"  style="width: 500px;">
 <br><br>
 <p style="display:inline;">　電話番号</p>
 <input id="tel" maxlength="14" placeholder="000-0000-0000"  style="width: 100px;">
