@@ -110,7 +110,7 @@ $(function() {
 	{
 	    for (var i = 0; i < rows.length; i++)
 	    {
-	        rowIds.push(rows[i].no);
+	        rowIds.push(rows[i].id);
 	    }
 	    //alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
@@ -118,7 +118,7 @@ $(function() {
 	    for (var i = 0; i < rows.length; i++)
 	    {
 	    	rowIds.some(function(v, ii){
-	    	    if (v==rows[i].no) rowIds.splice(ii,1);
+	    	    if (v==rows[i].id) rowIds.splice(ii,1);
 	    	});
 	        //rowIds.push(rows[i].no);
 	    }
@@ -141,8 +141,8 @@ function drow() {
 		for (var i = 0; i < rowIds.length; i++){
 			$.ajax({
 				type: "POST",
-				url: "botlogdel.php",
-				data: "no=" + rowIds[i],
+				url: "shisetsudel.php",
+				data: "id=" + rowIds[i],
 			}).then(
 				function(){
 				},
