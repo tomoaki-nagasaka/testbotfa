@@ -35,7 +35,7 @@ if ($link) {
 		}
 	}else{
 		$sql = "UPDATE shisetsu SET meisho = '{$meisho}', jusho = '{$jusho}', tel = '{$tel}' , genre1 = '{$j1}' , genre2 = '{$j2}' , lat = '{$lat}' , lng = '{$lng}' , imageurl = '{$iurl}'
-                , url = '{$url}' , geom = ST_GeomFromText('POINT({$lat} {$lng})',4326)) WHERE id = '{$id}'";
+                , url = '{$url}' , geom = ST_GeomFromText('POINT({$lat} {$lng})',4326) WHERE id = '{$id}'";
 		$result_flag = pg_query($sql);
 		if (!$result_flag) {
 			error_log("アップデートに失敗しました。".pg_last_error());
