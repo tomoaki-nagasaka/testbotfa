@@ -26,7 +26,7 @@ $url= $_POST['url'];
 //error_log("user:".$user." age:".$age." sex:".$sex." region:".$region);
 
 if ($link) {
-	if(array_key_exists( 'id',$_POST)){
+	if($id != ""){
 		$sql = "UPDATE shisetsu SET meisho = '{$meisho}', jusho = '{$jusho}', tel = '{$tel}' , genre1 = '{$j1}' , genre2 = '{$j2}' , lat = '{$lat}' , lng = '{$lng}' , imageurl = '{$iurl}'
 		, url = '{$url}' , geom = ST_GeomFromText('POINT({$lat} {$lng})',4326) WHERE id = '{$id}'";
 		$result_flag = pg_query($sql);
