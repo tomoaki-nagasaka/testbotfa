@@ -50,6 +50,50 @@
 <input type="button" onclick="map()" value="地図の確認" />
 <input type="button" onclick="back()" value="もどる" />
 
+<?php
+
+//引数
+$id = $_GET['id'];
+
+error_log("★★★★★★★★★★★★★★★id:".$id);
+
+//環境変数の取得
+$db_host =  getenv('DB_HOST');
+$db_name =  getenv('DB_NAME');
+$db_pass =  getenv('DB_PASS');
+$db_user =  getenv('DB_USER');
+
+//DB接続
+$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
+$link = pg_connect($conn);
+
+$meisho = "";
+$jusho= "";
+$tel= "";
+$genre1= "";
+$genre2= "";
+$lat= 0;
+$lng= 0;
+$imageurl= "";
+$url = "";
+
+if ($link) {
+	$result = pg_query("SELECT meisho, jusho, tel, genre1, genre2, lat, lng, imageurl, url FROM shisetsu WHERE id = '{$id}'");
+	$row = pg_fetch_row($result);
+	$meisho = $row[0];
+	$jusho= $row[1];
+	$tel= $row[2];
+	$genre1= $row[3];
+	$genre2= $row[4];
+	$lat= $row[5];
+	$lng= $row[6];
+	$imageurl= $row[7];
+	$url = $row[8];
+}
+
+
+?>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
 var meisho = "";
@@ -61,6 +105,28 @@ var lat = "";
 var lng = "";
 var iurl = "";
 var url = "";
+
+function(){
+	meisho = <?php echo json_encode($meisho); ?>;
+	jusho = <?php echo json_encode($jusho); ?>;
+	tel = <?php echo json_encode($tel); ?>;
+	j1 = <?php echo json_encode($genre1); ?>;
+	j2 = <?php echo json_encode($genre2); ?>;
+	lat = <?php echo json_encode($lat); ?>;
+	lng = <?php echo json_encode($lng); ?>;
+	iurl = <?php echo json_encode($iurl); ?>;
+	url = <?php echo json_encode($url); ?>;
+
+	document.getElementById('meisho').value = meisho;
+	document.getElementById('jusho').value = jusho;
+	document.getElementById('tel').value = tel;
+	document.getElementById('j1').value = j1;
+	document.getElementById('j2').value = j2;
+	document.getElementById('lat').value = lat;
+	document.getElementById('lng').value = lng;
+	document.getElementById('iurl').value = iurl;
+	document.getElementById('url').value = url;
+}
 
 //ジャンル選択
 function j1change(){

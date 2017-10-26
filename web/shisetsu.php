@@ -91,6 +91,7 @@ if ($link) {
 </div>
 <input id="btn_del" type="button" value="選択行の削除" onclick="drow()"  style="display:none">
 <input id="btn_ins" type="button" value="施設の追加" onclick="irow()"  style="display:none">
+<input id="btn_ins" type="button" value="施設の修正" onclick="mrow()"  style="display:none">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
@@ -162,6 +163,20 @@ function drow() {
 
 function irow(){
 	window.location.href = "./shisetsuadd.php";
+}
+
+function mrow(){
+	if(rowIds.length == 0){
+		alert("修正する行を選択してください");
+		return;
+	}
+
+	if(rowIds.length > 1){
+		alert("修正対象の行のみ選択してください");
+		return;
+	}
+
+	window.location.href = "./shisetsuadd.php?id=" + rowIds[0];
 }
 </script>
 </body>
