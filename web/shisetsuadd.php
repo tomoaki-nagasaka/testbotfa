@@ -55,18 +55,6 @@
 //引数
 $id = $_GET['id'];
 
-error_log("★★★★★★★★★★★★★★★id:".$id);
-
-//環境変数の取得
-$db_host =  getenv('DB_HOST');
-$db_name =  getenv('DB_NAME');
-$db_pass =  getenv('DB_PASS');
-$db_user =  getenv('DB_USER');
-
-//DB接続
-$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
-$link = pg_connect($conn);
-
 $meisho = "";
 $jusho= "";
 $tel= "";
@@ -77,18 +65,33 @@ $lng= 0;
 $imageurl= "";
 $url = "";
 
-if ($link) {
-	$result = pg_query("SELECT meisho, jusho, tel, genre1, genre2, lat, lng, imageurl, url FROM shisetsu WHERE id = '{$id}'");
-	$row = pg_fetch_row($result);
-	$meisho = $row[0];
-	$jusho= $row[1];
-	$tel= $row[2];
-	$genre1= $row[3];
-	$genre2= $row[4];
-	$lat= $row[5];
-	$lng= $row[6];
-	$imageurl= $row[7];
-	$url = $row[8];
+if(id != ""){
+
+	error_log("★★★★★★★★★★★★★★★id:".$id);
+
+	//環境変数の取得
+	$db_host =  getenv('DB_HOST');
+	$db_name =  getenv('DB_NAME');
+	$db_pass =  getenv('DB_PASS');
+	$db_user =  getenv('DB_USER');
+
+	//DB接続
+	$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
+	$link = pg_connect($conn);
+
+	if ($link) {
+		$result = pg_query("SELECT meisho, jusho, tel, genre1, genre2, lat, lng, imageurl, url FROM shisetsu WHERE id = '{$id}'");
+		$row = pg_fetch_row($result);
+		$meisho = $row[0];
+		$jusho= $row[1];
+		$tel= $row[2];
+		$genre1= $row[3];
+		$genre2= $row[4];
+		$lat= $row[5];
+		$lng= $row[6];
+		$imageurl= $row[7];
+		$url = $row[8];
+	}
 }
 
 

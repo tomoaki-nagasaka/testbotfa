@@ -91,7 +91,7 @@ if ($link) {
 </div>
 <input id="btn_del" type="button" value="選択行の削除" onclick="drow()"  style="display:none">
 <input id="btn_ins" type="button" value="施設の追加" onclick="irow()"  style="display:none">
-<input id="btn_ins" type="button" value="施設の修正" onclick="mrow()"  style="display:none">
+<input id="btn_mod" type="button" value="施設の修正" onclick="mrow()"  style="display:none">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
@@ -133,6 +133,7 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#wrap').css('display', 'block');
 	  $('#btn_del').css('display', 'block');
 	  $('#btn_ins').css('display', 'block');
+	  $('#btn_mod').css('display', 'block');
 });
 
 function drow() {
