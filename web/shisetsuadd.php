@@ -220,7 +220,8 @@ function update(){
 		}
 	}).then(
 		function(){
-			alert("登録が完了しました。画面を閉じてください。");
+			alert("登録が完了しました。");
+			window.location.href = "./shisetsu.php";
 		},
 		function(){
 			alert("登録できませんでした。");
