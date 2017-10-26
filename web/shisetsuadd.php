@@ -65,7 +65,7 @@ $lng= 0;
 $imageurl= "";
 $url = "";
 
-if(id != ""){
+if(id){
 
 	error_log("★★★★★★★★★★★★★★★id:".$id);
 
@@ -109,7 +109,7 @@ var lng = "";
 var iurl = "";
 var url = "";
 
-function(){
+$(function(){
 	meisho = <?php echo json_encode($meisho); ?>;
 	jusho = <?php echo json_encode($jusho); ?>;
 	tel = <?php echo json_encode($tel); ?>;
@@ -129,7 +129,7 @@ function(){
 	document.getElementById('lng').value = lng;
 	document.getElementById('iurl').value = iurl;
 	document.getElementById('url').value = url;
-}
+});
 
 //ジャンル選択
 function j1change(){
