@@ -126,6 +126,7 @@ $(function(){
 	document.getElementById('jusho').value = jusho;
 	document.getElementById('tel').value = tel;
 	document.getElementById('j1').value = j1;
+	j1change();
 	document.getElementById('j2').value = j2;
 	document.getElementById('lat').value = lat;
 	document.getElementById('lng').value = lng;
