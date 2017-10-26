@@ -52,9 +52,6 @@
 
 <?php
 
-//引数
-$id = $_GET['id'];
-
 $meisho = "";
 $jusho= "";
 $tel= "";
@@ -65,7 +62,10 @@ $lng= 0;
 $imageurl= "";
 $url = "";
 
-if(id){
+if( array_key_exists( 'id',$_GET ) ) {
+
+	//引数
+	$id = $_GET['id'];
 
 	error_log("★★★★★★★★★★★★★★★id:".$id);
 
@@ -117,7 +117,7 @@ $(function(){
 	j2 = <?php echo json_encode($genre2); ?>;
 	lat = <?php echo json_encode($lat); ?>;
 	lng = <?php echo json_encode($lng); ?>;
-	iurl = <?php echo json_encode($iurl); ?>;
+	iurl = <?php echo json_encode($imageurl); ?>;
 	url = <?php echo json_encode($url); ?>;
 
 	document.getElementById('meisho').value = meisho;
