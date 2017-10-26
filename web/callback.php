@@ -8,6 +8,7 @@ $accessToken = getenv('LINE_CHANNEL_ACCESS_TOKEN');
 $classfier = getenv('CLASSFIER');
 $workspace_id = getenv('CVS_WORKSPASE_ID');
 $workspace_id_ken = getenv('CVS_WORKSPASE_ID_KEN');
+$workspace_id_shi = getenv('CVS_WORKSPASE_ID_SHI');
 $username = getenv('CVS_USERNAME');
 $password = getenv('CVS_PASS');
 $db_host =  getenv('DB_HOST');
@@ -49,6 +50,8 @@ $sex = "0";
 $region = "000";
 //言語
 $lang = "01";
+//周辺検索ジャンル
+$searchG = "";
 
 
 //DB接続
@@ -64,6 +67,7 @@ if ($link) {
 		$sex = $row[3];
 		$age = $row[4];
 		$region = $row[5];
+		$searchG = $row[7];
 	}
 }
 
@@ -126,6 +130,7 @@ if($text == "ごみの分別"){
 if($text == "周辺施設検索"){
 	$shorimode = "03";
 	$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
+	$workspace_id = $workspace_id_shi;
 }
 if($text == "その他のお問い合わせ"){
 	$shorimode = "04";
@@ -180,7 +185,7 @@ if($shorimode == "00"){
 		$resmess = "以下のリンクより属性登録をお願いします。\nhttps://gyoseibot.herokuapp.com/attribute.php?user=".$link;
 	}
 }
-if($shorimode == "01" or $shorimode == "04"){
+if($shorimode == "01" or $shorimode == "03" or $shorimode == "04"){
 	//CVSの初回呼び出し
 	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
 	$jsonString = callWatson();
@@ -266,7 +271,7 @@ switch ($shorimode){
 	case "02":
 		goto PROC02;
 		break;
-	//図書検索
+	//周辺施設検索
 	case "03":
 		goto PROC03;
 		break;
@@ -415,33 +420,80 @@ if($type == "image"){
 
 goto lineSend;
 
-//図書検索
+//周辺施設検索
 PROC03:
-$resmess = "現在準備中です。他のメニューを選択してください。";
-translation();
+if($type == "text"){
+	$workspace_id = $workspace_id_shi;
+	translationJa();
+	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
 
-if($type == "location"){
+	$data = array('input' => array("text" => $text));
+
+	if ($link) {
+		$result = pg_query("SELECT * FROM cvsdata WHERE userid = '{$userID}'");
+		$row = pg_fetch_row($result);
+		$conversation_id = $row[1];
+		$conversation_node= $row[2];
+		$conversation_time= $row[3];
+	}
+
+	$data["context"] = array("conversation_id" => $conversation_id,
+			"system" => array("dialog_stack" => array(array("dialog_node" => $conversation_node)),
+					"dialog_turn_counter" => 1,
+					"dialog_request_counter" => 1));
+	$jsonString = callWatson();
+	$json = json_decode($jsonString, true);
+
+	$genre = $json["output"]["text"][0];
+	$genreB = explode(".", $genre);
+	$resmess = "『".$genreB[1]."』について周辺検索します。位置情報を送信してください。";
+	if ($link) {
+		$sql = "UPDATE userinfo SET search = '{$genre}' WHERE userid = '{$userID}'";
+		$result_flag = pg_query($sql);
+		if (!$result_flag) {
+			error_log("アップデートに失敗しました。".pg_last_error());
+		}
+	}
+	translation();
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
+	goto lineSend;
+
+}else if($type == "location"){
+
+	if($searchG == ""){
+		$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
+		goto PROC03_END;
+	}
+	$genreB = explode(".", $searchG);
+
 	//位置情報の取得
 	$latitude= $jsonObj->{"events"}[0]->{"message"}->{"latitude"};
 	$longitude= $jsonObj->{"events"}[0]->{"message"}->{"longitude"};
 
 	//現在地から近い順に検索
 	if ($link) {
-		$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
-        'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
-        ORDER BY GISX.KYORI ");
+		if($genreB[0] == "1"){
+			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+        	'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = '{$genreB[1]}' AND ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
+        	ORDER BY GISX.KYORI ");
+		}else{
+			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre2 = '{$genreB[1]}' AND ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
+			ORDER BY GISX.KYORI ");
+		}
 		if (pg_num_rows($result) == 0) {
 			$resmess = "1Km以内にお探しの施設はありませんでした。";
 		}else{
 			$colmuns = [];
 			while ($row = pg_fetch_row($result)) {
-				error_log("★★★★★★★★★★meisho:".$row[0]);
-				error_log("★★★★★★★★★★距離:".$row[7]);
-				$kyori = explode(".", $row[7]);
+				$kyori= explode(".", $row[7]);
 				$shisetsu = [
 						"thumbnailImageUrl" => $row[3],
 						"title" =>  $row[0],
-						"text" =>  $row[1]."\n".$row[2]."\n直線距離:".$kyori[0],
+						"text" =>  $row[1]."\n".$row[2]."\n直線距離:".$kyori[0]."m",
 						"actions" => [
 								[
 										"type" =>  "uri",
@@ -456,6 +508,9 @@ if($type == "location"){
 						]
 				];
 				array_push($colmuns, $shisetsu);
+				if(count($colmuns) == 5){
+					break;
+				}
 			}
 			$response_format_text = [
 					"type" => "template",
@@ -470,59 +525,15 @@ if($type == "location"){
 		}
 	}
 }else{
-	$resmess = "申し訳ありませんが、位置情報を送信してください。";
+	$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
 }
 
+PROC03_END:
+translation();
 $response_format_text = [
 		"type" => "text",
 		"text" => $resmess
 ];
-
-/*
-$response_format_text = [
-		"type" => "template",
-		"altText" => "this is a carousel template",
-		"template" => [
-		"type" => "carousel",
-		"columns" => [
-		[
-			"thumbnailImageUrl" => "https://www.city.tachikawa.lg.jp/koenryokuchi/kanko/kanko/kankospot/koen/documents/0000000131_0000004164.jpg",
-			"title" =>  "諏訪の森公園",
-			"text" =>  "東京都立川市柴崎町1丁目",
-			"actions" => [
-			[
-				"type" =>  "uri",
-				"label" => "詳細",
-				"uri" =>  "http://www.city.tachikawa.lg.jp/koenryokuchi/kanko/kanko/kankospot/koen/suwanomori.html"
-			],
-			[
-					"type" =>  "uri",
-					"label" => "地図",
-					"uri" =>  "https://www.google.co.jp/maps/place/%E8%AB%8F%E8%A8%AA%E3%81%AE%E6%A3%AE%E5%85%AC%E5%9C%92/@35.6964168,139.4042302,17z/data=!3m1!4b1!4m5!3m4!1s0x6018e1780899fc1d:0xfe48e5da3b5e3ee0!8m2!3d35.6964125!4d139.4064189"
-			]
-			]
-		],
-		[
-			"thumbnailImageUrl" =>  "https://www.city.tachikawa.lg.jp/sangyoshinko/kanko/kanko/kankospot/koen/images/0000000075_0000033119l.jpg",
-			"title" =>  "国営昭和記念公園",
-			"text" =>  "東京都立川市緑町3173",
-				"actions" => [
-			[
-				"type" =>  "uri",
-				"label" =>  "詳細",
-				"uri" =>  "http://www.showakinen-koen.jp/"
-			],
-				[
-						"type" =>  "uri",
-						"label" => "地図",
-						"uri" =>  "https://www.google.co.jp/maps/place/%E5%9B%BD%E5%96%B6%E6%98%AD%E5%92%8C%E8%A8%98%E5%BF%B5%E5%85%AC%E5%9C%92/@35.6964383,139.3976641,15z/data=!4m8!1m2!2m1!1z5Zu95Za25pit5ZKM6KiY5b-15YWs5ZyS!3m4!1s0x6018e1ace14bd40b:0xd7da4db683b53513!8m2!3d35.7033599!4d139.4078879"
-				]
-			]
-		]
-		]
-		]
-];
-*/
 
 $dbupdateflg = false;
 goto lineSend;
