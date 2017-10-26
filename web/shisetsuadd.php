@@ -52,13 +52,14 @@
 
 <?php
 
+$id = "";
 $meisho = "";
 $jusho= "";
 $tel= "";
 $genre1= "";
 $genre2= "";
-$lat= 0;
-$lng= 0;
+$lat= "";
+$lng= "";
 $imageurl= "";
 $url = "";
 
@@ -99,6 +100,7 @@ if( array_key_exists( 'id',$_GET ) ) {
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
+var id = "";
 var meisho = "";
 var jusho = "";
 var tel = "";
@@ -190,6 +192,7 @@ function clearform(){
 
 //更新
 function update(){
+	id = <?php echo json_encode($id); ?>;
 	meisho = document.getElementById('meisho').value;
 	jusho = document.getElementById('jusho').value;
 	tel = document.getElementById('tel').value;
@@ -203,6 +206,7 @@ function update(){
 		type: "POST",
 		url: "shisetsuup.php",
 		data: {
+			"id" : id,
 			"meisho" : meisho,
 			"jusho" : jusho,
 			"tel" : tel,
