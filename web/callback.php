@@ -123,9 +123,9 @@ if($text == "ごみの分別"){
 	$shorimode = "02";
 	$resmess = "捨てたいごみの写真を撮って送ってください。まわりに何もない写真の方が正確に判定できますよ～♪";
 }
-if($text == "図書検索"){
+if($text == "周辺施設検索"){
 	$shorimode = "03";
-	$resmess = "現在準備中です。他のメニューを選択してください。";
+	$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
 }
 if($text == "その他のお問い合わせ"){
 	$shorimode = "04";
@@ -427,17 +427,46 @@ if($type == "location"){
 
 	//現在地から近い順に検索
 	if ($link) {
-		$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+		$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
         'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
         ORDER BY GISX.KYORI ");
 		if (pg_num_rows($result) == 0) {
-			$resmess = "半径1Km以内にお探しの施設はありませんでした。";
+			$resmess = "1Km以内にお探しの施設はありませんでした。";
 		}else{
+			$colmuns = [];
 			while ($row = pg_fetch_row($result)) {
 				error_log("★★★★★★★★★★meisho:".$row[0]);
-				error_log("★★★★★★★★★★距離:".$row[5]);
+				error_log("★★★★★★★★★★距離:".$row[7]);
+				$kyori = explode(".", $row[7]);
+				$shisetsu = [
+						"thumbnailImageUrl" => $row[3],
+						"title" =>  $row[0],
+						"text" =>  $row[1]."\n".$row[2]."\n直線距離:".$kyori[0],
+						"actions" => [
+								[
+										"type" =>  "uri",
+										"label" => "詳細",
+										"uri" =>  $row[4]
+								],
+								[
+										"type" =>  "uri",
+										"label" => "地図",
+										"uri" =>  "http://maps.google.com/maps?q=".$row[5].",".$row[6]."+(ココ)"
+								]
+						]
+				];
+				array_push($colmuns, $shisetsu);
 			}
-			$resmess = "検索しました。";
+			$response_format_text = [
+					"type" => "template",
+					"altText" => "this is a carousel template",
+					"template" => [
+							"type" => "carousel",
+							"columns" => $colmuns
+					]
+			];
+			$dbupdateflg = false;
+			goto lineSend;
 		}
 	}
 }else{
