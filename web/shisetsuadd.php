@@ -120,15 +120,17 @@ $(function(){
 	iurl = <?php echo json_encode($imageurl); ?>;
 	url = <?php echo json_encode($url); ?>;
 
-	document.getElementById('meisho').value = meisho;
-	document.getElementById('jusho').value = jusho;
-	document.getElementById('tel').value = tel;
-	document.getElementById('j1').value = j1;
-	j1change();
-	document.getElementById('j2').value = j2;
-	document.getElementById('latlng').value = lat + "," + lng;
-	document.getElementById('iurl').value = iurl;
-	document.getElementById('url').value = url;
+	if(meisho != ""){
+		document.getElementById('meisho').value = meisho;
+		document.getElementById('jusho').value = jusho;
+		document.getElementById('tel').value = tel;
+		document.getElementById('j1').value = j1;
+		j1change();
+		document.getElementById('j2').value = j2;
+		document.getElementById('latlng').value = lat + "," + lng;
+		document.getElementById('iurl').value = iurl;
+		document.getElementById('url').value = url;
+	}
 });
 
 //ジャンル選択
