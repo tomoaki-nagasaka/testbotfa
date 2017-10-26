@@ -31,11 +31,9 @@
 <select id="j2">
 </select>
 <br><br>
-<p style="display:inline;">　　　緯度</p>
-<input id="lat" maxlength="14" placeholder="999.99999" style="width: 100px;">
-<br><br>
-<p style="display:inline;">　　　経度</p>
-<input id="lng" maxlength="14" placeholder="999.99999" style="width: 100px;">
+<p style="display:inline;">緯度・経度</p>
+<input id="latlng" maxlength="33" placeholder="999.99999,999.99999" style="width: 150px;">
+<input type="button" onclick="map()" value="地図の確認" />
 <br><br>
 <p style="display:inline;">画像ＵＲＬ</p>
 <input id="iurl" maxlength="300" placeholder="https://www.yyy.zzz.jpg" style="width: 500px;">
@@ -47,7 +45,6 @@
 <br><br>
 <input type="button" onclick="clearform()" value="クリア" />
 <input type="button" onclick="update()" value="更新" />
-<input type="button" onclick="map()" value="地図の確認" />
 <input type="button" onclick="back()" value="もどる" />
 
 <?php
@@ -106,6 +103,7 @@ var jusho = "";
 var tel = "";
 var j1 = "";
 var j2 = "";
+var latlng = "";
 var lat = "";
 var lng = "";
 var iurl = "";
@@ -128,8 +126,7 @@ $(function(){
 	document.getElementById('j1').value = j1;
 	j1change();
 	document.getElementById('j2').value = j2;
-	document.getElementById('lat').value = lat;
-	document.getElementById('lng').value = lng;
+	document.getElementById('latlng').value = lat + "," + lng;
 	document.getElementById('iurl').value = iurl;
 	document.getElementById('url').value = url;
 });
@@ -185,8 +182,7 @@ function clearform(){
 	document.getElementById('tel').value = "";
 	document.getElementById('j1').selectedIndex = 0;
 	document.getElementById('j2').selectedIndex = 0;
-	document.getElementById('lat').value = "";
-	document.getElementById('lng').value = "";
+	document.getElementById('latlng').value = "";
 	document.getElementById('iurl').value = "";
 	document.getElementById('url').value = "";
 }
@@ -199,8 +195,10 @@ function update(){
 	tel = document.getElementById('tel').value;
 	j1 = document.getElementById('j1').value;
 	j2 = document.getElementById('j2').value;
-	lat = document.getElementById('lat').value;
-	lng = document.getElementById('lng').value;
+	latlng = document.getElementById('latlng').value;
+	var arrayOfStrings = latlng.split(",");
+	lat = arrayOfStrings[0];
+	lng = arrayOfStrings[1];
 	iurl = document.getElementById('iurl').value;
 	url = document.getElementById('url').value;
 	$.ajax({
@@ -235,9 +233,8 @@ function back(){
 
 //地図の確認
 function map(){
-	lat = document.getElementById('lat').value;
-	lng = document.getElementById('lng').value;
-	window.open( "http://maps.google.com/maps?q=" + lat + "," + lng + "+(ココ)", '_blank');
+	latlng = document.getElementById('latlng').value;
+	window.open( "http://maps.google.com/maps?q=" + latlng + "+(ココ)", '_blank');
 }
 </script>
 </body>
