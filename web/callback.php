@@ -129,7 +129,7 @@ if($text == "ごみの分別"){
 }
 if($text == "周辺施設検索"){
 	$shorimode = "03";
-	$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
+	$data = array('input' => array("text" => "初回発話"));
 	$workspace_id = $workspace_id_shi;
 }
 if($text == "その他のお問い合わせ"){
