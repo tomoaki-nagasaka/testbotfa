@@ -486,7 +486,7 @@ if($type == "text"){
         	ORDER BY GISX.KYORI ");
         	*/
 			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
-			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} ORDER BY GISX.KYORI ");
+			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} ) AS GISX ORDER BY GISX.KYORI ");
 		}else{
 			/*
 			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
@@ -494,7 +494,7 @@ if($type == "text"){
 			ORDER BY GISX.KYORI ");
 			*/
 			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
-			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} AND genre2 = {$genreB[1]} ORDER BY GISX.KYORI ");
+			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} AND genre2 = {$genreB[1]} ) AS GISX ORDER BY GISX.KYORI ");
 		}
 		if (pg_num_rows($result) == 0) {
 			$resmess = "市内にお探しの施設はありませんでした。";
