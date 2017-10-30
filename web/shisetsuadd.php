@@ -17,14 +17,6 @@
 <br><br>
 <p style="display:inline;">ジャンル１</p>
 <select id="j1"  onChange="j1change()">
-<option value="" selected></option>
-<option value="グルメ">グルメ</option>
-<option value="レジャー・観光・スポーツ">レジャー・観光・スポーツ</option>
-<option value="ホテル・旅館">ホテル・旅館</option>
-<option value="駅・バス・車・交通">駅・バス・車・交通</option>
-<option value="公共・病院・銀行・学校">公共・病院・銀行・学校</option>
-<option value="ショッピング">ショッピング</option>
-<option value="生活・不動産">生活・不動産</option>
 </select>
 <br><br>
 <p style="display:inline;">ジャンル２</p>
@@ -60,22 +52,26 @@ $lng= "";
 $imageurl= "";
 $url = "";
 
+//ジャンル
+$j1value = array();
+$j2value = array();
+
+//環境変数の取得
+$db_host =  getenv('DB_HOST');
+$db_name =  getenv('DB_NAME');
+$db_pass =  getenv('DB_PASS');
+$db_user =  getenv('DB_USER');
+
+//DB接続
+$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
+$link = pg_connect($conn);
+
 if( array_key_exists( 'id',$_GET ) ) {
 
 	//引数
 	$id = $_GET['id'];
 
-	error_log("★★★★★★★★★★★★★★★id:".$id);
-
-	//環境変数の取得
-	$db_host =  getenv('DB_HOST');
-	$db_name =  getenv('DB_NAME');
-	$db_pass =  getenv('DB_PASS');
-	$db_user =  getenv('DB_USER');
-
-	//DB接続
-	$conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
-	$link = pg_connect($conn);
+	//error_log("★★★★★★★★★★★★★★★id:".$id);
 
 	if ($link) {
 		$result = pg_query("SELECT meisho, jusho, tel, genre1, genre2, lat, lng, imageurl, url FROM shisetsu WHERE id = '{$id}'");
@@ -92,7 +88,12 @@ if( array_key_exists( 'id',$_GET ) ) {
 	}
 }
 
-
+if ($link) {
+	$result = pg_query("SELECT * FROM genre WHERE bunrui = 1");
+	while ($row = pg_fetch_row($result)) {
+		$j1value = $j1value + array($row[1] => $row[4]);
+	}
+}
 ?>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
@@ -120,6 +121,18 @@ $(function(){
 	iurl = <?php echo json_encode($imageurl); ?>;
 	url = <?php echo json_encode($url); ?>;
 
+	//ジャンルの設定
+	var j1value = <?php echo json_encode($j1value); ?>;
+	var select = document.getElementById('j1');
+
+	for( var key in j1value ) {
+		var option = document.createElement('option');
+		option.setAttribute('value', key);
+		var text = document.createTextNode(j1value[key]);
+		option.appendChild(text);
+		select.appendChild(option);
+	}
+
 	if(meisho != ""){
 		document.getElementById('meisho').value = meisho;
 		document.getElementById('jusho').value = jusho;
@@ -131,6 +144,7 @@ $(function(){
 		document.getElementById('iurl').value = iurl;
 		document.getElementById('url').value = url;
 	}
+
 });
 
 //ジャンル選択
