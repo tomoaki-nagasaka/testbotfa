@@ -427,6 +427,8 @@ if($type == "text"){
 	translationJa();
 	$url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
 
+	//改行コードを取り除く
+	$text= str_replace("\n","",$text);
 	$data = array('input' => array("text" => $text));
 
 	if ($link) {
@@ -679,6 +681,8 @@ if($type != "text"){
 $url = "https://gateway.watsonplatform.net/conversation/api/v1/workspaces/".$workspace_id."/message?version=2017-04-21";
 
 //$data = array("text" => $text);
+//改行コードを取り除く
+$text= str_replace("\n","",$text);
 $data = array('input' => array("text" => $text));
 
 if ($link) {
