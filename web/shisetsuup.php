@@ -27,7 +27,7 @@ $url= $_POST['url'];
 
 if ($link) {
 	if($id != ""){
-		$sql = "UPDATE shisetsu SET meisho = '{$meisho}', jusho = '{$jusho}', tel = '{$tel}' , genre1 = '{$j1}' , genre2 = '{$j2}' , lat = '{$lat}' , lng = '{$lng}' , imageurl = '{$iurl}'
+		$sql = "UPDATE shisetsu SET meisho = '{$meisho}', jusho = '{$jusho}', tel = '{$tel}' , genre1 = {$j1} , genre2 = {$j2} , lat = '{$lat}' , lng = '{$lng}' , imageurl = '{$iurl}'
 		, url = '{$url}' , geom = ST_GeomFromText('POINT({$lat} {$lng})',4326) WHERE id = '{$id}'";
 		$result_flag = pg_query($sql);
 		if (!$result_flag) {
@@ -35,7 +35,7 @@ if ($link) {
 		}
 	}else{
 		$sql = "INSERT INTO shisetsu (meisho, jusho, tel, genre1, genre2, genre3, lat, lng, imageurl, url, geom) VALUES
-		('{$meisho}','{$jusho}','{$tel}','{$j1}','{$j2}','','{$lat}','{$lng}','{$iurl}','{$url}',ST_GeomFromText('POINT({$lat} {$lng})',4326))";
+		('{$meisho}','{$jusho}','{$tel}',{$j1},{$j2},0,'{$lat}','{$lng}','{$iurl}','{$url}',ST_GeomFromText('POINT({$lat} {$lng})',4326))";
 		$result_flag = pg_query($sql);
 		if (!$result_flag) {
 			error_log("インサートに失敗しました。".pg_last_error());

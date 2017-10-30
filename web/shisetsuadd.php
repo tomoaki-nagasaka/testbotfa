@@ -99,7 +99,6 @@ if ($link) {
 		$arr = array();
 		while ($row = pg_fetch_row($result)) {
 			$arr = $arr + array($row[2] => $row[4]);
-			error_log("★★★★★★★★★★★★★★★名称:".$row[4]);
 		}
 		$j2value = $j2value + array($key => $arr);
 	}
@@ -142,6 +141,7 @@ $(function(){
 		option.appendChild(text);
 		select.appendChild(option);
 	}
+	j1change();
 
 	if(meisho != ""){
 		document.getElementById('meisho').value = meisho;
@@ -166,8 +166,6 @@ function j1change(){
 
 	var j2value = <?php echo json_encode($j2value); ?>;
 	var janru = j2value[document.getElementById('j1').value];
-
-	alert("j2valueの長さ:" + Object.keys(j2value).length + " 長さ:" + Object.keys(j2value).janru);
 
 	for( var key in janru ) {
 		var option = document.createElement('option');
