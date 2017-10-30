@@ -93,6 +93,15 @@ if ($link) {
 	while ($row = pg_fetch_row($result)) {
 		$j1value = $j1value + array($row[1] => $row[4]);
 	}
+
+	foreach($j1value as $key => $value){
+		$result = pg_query("SELECT * FROM genre WHERE bunrui = 2 and genre1 = {$key1}");
+		$arr = array();
+		while ($row = pg_fetch_row($result)) {
+			$arr = $arr + array($row[2] => $row[4]);
+		}
+		$j2value = $j2value + array($key => $arr);
+	}
 }
 ?>
 
@@ -154,6 +163,18 @@ function j1change(){
 		select.removeChild(select.childNodes[0]);
 	}
 
+	var j2value = <?php echo json_encode($j2value); ?>;
+	var janru = j2value[document.getElementById('j1').value];
+
+	for( var key in janru ) {
+		var option = document.createElement('option');
+		option.setAttribute('value', key);
+		var text = document.createTextNode(janru[key]);
+		option.appendChild(text);
+		select.appendChild(option);
+	}
+
+	/*
 	var janru = [];
 	switch (document.getElementById('j1').value){
 	  case "グルメ":
@@ -189,6 +210,7 @@ function j1change(){
 		option.appendChild(text);
 		select.appendChild(option);
 	});
+	*/
 }
 
 //クリア
