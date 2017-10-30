@@ -448,7 +448,9 @@ if($type == "text"){
 
 	$genre = $json["output"]["text"][0];
 	$genreB = explode(".", $genre);
-	$resmess = "『".$genreB[1]."』について周辺検索します。位置情報を送信してください。";
+	$result = pg_query("SELECT meisho FROM genre WHERE gid1 = $genreB[0] AND gid2 = $genreB[1]");
+	$row = pg_fetch_row($result);
+	$resmess = "『".$row[0]."』について周辺検索します。位置情報を送信してください。";
 	if ($link) {
 		$sql = "UPDATE userinfo SET search = '{$genre}' WHERE userid = '{$userID}'";
 		$result_flag = pg_query($sql);
@@ -466,7 +468,7 @@ if($type == "text"){
 }else if($type == "location"){
 
 	if($searchG == ""){
-		$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
+		$resmess = "現在地から市内の施設を検索します。どのような施設を検索しますか？";
 		goto PROC03_END;
 	}
 	$genreB = explode(".", $searchG);
@@ -477,17 +479,25 @@ if($type == "text"){
 
 	//現在地から近い順に検索
 	if ($link) {
-		if($genreB[0] == "1"){
+		if($genreB[1] == "0"){
+			/*
 			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
-        	'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = '{$genreB[1]}' AND ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
+        	'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = '{$genreB[0]}' AND ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
         	ORDER BY GISX.KYORI ");
-		}else{
+        	*/
 			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
-			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre2 = '{$genreB[1]}' AND ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
+			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} ORDER BY GISX.KYORI ");
+		}else{
+			/*
+			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} AND genre2 = '{$genreB[1]}' AND ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),'SPHEROID[\"GRS_1980\",6378137,298.257222101]') < 1000) AS GISX
 			ORDER BY GISX.KYORI ");
+			*/
+			$result = pg_query("SELECT * FROM (SELECT meisho,jusho,tel,imageurl,url,lat,lng,ST_Distance_Spheroid(geom,ST_GeomFromText('POINT({$latitude} {$longitude})',4326),
+			'SPHEROID[\"GRS_1980\",6378137,298.257222101]') AS KYORI FROM shisetsu WHERE genre1 = {$genreB[0]} AND genre2 = {$genreB[1]} ORDER BY GISX.KYORI ");
 		}
 		if (pg_num_rows($result) == 0) {
-			$resmess = "1Km以内にお探しの施設はありませんでした。";
+			$resmess = "市内にお探しの施設はありませんでした。";
 		}else{
 			$colmuns = [];
 			while ($row = pg_fetch_row($result)) {
@@ -527,7 +537,7 @@ if($type == "text"){
 		}
 	}
 }else{
-	$resmess = "現在地から1Km以内の施設を検索します。どのような施設を検索しますか？";
+	$resmess = "現在地から市内の施設を検索します。どのような施設を検索しますか？";
 }
 
 PROC03_END:
