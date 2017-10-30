@@ -166,6 +166,8 @@ function j1change(){
 	var j2value = <?php echo json_encode($j2value); ?>;
 	var janru = j2value[document.getElementById('j1').value];
 
+	alert("j2valueの長さ:" + Object.keys(j2value).length + " 長さ:" + Object.keys(j2value).janru);
+
 	for( var key in janru ) {
 		var option = document.createElement('option');
 		option.setAttribute('value', key);
