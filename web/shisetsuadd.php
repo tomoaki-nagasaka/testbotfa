@@ -99,6 +99,7 @@ if ($link) {
 		$arr = array();
 		while ($row = pg_fetch_row($result)) {
 			$arr = $arr + array($row[2] => $row[4]);
+			error_log("★★★★★★★★★★★★★★★名称:".$row[4]);
 		}
 		$j2value = $j2value + array($key => $arr);
 	}
