@@ -95,7 +95,7 @@ if ($link) {
 	}
 
 	foreach($j1value as $key => $value){
-		$result = pg_query("SELECT * FROM genre WHERE bunrui = 2 and genre1 = {$key1}");
+		$result = pg_query("SELECT * FROM genre WHERE bunrui = 2 AND genre1 = {$key}");
 		$arr = array();
 		while ($row = pg_fetch_row($result)) {
 			$arr = $arr + array($row[2] => $row[4]);
