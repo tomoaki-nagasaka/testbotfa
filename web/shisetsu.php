@@ -59,11 +59,15 @@ if ($link) {
 		echo "<td>";
 		echo $row[2];
 		echo "</td>";
+		$result2 = pg_query("SELECT meisho FROM genre WHERE gid1 = {$row[3]} AND bunrui = 1");
+		$row2 = pg_fetch_row($result2);
 		echo "<td>";
-		echo $row[3];
+		echo $row2[0];
 		echo "</td>";
+		$result2 = pg_query("SELECT meisho FROM genre WHERE gid1 = {$row[3]} AND gid = {$row[4]} AND bunrui = 2");
+		$row2 = pg_fetch_row($result2);
 		echo "<td>";
-		echo $row[4];
+		echo $row2[0];
 		echo "</td>";
 		echo "<td>";
 		echo $row[5];
