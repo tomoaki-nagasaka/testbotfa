@@ -60,7 +60,7 @@ if ($link) {
 		echo $row[2];
 		echo "</td>";
 		echo "<td>";
-		echo $row2[3];
+		echo $row[3];
 		echo "</td>";
 		$result2 = pg_query("SELECT meisho FROM genre WHERE gid1 = {$row[4]} AND bunrui = 1");
 		$row2 = pg_fetch_row($result2);
