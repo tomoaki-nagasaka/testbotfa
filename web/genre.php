@@ -46,6 +46,7 @@ if ($link) {
 	echo "</thead>";
 	echo "<tbody>";
 	while ($row = pg_fetch_row($result)) {
+		echo "<tr>";
 		echo "<td>";
 		echo $no++;
 		echo "</td>";
