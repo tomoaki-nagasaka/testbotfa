@@ -32,14 +32,14 @@ $link = pg_connect($conn);
 
 
 if ($link) {
-	$result = pg_query("SELECT * FROM genre");
+	$result = pg_query("SELECT * FROM genre ORDER BY gid1");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
 	echo "<tr><th data-column-id='bunrui' >分類</th>
                <th data-column-id='g1'  >大分類名</th>
                <th data-column-id='g2'  >小分類名</th>
-               <th data-column-id='gid1' style='display:none;'></th>
-               <th data-column-id='gid2' style='display:none;'></th>
+               <th data-column-id='gid1'>分類ID1</th>
+               <th data-column-id='gid2'>分類ID2</th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
