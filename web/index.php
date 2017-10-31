@@ -10,6 +10,7 @@
 <input type="button" onclick="location.href='rank.php'" value="ランキング" />
 <input type="button" onclick="location.href='attribute.php'" value="属性登録" />
 <input type="button" onclick="location.href='shisetsu.php'" value="施設情報" />
+<input type="button" onclick="location.href='genre.php'" value="施設ジャンル" />
 <img src="getimage.php?id=2" />
 
 <?php
