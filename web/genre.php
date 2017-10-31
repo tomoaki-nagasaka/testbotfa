@@ -38,8 +38,8 @@ if ($link) {
 	echo "<thead>";
 	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='bunrui' >分類</th>
-               <th data-column-id='g1'  >大分類名</th>
-               <th data-column-id='g2'  >小分類名</th>
+               <th data-column-id='g1'  >大分類名称</th>
+               <th data-column-id='g2'  >小分類名称</th>
                <th data-column-id='gid1'>分類ID1</th>
                <th data-column-id='gid2'>分類ID2</th>
            </tr>";
@@ -156,7 +156,8 @@ function drow() {
 			$.ajax({
 				type: "POST",
 				url: "genredel.php",
-				data: "id=" + rowIds[i],
+				data: "gid1=" + rowgid1[i],
+				data: "gid2=" + rowgid2[i]
 			}).then(
 				function(){
 				},
@@ -175,7 +176,7 @@ function drow() {
 }
 
 function irow(){
-	window.location.href = "./genreadd.php";
+	window.location.href = "./genreadd.php?gid1=0";
 }
 
 function mrow(){
