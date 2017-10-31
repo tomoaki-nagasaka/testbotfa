@@ -32,7 +32,7 @@ $link = pg_connect($conn);
 
 
 if ($link) {
-	$no = 0;
+	$no = 1;
 	$result = pg_query("SELECT * FROM genre ORDER BY gid1,gid2");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
@@ -119,6 +119,7 @@ $(function() {
 	    //alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
 	{
+		/*
 	    for (var i = 0; i < rows.length; i++)
 	    {
 	    	for (var ii = 0; ii < rowIds.length; ii++){
@@ -131,6 +132,7 @@ $(function() {
 	    	}
 	        //rowIds.push(rows[i].no);
 	    }
+	    */
 	    //alert("Deselect: " + rowIds.join(","));
 	});
 });
