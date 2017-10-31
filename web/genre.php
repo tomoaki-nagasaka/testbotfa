@@ -32,10 +32,12 @@ $link = pg_connect($conn);
 
 
 if ($link) {
-	$result = pg_query("SELECT * FROM genre ORDER BY gid1");
+	$no = 0;
+	$result = pg_query("SELECT * FROM genre ORDER BY gid1,gid2");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='bunrui' >分類</th>
+	echo "<tr><th data-column-id='no' >No</th>
+               <th data-column-id='bunrui' >分類</th>
                <th data-column-id='g1'  >大分類名</th>
                <th data-column-id='g2'  >小分類名</th>
                <th data-column-id='gid1'>分類ID1</th>
@@ -44,6 +46,9 @@ if ($link) {
 	echo "</thead>";
 	echo "<tbody>";
 	while ($row = pg_fetch_row($result)) {
+		echo "<td>";
+		echo $no++;
+		echo "</td>";
 		echo "<tr>";
 		echo "<td>";
 		if($row[0] == 1){
@@ -90,6 +95,7 @@ if ($link) {
 <script src="js/bootstrap.js"></script>
 <script src="js/jquery.bootgrid.js"></script>
 <script>
+var rowIds = [];
 var rowgid1 = [];
 var rowgid2 = [];
 $(function() {
@@ -106,23 +112,21 @@ $(function() {
 	{
 	    for (var i = 0; i < rows.length; i++)
 	    {
-	    	rowgid1.push(rows[i].gid1);
-	    	rowgid2.push(rows[i].gid2);
+	        rowIds.push(rows[i].no);
+	        rowgid1.push(rows[i].gid1);
+	        rowgid2.push(rows[i].gid2);
 	    }
 	    //alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
 	{
 	    for (var i = 0; i < rows.length; i++)
 	    {
-	    	rowgid1.some(function(v, ii){
-		    	if(v==rows[i].gid1){
-		    		rowgid2.some(function(vv, iii){
-		    			if(v==rows[i].gid2){
-		    				rowgid1.splice(iii,1);
-		    				rowgid2.splice(iii,1);
-		    			}
-		    		});
-		    	}
+	    	rowIds.some(function(v, ii){
+	    	    if (v==rows[i].no){
+		    	     rowIds.splice(ii,1);
+		    	     rowgid1.splice(ii,1);
+		    	     rowgid2.splice(ii,1);
+	    	    }
 	    	});
 	        //rowIds.push(rows[i].no);
 	    }
