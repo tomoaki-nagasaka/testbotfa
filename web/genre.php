@@ -49,7 +49,6 @@ if ($link) {
 		echo "<td>";
 		echo $no++;
 		echo "</td>";
-		echo "<tr>";
 		echo "<td>";
 		if($row[0] == 1){
 			echo "大分類";
@@ -121,13 +120,14 @@ $(function() {
 	{
 	    for (var i = 0; i < rows.length; i++)
 	    {
-	    	rowIds.some(function(v, ii){
-	    	    if (v==rows[i].no){
-		    	     rowIds.splice(ii,1);
-		    	     rowgid1.splice(ii,1);
-		    	     rowgid2.splice(ii,1);
-	    	    }
-	    	});
+	    	for (var ii = 0; ii < rowIds.length; ii++){
+		    	if(rowIds[ii] == rows[i].no){
+		    		rowIds.splice(ii,1);
+		    		rowgid1.splice(ii,1);
+		    		rowgid2.splice(ii,1);
+		    		break;
+		    	}
+	    	}
 	        //rowIds.push(rows[i].no);
 	    }
 	    //alert("Deselect: " + rowIds.join(","));
