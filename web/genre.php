@@ -38,8 +38,8 @@ if ($link) {
 	echo "<tr><th data-column-id='bunrui' >分類</th>
                <th data-column-id='g1'  >大分類名</th>
                <th data-column-id='g2'  >小分類名</th>
-               <th data-column-id='gid1' style='display:none'></th>
-               <th data-column-id='gid2' style='display:none'></th>
+               <th data-column-id='gid1' style='display:none;'></th>
+               <th data-column-id='gid2' style='display:none;'></th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -65,7 +65,7 @@ if ($link) {
 		if($row[0] == 1){
 			echo "－";
 		}else{
-			echo $row2[4];
+			echo $row[4];
 		}
 		echo "</td>";
 		echo "<td>";
