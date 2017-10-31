@@ -36,7 +36,7 @@ if ($link) {
 	$result = pg_query("SELECT * FROM genre ORDER BY gid1,gid2");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
-	echo "<tr><th data-column-id='no' >No</th>
+	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='bunrui' >分類</th>
                <th data-column-id='g1'  >大分類名</th>
                <th data-column-id='g2'  >小分類名</th>
@@ -110,12 +110,14 @@ $(function() {
 	    keepSelection: true,
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
 	{
+		/*
 	    for (var i = 0; i < rows.length; i++)
 	    {
 	        rowIds.push(rows[i].no);
 	        rowgid1.push(rows[i].gid1);
 	        rowgid2.push(rows[i].gid2);
 	    }
+	    */
 	    //alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
 	{
