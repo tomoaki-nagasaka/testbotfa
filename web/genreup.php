@@ -17,7 +17,7 @@ $meisho= $_POST['meisho'];
 $gid1= $_POST['gid1'];
 $gid2= $_POST['gid2'];
 
-//error_log("user:".$user." age:".$age." sex:".$sex." region:".$region);
+error_log("uiKbn:".$uiKbn." bunrui:".$bunrui." meisho:".$meisho." gid1:".$gid1." gid2:".$gid2);
 
 if ($link) {
 	if($uiKbn == 1){

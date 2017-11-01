@@ -162,12 +162,12 @@ function drow() {
 				}
 			);
 		}
-	}
-	if( successFlg == true){
-		alert("削除しました");
-		location.reload();
-	}else{
-		alert("削除できませんでした");
+		if( successFlg == true){
+			alert("削除しました");
+			location.reload();
+		}else{
+			alert("削除できませんでした");
+		}
 	}
 }
 
