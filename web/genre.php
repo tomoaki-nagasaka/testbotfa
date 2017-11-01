@@ -154,6 +154,7 @@ function drow() {
 	var myRet = confirm("選択行を削除しますか？");
 	if ( myRet == true ){
 		for (var i = 0; i < rowIds.length; i++){
+			alert("rowgid1:" + rowgid1[i] + " rowgid2:" + rowgid2[i]);
 			$.ajax({
 				type: "POST",
 				url: "genredel.php",
