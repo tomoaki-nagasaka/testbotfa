@@ -448,14 +448,18 @@ if($type == "text"){
 
 	$genre = $json["output"]["text"][0];
 	$genreB = explode(".", $genre);
-	$result = pg_query("SELECT meisho FROM genre WHERE gid1 = $genreB[0] AND gid2 = $genreB[1]");
-	$row = pg_fetch_row($result);
-	$resmess = "『".$row[0]."』について周辺検索します。位置情報を送信してください。";
-	if ($link) {
-		$sql = "UPDATE userinfo SET search = '{$genre}' WHERE userid = '{$userID}'";
-		$result_flag = pg_query($sql);
-		if (!$result_flag) {
-			error_log("アップデートに失敗しました。".pg_last_error());
+	if($genreB[0] == 0){
+		$resmess = "市内にお探しの施設はありませんでした。";
+	}else{
+		$result = pg_query("SELECT meisho FROM genre WHERE gid1 = $genreB[0] AND gid2 = $genreB[1]");
+		$row = pg_fetch_row($result);
+		$resmess = "『".$row[0]."』について周辺検索します。位置情報を送信してください。";
+		if ($link) {
+			$sql = "UPDATE userinfo SET search = '{$genre}' WHERE userid = '{$userID}'";
+			$result_flag = pg_query($sql);
+			if (!$result_flag) {
+				error_log("アップデートに失敗しました。".pg_last_error());
+			}
 		}
 	}
 	translation();
