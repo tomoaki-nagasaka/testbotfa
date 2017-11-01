@@ -105,7 +105,7 @@ $(function(){
 		}
 	}else{
 		uiKbn = 2;
-		document.getElementById('g1meisho').style.display = "none";
+		document.getElementById('g1').style.display = "none";
 		document.getElementById('g2meisho').disabled = true;
 	}
 
