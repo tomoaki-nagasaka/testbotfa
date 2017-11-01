@@ -17,7 +17,7 @@
 <script src="js/bootstrap.js"></script>
 <script>
 $(function(){
-	$("#header").load("./header.html");
+	$("#header").load("header.html");
 });
 </script>
 </html>
