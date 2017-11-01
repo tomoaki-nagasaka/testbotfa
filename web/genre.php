@@ -89,11 +89,11 @@ if ($link) {
 }
 
 ?>
-</div>
 <div class="container">
 	<input id="btn_del" type="button" class="btn btn-secondary" value="選択行の削除" onclick="drow()"  style="display:none">
 	<input id="btn_ins" type="button" class="btn btn-secondary" value="ジャンルの追加" onclick="irow()"  style="display:none">
 	<input id="btn_mod" type="button" class="btn btn-secondary" value="ジャンルの修正" onclick="mrow()"  style="display:none">
+</div>
 </div>
 <script>
 var rowIds = [];
@@ -143,9 +143,9 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#loader-bg').delay(900).fadeOut(800);
 	  $('#loader').delay(600).fadeOut(300);
 	  $('#wrap').css('display', 'block');
-	  $('#btn_del').css('display', 'block');
-	  $('#btn_ins').css('display', 'block');
-	  $('#btn_mod').css('display', 'block');
+	  //$('#btn_del').css('display', 'block');
+	  //$('#btn_ins').css('display', 'block');
+	  //$('#btn_mod').css('display', 'block');
 });
 
 function drow() {
