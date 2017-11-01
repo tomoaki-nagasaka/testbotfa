@@ -680,7 +680,12 @@ if($eventType == "postback"){
 
 //メッセージ以外のときは何も返さず終了
 if($type != "text"){
-	$resmess = "まだ、勉強中なところが多いですが、質問にお答えしますよ～。\n聞きたいことを送信してくださいね。";
+	$resmess = "申し訳ありませんが、文字を送信してください。";
+	translation();
+	$response_format_text = [
+			"type" => "text",
+			"text" => $resmess
+	];
 	$dbupdateflg = false;
 	goto lineSend;
 }
