@@ -47,7 +47,7 @@ $gid1 = $_GET['gid1'];
 $gid2 = $_GET['gid2'];
 
 //error_log("★★★★★★★★★★★★★★★id:".$id);
-if($gid > 0){
+if($gid1 > 0){
 	if ($link) {
 		$result = pg_query("SELECT * FROM genre WHERE gid1 = {$gid1} AND gid2 = {$gid2}");
 		$row = pg_fetch_row($result);
@@ -95,6 +95,7 @@ $(function(){
 		if(gid2 > 0){
 			document.getElementById('bunrui').value = 2;
 			document.getElementById('g1').value = gid1;
+			document.getElementById('g1').disabled = true;
 			document.getElementById('g1meisho').style.display = "none";
 			document.getElementById('g2meisho').value = meisho;
 		}else{
