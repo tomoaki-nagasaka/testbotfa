@@ -31,13 +31,13 @@ if ($link) {
 			$result= pg_query("SELECT gid1 FROM genre ORDER BY gid1 DESC");
 			$row = pg_fetch_row($result);
 			$gid1 = $row[0] + 1;
-			$sql = "INSERT INTO genre (bunrui, gid1, gid2, gid3, meisho) VALUES ({$bunrui}, {$gid1}, 0, 0, {$meisho})";
+			$sql = "INSERT INTO genre (bunrui, gid1, gid2, gid3, meisho) VALUES ({$bunrui}, {$gid1}, 0, 0, '{$meisho}')";
 			$result_flag = pg_query($sql);
 		}else{
 			$result= pg_query("SELECT gid2 FROM genre WHERE gid1 = {$gid1} ORDER BY gid2 DESC");
 			$row = pg_fetch_row($result);
 			$gid2 = $row[0] + 1;
-			$sql = "INSERT INTO genre (bunrui, gid1, gid2, gid3, meisho) VALUES ({$bunrui}, {$gid1}, {$gid2}, 0, {$meisho})";
+			$sql = "INSERT INTO genre (bunrui, gid1, gid2, gid3, meisho) VALUES ({$bunrui}, {$gid1}, {$gid2}, 0, '{$meisho}')";
 			$result_flag = pg_query($sql);
 		}
 		if (!$result_flag) {
