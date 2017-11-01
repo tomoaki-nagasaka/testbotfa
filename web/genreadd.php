@@ -100,6 +100,7 @@ $(function(){
 			document.getElementById('g2meisho').value = meisho;
 		}else{
 			document.getElementById('bunrui').value = 1;
+			document.getElementById('g1').value = gid1;
 			document.getElementById('g1').style.display = "none";
 			document.getElementById('g1meisho').value = meisho;
 			document.getElementById('g2meisho').disabled = true;

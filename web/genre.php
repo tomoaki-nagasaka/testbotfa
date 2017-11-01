@@ -115,7 +115,7 @@ $(function() {
 	        rowIds.push(rows[i].no);
 	        rowgid1.push(rows[i].gid1);
 	        rowgid2.push(rows[i].gid2);
-	        alert("rowgid1:" + rows[i].gid1 + " rowgid2:" + rows[i].gid2);
+	        //alert("rowgid1:" + rows[i].gid1 + " rowgid2:" + rows[i].gid2);
 	    }
 	    //alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
