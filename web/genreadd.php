@@ -133,7 +133,7 @@ function update(){
 	if(bunrui == 1){
 		meisho = document.getElementById('g1meisho').value;
 	}else{
-		meisho = document.getElementById('g1meisho').value;
+		meisho = document.getElementById('g2meisho').value;
 	}
 	$.ajax({
 		type: "POST",
