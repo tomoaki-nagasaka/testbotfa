@@ -10,12 +10,16 @@
 </head>
 <body>
 <div id="header"></div>
-<input type="button" class="btn btn-primary" onclick="location.href='botlog.php'" value="ログ参照" />
-<input type="button" class="btn btn-primary" onclick="location.href='imagelog.php'" value="画像ログ参照" />
-<input type="button" class="btn btn-primary" onclick="location.href='rank.php'" value="ランキング" />
-<input type="button" class="btn btn-primary" onclick="location.href='attribute.php'" value="属性登録" />
-<input type="button" class="btn btn-primary" onclick="location.href='shisetsu.php'" value="施設情報" />
-<input type="button" class="btn btn-primary" onclick="location.href='genre.php'" value="施設ジャンル" />
+<div class="container">
+	<div class="center-block">
+		<input type="button" class="btn btn-primary" onclick="location.href='botlog.php'" value="ログ参照" />
+		<input type="button" class="btn btn-primary" onclick="location.href='imagelog.php'" value="画像ログ参照" />
+		<input type="button" class="btn btn-primary" onclick="location.href='rank.php'" value="ランキング" />
+		<input type="button" class="btn btn-primary" onclick="location.href='attribute.php'" value="属性登録" />
+		<input type="button" class="btn btn-primary" onclick="location.href='shisetsu.php'" value="施設情報" />
+		<input type="button" class="btn btn-primary" onclick="location.href='genre.php'" value="施設ジャンル" />
+	</div>
+</div>
 </body>
 <script>
 $(function(){
