@@ -110,18 +110,15 @@ $(function() {
 	    keepSelection: true,
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
 	{
-		/*
-	    for (var i = 0; i < rows.length; i++)
+		for (var i = 0; i < rows.length; i++)
 	    {
 	        rowIds.push(rows[i].no);
 	        rowgid1.push(rows[i].gid1);
 	        rowgid2.push(rows[i].gid2);
 	    }
-	    */
 	    //alert("Select: " + rowIds.join(","));
 	}).on("deselected.rs.jquery.bootgrid", function(e, rows)
 	{
-		/*
 	    for (var i = 0; i < rows.length; i++)
 	    {
 	    	for (var ii = 0; ii < rowIds.length; ii++){
@@ -134,7 +131,6 @@ $(function() {
 	    	}
 	        //rowIds.push(rows[i].no);
 	    }
-	    */
 	    //alert("Deselect: " + rowIds.join(","));
 	});
 });
@@ -176,7 +172,7 @@ function drow() {
 }
 
 function irow(){
-	window.location.href = "./genreadd.php?gid1=0";
+	window.location.href = "./genreadd.php?gid1=0&gid2=0";
 }
 
 function mrow(){

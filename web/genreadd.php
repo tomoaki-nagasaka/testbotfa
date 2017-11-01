@@ -6,18 +6,18 @@
 <title>ジャンル登録</title>
 </head>
 <body>
-<p style="display:inline;">分類</p>
+<p>分類</p>
 <select id="bunrui"  onChange="bchange()">
 <option value="1">大分類</option>
 <option value="2">小分類</option>
 </select>
 <br><br>
-<p  style="display:inline;">大分類名称</p>
+<p>大分類名称</p>
 <input id="g1meisho" maxlength="50" placeholder="大分類名称" style="width: 500px;">
 <select id="g1">
 </select>
 <br><br>
-<p  style="display:inline;">小分類名称</p>
+<p>小分類名称</p>
 <input id="g2meisho" maxlength="50" placeholder="小分類名称" style="width: 500px;">
 <br><br>
 <input type="button" onclick="update()" value="更新" />
@@ -65,9 +65,11 @@ if ($link) {
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
+var bunrui = 0;
 var gid1 = 0;
 var gid2 = 0;
 var meisho = "";
+var uiKbn = 0;
 
 $(function(){
 	gid1 = <?php echo json_encode($gid1); ?>;
@@ -88,7 +90,8 @@ $(function(){
 
 
 	if(gid1 > 0){
-		document.getElementById('bunrui').disabled = false;
+		uiKbn = 1;
+		document.getElementById('bunrui').disabled = true;
 		if(gid2 > 0){
 			document.getElementById('bunrui').value = 2;
 			document.getElementById('g1').value = gid1;
@@ -98,11 +101,12 @@ $(function(){
 			document.getElementById('bunrui').value = 1;
 			document.getElementById('g1').style.display = "none";
 			document.getElementById('g1meisho').value = meisho;
-			document.getElementById('g2meisho').disabled = false;
+			document.getElementById('g2meisho').disabled = true;
 		}
 	}else{
+		uiKbn = 2;
 		document.getElementById('g1meisho').style.display = "none";
-		document.getElementById('g2meisho').value = meisho;
+		document.getElementById('g2meisho').disabled = true;
 	}
 
 });
@@ -112,49 +116,39 @@ function bchange(){
 	if(document.getElementById('bunrui').value == 1){
 		document.getElementById('g1').style.display = "none";
 		document.getElementById('g1meisho').style.display = "block";
-		document.getElementById('g2meisho').disabled = false;
+		document.getElementById('g2meisho').disabled = true;
 		document.getElementById('g2meisho').value = "";
 	}
 	if(document.getElementById('bunrui').value == 2){
 		document.getElementById('g1').style.display = "block";
 		document.getElementById('g1meisho').style.display = "none"
-		document.getElementById('g2meisho').disabled = true;
+		document.getElementById('g2meisho').disabled = false;
 	}
 }
 
 //更新
 function update(){
-	id = <?php echo json_encode($id); ?>;
-	meisho = document.getElementById('meisho').value;
-	jusho = document.getElementById('jusho').value;
-	tel = document.getElementById('tel').value;
-	j1 = document.getElementById('j1').value;
-	j2 = document.getElementById('j2').value;
-	latlng = document.getElementById('latlng').value;
-	var arrayOfStrings = latlng.split(",");
-	lat = arrayOfStrings[0];
-	lng = arrayOfStrings[1];
-	iurl = document.getElementById('iurl').value;
-	url = document.getElementById('url').value;
+	bunrui = document.getElementById('bunrui').value;
+	gid1 = document.getElementById('g1').value;
+	if(bunrui == 1){
+		meisho = document.getElementById('g1meisho').value;
+	}else{
+		meisho = document.getElementById('g1meisho').value;
+	}
 	$.ajax({
 		type: "POST",
-		url: "shisetsuup.php",
+		url: "genreup.php",
 		data: {
-			"id" : id,
+			"uiKbn" : uiKbn,
+			"bunrui" : bunrui,
 			"meisho" : meisho,
-			"jusho" : jusho,
-			"tel" : tel,
-			"j1" : j1,
-			"j2" : j2,
-			"lat" : lat,
-			"lng" : lng,
-			"iurl" : iurl,
-			"url" : url
+			"gid1" : gid1,
+			"gid2" : gid2
 		}
 	}).then(
 		function(){
 			alert("登録が完了しました。");
-			window.location.href = "./shisetsu.php";
+			window.location.href = "./genre.php";
 		},
 		function(){
 			alert("登録できませんでした。");
