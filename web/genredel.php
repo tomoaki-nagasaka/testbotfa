@@ -14,6 +14,8 @@ $link = pg_connect($conn);
 $gid1 = $_POST['gid1'];
 $gid2 = $_POST['gid2'];
 
+error_log("★★★★★★★★★★★ gid1:".$gid1." gid2:".$gid2);
+
 if ($link) {
 	$result = pg_query("DELETE FROM genre WHERE gid1 = {$gid1} AND gid2 = {$gid2}");
 
