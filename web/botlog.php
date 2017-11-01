@@ -16,7 +16,7 @@
   </div>
 </div>
 <div id="wrap" style="display:none">
-
+<div id="header"></div>
 <?php
 
 //環境変数の取得
@@ -79,6 +79,8 @@ $(function() {
 	var h = $(window).height();
 	$('#wrap').css('display','none');
 	$('#loader-bg ,#loader').height(h).css('display','block');
+
+	$("#header").load("header.html");
 
 	$("#grid-basic").bootgrid({
 		selection: true,
