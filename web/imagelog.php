@@ -154,6 +154,10 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 });
 
 function drow() {
+	if(rowIds.length == 0){
+		alert("削除する行を選択してください");
+		return;
+	}
 	var successFlg = true;
 	var myRet = confirm("選択行を削除しますか？");
 	if ( myRet == true ){
@@ -170,12 +174,12 @@ function drow() {
 				}
 			);
 		}
-	}
-	if( successFlg == true){
-		alert("削除しました");
-		location.reload();
-	}else{
-		alert("削除できませんでした");
+		if( successFlg == true){
+			alert("削除しました");
+			location.reload();
+		}else{
+			alert("削除できませんでした");
+		}
 	}
 }
 
