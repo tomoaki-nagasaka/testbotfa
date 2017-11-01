@@ -7,6 +7,8 @@
 <link href="css/common.css" rel="stylesheet" />
 <link href="css/bootstrap.css" rel="stylesheet" />
 <link href="css/jquery.bootgrid.css" rel="stylesheet" />
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
+<script src="js/jquery.bootgrid.js"></script>
 </head>
 <body>
 <div id="loader-bg">
@@ -16,7 +18,7 @@
   </div>
 </div>
 <div id="wrap" style="display:none">
-
+<div id="header"></div>
 <?php
 
 //環境変数の取得
@@ -100,15 +102,14 @@ if ($link) {
 ?>
 </div>
 <input id="btn_del" type="button" value="選択行の削除" onclick="drow()"  style="display:none">
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.bootgrid.js"></script>
 <script>
 var rowIds = [];
 $(function() {
 	var h = $(window).height();
 	$('#wrap').css('display','none');
 	$('#loader-bg ,#loader').height(h).css('display','block');
+
+	$("#header").load("header.html");
 
 	$("#grid-basic").bootgrid({
 		selection: true,

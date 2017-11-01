@@ -4,8 +4,10 @@
 <meta charset='utf-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
 <title>ジャンル登録</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 </head>
 <body>
+<div id="header"></div>
 <p>分類</p>
 <select id="bunrui"  onChange="bchange()">
 <option value="1">大分類</option>
@@ -63,7 +65,6 @@ if ($link) {
 }
 ?>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
 var bunrui = 0;
 var gid1 = 0;
@@ -72,6 +73,7 @@ var meisho = "";
 var uiKbn = 0;
 
 $(function(){
+	$("#header").load("header.html");
 	gid1 = <?php echo json_encode($gid1); ?>;
 	gid2 = <?php echo json_encode($gid2); ?>;
 	meisho = <?php echo json_encode($meisho); ?>;

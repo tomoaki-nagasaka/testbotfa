@@ -4,7 +4,9 @@
 <meta charset='utf-8'>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
 <title>施設登録</title>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 </head>
+<div id="header"></div>
 <body>
 <p  style="display:inline;">　施設名称</p>
 <input id="meisho" maxlength="40" placeholder="行政公園" style="width: 500px;">
@@ -104,8 +106,6 @@ if ($link) {
 	}
 }
 ?>
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.js"></script>
 <script>
 var id = "";
 var meisho = "";
@@ -120,6 +120,7 @@ var iurl = "";
 var url = "";
 
 $(function(){
+	$("#header").load("header.html");
 	meisho = <?php echo json_encode($meisho); ?>;
 	jusho = <?php echo json_encode($jusho); ?>;
 	tel = <?php echo json_encode($tel); ?>;
