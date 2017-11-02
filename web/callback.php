@@ -614,6 +614,11 @@ if($type != "text"){
 
 	$url = "https://watson-api-explorer.mybluemix.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
+	$options = array (
+			CURLOPT_POST=> TRUE ,
+			CURLOPT_RETURNTRANSFER =>TRUE
+	);
+	curl_setopt_array ( $curl, $options );
 	$jsonString = curl_exec ($curl);
 	$json = json_decode($jsonString, true);
 
@@ -623,7 +628,7 @@ if($type != "text"){
 	$disgust = $json["emotion"]["document"]["emotion"]["disgust"] * 100;
 	$anger = $json["emotion"]["document"]["emotion"]["anger"] * 100;
 
-	error_log("★★★★★★★★★★★★★★★★★sadness:".$sadness." joy:".$joy." fear:".$fear." disgust:".$disgust." anger:".$anger);
+	error_log("★★★★★★★★★★★★★★★★★sadness:".$sadness." joy:".$json["emotion"]["document"]["emotion"]["joy"]." fear:".$fear." disgust:".$disgust." anger:".$anger);
 
 	//DBの更新
 	$Utext= str_replace("'","",$Utext);
