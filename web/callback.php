@@ -615,7 +615,9 @@ if($type != "text"){
 	$url = "https://watson-api-explorer.mybluemix.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
 	$options = array (
-			CURLOPT_POST=> TRUE ,
+			CURLOPT_HTTPHEADER => array(
+					'content-type: text/plain','accept: application/json'
+			),
 			CURLOPT_RETURNTRANSFER =>TRUE
 	);
 	curl_setopt_array ( $curl, $options );
