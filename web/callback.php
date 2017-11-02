@@ -618,6 +618,7 @@ if($type != "text"){
 			CURLOPT_HTTPHEADER => array(
 					'content-type: text/plain','accept: application/json'
 			),
+			CURLOPT_CUSTOMREQUEST => 'GET',
 			CURLOPT_RETURNTRANSFER =>TRUE
 	);
 	curl_setopt_array ( $curl, $options );
