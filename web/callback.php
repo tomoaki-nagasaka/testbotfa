@@ -610,6 +610,8 @@ if($type != "text"){
 	$disgust = 0;
 	$anger = 0;
 
+	error_log("★★★★★★★★★★★★★★★★★text:".$text);
+
 	$url = "https://watson-api-explorer.mybluemix.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
 	$jsonString = curl_exec ($curl);
@@ -1038,10 +1040,7 @@ function translationJa(){
 }
 
 function translationEn(){
-	global $text,$lang,$data;
-	//日本語以外の場合は翻訳
-	if($lang == "02"){
-		$data = array('text' => $text, 'source' => 'ja', 'target' => 'en');
-		$text = callWatsonLT2();
-	}
+	global $text,$data;
+	$data = array('text' => $text, 'source' => 'ja', 'target' => 'en');
+	$text = callWatsonLT2();
 }
