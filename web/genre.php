@@ -89,10 +89,10 @@ if ($link) {
 }
 
 ?>
-<div class="container">
-	<input id="btn_del" type="button" class="btn btn-secondary" value="選択行の削除" onclick="drow()">
-	<input id="btn_ins" type="button" class="btn btn-secondary" value="ジャンルの追加" onclick="irow()">
-	<input id="btn_mod" type="button" class="btn btn-secondary" value="ジャンルの修正" onclick="mrow()">
+<div class="container" align="center">
+	<input id="btn_del" type="button" class="btn btn-default" value="選択行の削除" onclick="drow()">
+	<input id="btn_ins" type="button" class="btn btn-default" value="ジャンルの追加" onclick="irow()">
+	<input id="btn_mod" type="button" class="btn btn-default" value="ジャンルの修正" onclick="mrow()">
 </div>
 </div>
 <script>
