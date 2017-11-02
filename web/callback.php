@@ -144,6 +144,10 @@ if($text == "AED検索"){
 	$shorimode = "05";
 	$resmess = "最寄りのAEDを検索します。\n位置情報を送信してください。";
 }
+if($text == "市政へのご意見"){
+	$shorimode = "06";
+	$resmess = "行政市では、皆様の貴重なご意見を頂戴し、市政に反映していきます。\n市政へのご意見を送信してください。\nよろしくお願いします。";
+}
 //検診相談、属性登録の場合は年齢、性別が登録されているかを確認
 if($shorimode == "01" or $shorimode == "00"){
 	if($sex == "1"){
@@ -282,6 +286,10 @@ switch ($shorimode){
 	//AED検索
 	case "05":
 		goto PROC05;
+		break;
+	//市政へのご意見
+	case "06":
+		goto PROC06;
 		break;
 	//その他
 	default:
@@ -580,6 +588,50 @@ if($type == "location"){
 
 }else{
 	$resmess = "申し訳ありませんが、位置情報を送信してください。";
+}
+translation();
+$response_format_text = [
+		"type" => "text",
+		"text" => $resmess
+];
+$dbupdateflg = false;
+goto lineSend;
+
+//市政へのご意見
+PROC06:
+if($type != "text"){
+	$resmess = "申し訳ありませんが、文字を送信してください。";
+}else{
+	translationEn();
+
+	$sadness = 0;
+	$joy = 0;
+	$fear = 0;
+	$disgust = 0;
+	$anger = 0;
+
+	$url = "https://watson-api-explorer.mybluemix.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
+	$curl = curl_init($url);
+	$jsonString = curl_exec ($curl);
+	$json = json_decode($jsonString, true);
+
+	$sadness = $json["emotion"]["document"]["emotion"]["sadness"] * 100;
+	$joy = $json["emotion"]["document"]["emotion"]["joy"] * 100;
+	$fear = $json["emotion"]["document"]["emotion"]["fear"] * 100;
+	$disgust = $json["emotion"]["document"]["emotion"]["disgust"] * 100;
+	$anger = $json["emotion"]["document"]["emotion"]["anger"] * 100;
+
+	error_log("★★★★★★★★★★★★★★★★★sadness:".$sadness." joy:".$joy." fear:".$fear." disgust:".$disgust." anger:".$anger);
+
+	//DBの更新
+	$Utext= str_replace("'","",$Utext);
+	$sql = "INSERT INTO opinion (time, sex, age, opinion, sadness, joy, fear, disgust, anger, checked) VALUES ('{$tdate}','{$sex}','{$age}','{$Utext}',{$sadness},{$joy},{$fear},{$disgust},{$anger},'')";
+	$result_flag = pg_query($sql);
+	if (!$result_flag) {
+		error_log("opinionDBのインサートに失敗しました。".pg_last_error());
+	}
+
+	$resmess = "貴重なご意見をありがとうございました。\n市政に反映できるように努力していきます。";
 }
 translation();
 $response_format_text = [
@@ -981,6 +1033,15 @@ function translationJa(){
 	//日本語以外の場合は翻訳
 	if($lang == "02"){
 		$data = array('text' => $text, 'source' => 'en', 'target' => 'ja');
+		$text = callWatsonLT2();
+	}
+}
+
+function translationEn(){
+	global $text,$lang,$data;
+	//日本語以外の場合は翻訳
+	if($lang == "02"){
+		$data = array('text' => $text, 'source' => 'ja', 'target' => 'en');
 		$text = callWatsonLT2();
 	}
 }
