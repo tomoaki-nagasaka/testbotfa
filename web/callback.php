@@ -621,7 +621,7 @@ if($type != "text"){
 	//$json = json_decode($jsonString, true);
 	$json = json_decode($jsonString);
 
-	error_log("★★★★★★★★★★★★★★★★★text:".$jsonString);
+	error_log("★★★★★★★★★★★★★★★★★text:".$json->{"usage"}->{"text_characters"});
 
 	/*
 	$sadness = $json["emotion"]["document"]["emotion"]["sadness"] * 100;
