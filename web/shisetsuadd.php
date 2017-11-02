@@ -28,7 +28,7 @@
 	<br><br>
 	<p style="display:inline;">緯度・経度</p>
 	<input id="latlng" maxlength="33" placeholder="999.99999,999.99999" style="width: 150px;">
-	<input type="button" onclick="map()" value="地図の確認" />
+	<input type="button" class="btn btn-default" onclick="map()" value="地図の確認" />
 	<br><br>
 	<p style="display:inline;">画像ＵＲＬ</p>
 	<input id="iurl" maxlength="300" placeholder="https://www.yyy.zzz.jpg" style="width: 500px;">
