@@ -618,15 +618,26 @@ if($type != "text"){
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	$jsonString = curl_exec ($curl);
-	$json = json_decode($jsonString, true);
+	//$json = json_decode($jsonString, true);
+	$json = json_decode($jsonString);
 
+	error_log("★★★★★★★★★★★★★★★★★text:".$jsonString);
+
+	/*
 	$sadness = $json["emotion"]["document"]["emotion"]["sadness"] * 100;
 	$joy = $json["emotion"]["document"]["emotion"]["joy"] * 100;
 	$fear = $json["emotion"]["document"]["emotion"]["fear"] * 100;
 	$disgust = $json["emotion"]["document"]["emotion"]["disgust"] * 100;
 	$anger = $json["emotion"]["document"]["emotion"]["anger"] * 100;
+	*/
 
-	error_log("★★★★★★★★★★★★★★★★★sadness:".$sadness." joy:".$json["emotion"]["document"]["emotion"]["joy"]." fear:".$fear." disgust:".$disgust." anger:".$anger);
+	$sadness = $json->{"emotion"}->{"document"}->{"emotion"}->{"sadness"} * 100;
+	$joy= $json->{"emotion"}->{"document"}->{"emotion"}->{"joy"} * 100;
+	$fear= $json->{"emotion"}->{"document"}->{"emotion"}->{"fear"} * 100;
+	$disgust= $json->{"emotion"}->{"document"}->{"emotion"}->{"disgust"} * 100;
+	$anger= $json->{"emotion"}->{"document"}->{"emotion"}->{"anger"} * 100;
+
+	error_log("★★★★★★★★★★★★★★★★★sadness:".$sadness." joy:".$json->{"emotion"}->{"document"}->{"emotion"}->{"joy"}." fear:".$fear." disgust:".$disgust." anger:".$anger);
 
 	//DBの更新
 	$Utext= str_replace("'","",$Utext);
