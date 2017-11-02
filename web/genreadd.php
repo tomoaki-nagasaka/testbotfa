@@ -8,22 +8,24 @@
 </head>
 <body>
 <div id="header"></div>
-<p>分類</p>
-<select id="bunrui"  onChange="bchange()">
-<option value="1">大分類</option>
-<option value="2">小分類</option>
-</select>
-<br><br>
-<p>大分類名称</p>
-<input id="g1meisho" maxlength="50" placeholder="大分類名称" style="width: 500px;">
-<select id="g1">
-</select>
-<br><br>
-<p>小分類名称</p>
-<input id="g2meisho" maxlength="50" placeholder="小分類名称" style="width: 500px;">
-<br><br>
-<input type="button" onclick="update()" value="更新" />
-<input type="button" onclick="back()" value="もどる" />
+<div class="container">
+	<p>分類</p>
+	<select id="bunrui"  onChange="bchange()">
+	<option value="1">大分類</option>
+	<option value="2">小分類</option>
+	</select>
+	<br><br>
+	<p>大分類名称</p>
+	<input id="g1meisho" maxlength="50" placeholder="大分類名称" style="width: 500px;">
+	<select id="g1">
+	</select>
+	<br><br>
+	<p>小分類名称</p>
+	<input id="g2meisho" maxlength="50" placeholder="小分類名称" style="width: 500px;">
+	<br><br>
+	<input type="button" class="btn btn-default" onclick="update()" value="更新" />
+	<input type="button" class="btn btn-default" onclick="back()" value="もどる" />
+</div>
 
 <?php
 

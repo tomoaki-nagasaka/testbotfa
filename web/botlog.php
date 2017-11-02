@@ -70,8 +70,10 @@ if ($link) {
 }
 
 ?>
+<div class="container" align="center">
+	<input id="btn_del" type="button" class="btn btn-default" value="選択行の削除" onclick="drow()">
 </div>
-<input id="btn_del" type="button" value="選択行の削除" onclick="drow()"  style="display:none">
+</div>
 <script>
 var rowIds = [];
 $(function() {
@@ -110,7 +112,6 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#loader-bg').delay(900).fadeOut(800);
 	  $('#loader').delay(600).fadeOut(300);
 	  $('#wrap').css('display', 'block');
-	  $('#btn_del').css('display', 'block');
 });
 
 function drow() {
