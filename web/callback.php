@@ -525,6 +525,13 @@ if($type == "text"){
 							"uri" =>  $row[4]
 					];
 					array_push($actionsarray, $actions);
+				}else{
+					$actions = [
+							"type" =>  "postback",
+							"label" => "詳細なし",
+							"uri" =>  ""
+					];
+					array_push($actionsarray, $actions);
 				}
 				//地図
 				$actions = [
@@ -537,11 +544,17 @@ if($type == "text"){
 				$row[2]= str_replace("-","",$row[2]);
 				$row[2]= str_replace(" ","",$row[2]);
 				if(is_numeric($row[2])){
-					error_log("★★★★★★★★★★★★★".$row[2]);
 					$actions = [
 							"type" =>  "uri",
 							"label" => "電話",
 							"uri" =>  "tel:".$row[2]
+					];
+					array_push($actionsarray, $actions);
+				}else{
+					$actions = [
+							"type" =>  "uri",
+							"label" => "電話番号なし",
+							"uri" =>  ""
 					];
 					array_push($actionsarray, $actions);
 				}
