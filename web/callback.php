@@ -612,11 +612,14 @@ if($type != "text"){
 	$disgust = 0;
 	$anger = 0;
 
+	//スペースを置き換え
+	$text= str_replace(" ","%20",$text);
+
 	error_log("★★★★★★★★★★★★★★★★★text:".$text);
 
+
 	//$url = "https://".$nlu_user.":".$nlu_pass."@gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
-	//$url = "https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
-	$url = "https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=enjoy";
+	$url = "https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
