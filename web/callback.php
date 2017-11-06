@@ -533,17 +533,15 @@ if($type == "text"){
 						"uri" =>  "http://maps.google.com/maps?q=".$row[5].",".$row[6]."+(ココ)"
 				];
 				array_push($actionsarray, $actions);
-				/*
 				//電話
 				if($row[2] != ""){
 					$actions = [
 							"type" =>  "uri",
 							"label" => "電話",
-							"uri" =>  $row[2]
+							"uri" =>  "tel:".$row[2]
 					];
 					array_push($actionsarray, $actions);
 				}
-				*/
 				$shisetsu = [
 						"thumbnailImageUrl" => $row[3],
 						"title" =>  $row[0],
