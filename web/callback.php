@@ -614,12 +614,13 @@ if($type != "text"){
 
 	error_log("★★★★★★★★★★★★★★★★★text:".$text);
 
-	$url = "https://".$nlu_user.":".$nlu_pass."@gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
+	//$url = "https://".$nlu_user.":".$nlu_pass."@gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
+	$url = "https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-	//curl_setopt($curl, CURLOPT_USERPWD, $LTuser. ':' . $LTpass);
+	curl_setopt($curl, CURLOPT_USERPWD, $nlu_user. ':' . $nlu_pass);
 	$jsonString = curl_exec($curl);
 	//$json = json_decode($jsonString, true);
 	$json = json_decode($jsonString);
