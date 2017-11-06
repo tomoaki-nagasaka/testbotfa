@@ -516,22 +516,37 @@ if($type == "text"){
 			$colmuns = [];
 			while ($row = pg_fetch_row($result)) {
 				$kyori= explode(".", $row[7]);
+				$actionsarray = [];
+				//詳細
+				if($row[4] != ""){
+					$actions = [
+							"type" =>  "uri",
+							"label" => "詳細",
+							"uri" =>  $row[4]
+					];
+					array_push($actionsarray, $actions);
+				}
+				//地図
+				$actions = [
+						"type" =>  "uri",
+						"label" => "地図",
+						"uri" =>  "http://maps.google.com/maps?q=".$row[5].",".$row[6]."+(ココ)"
+				];
+				array_push($actionsarray, $actions);
+				//電話
+				if($row[2] != ""){
+					$actions = [
+							"type" =>  "uri",
+							"label" => "電話",
+							"uri" =>  $row[2]
+					];
+					array_push($actionsarray, $actions);
+				}
 				$shisetsu = [
 						"thumbnailImageUrl" => $row[3],
 						"title" =>  $row[0],
-						"text" =>  $row[1]."\n".$row[2]."\n直線距離:".$kyori[0]."m",
-						"actions" => [
-								[
-										"type" =>  "uri",
-										"label" => "詳細",
-										"uri" =>  $row[4]
-								],
-								[
-										"type" =>  "uri",
-										"label" => "地図",
-										"uri" =>  "http://maps.google.com/maps?q=".$row[5].",".$row[6]."+(ココ)"
-								]
-						]
+						"text" =>  $row[1]."\n直線距離:".$kyori[0]."m",
+						"actions" => $actionsarray
 				];
 				array_push($colmuns, $shisetsu);
 				if(count($colmuns) == 5){
@@ -615,10 +630,6 @@ if($type != "text"){
 	//スペースを置き換え
 	$text= str_replace(" ","%20",$text);
 
-	error_log("★★★★★★★★★★★★★★★★★text:".$text);
-
-
-	//$url = "https://".$nlu_user.":".$nlu_pass."@gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$url = "https://gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
@@ -626,26 +637,13 @@ if($type != "text"){
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($curl, CURLOPT_USERPWD, $nlu_user. ':' . $nlu_pass);
 	$jsonString = curl_exec($curl);
-	//$json = json_decode($jsonString, true);
 	$json = json_decode($jsonString);
-
-	error_log("★★★★★★★★★★★★★★★★★text:".$jsonString);
-
-	/*
-	$sadness = $json["emotion"]["document"]["emotion"]["sadness"] * 100;
-	$joy = $json["emotion"]["document"]["emotion"]["joy"] * 100;
-	$fear = $json["emotion"]["document"]["emotion"]["fear"] * 100;
-	$disgust = $json["emotion"]["document"]["emotion"]["disgust"] * 100;
-	$anger = $json["emotion"]["document"]["emotion"]["anger"] * 100;
-	*/
 
 	$sadness = $json->{"emotion"}->{"document"}->{"emotion"}->{"sadness"} * 100;
 	$joy= $json->{"emotion"}->{"document"}->{"emotion"}->{"joy"} * 100;
 	$fear= $json->{"emotion"}->{"document"}->{"emotion"}->{"fear"} * 100;
 	$disgust= $json->{"emotion"}->{"document"}->{"emotion"}->{"disgust"} * 100;
 	$anger= $json->{"emotion"}->{"document"}->{"emotion"}->{"anger"} * 100;
-
-	error_log("★★★★★★★★★★★★★★★★★sadness:".$sadness." joy:".$json->{"emotion"}->{"document"}->{"emotion"}->{"joy"}." fear:".$fear." disgust:".$disgust." anger:".$anger);
 
 	//DBの更新
 	$Utext= str_replace("'","",$Utext);
