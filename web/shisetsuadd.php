@@ -16,7 +16,7 @@
 	<input id="jusho" maxlength="128" placeholder="行政市行政1-1-1"  style="width: 500px;">
 	<br><br>
 	<p style="display:inline;">　電話番号</p>
-	<input id="tel" maxlength="14" placeholder="000-0000-0000"  style="width: 100px;">
+	<input id="tel" type="number" maxlength="12" placeholder="0399999999"  style="width: 100px;">
 	<br><br>
 	<p style="display:inline;">ジャンル１</p>
 	<select id="j1"  onChange="j1change()">
