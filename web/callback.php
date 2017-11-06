@@ -538,7 +538,8 @@ if($type == "text"){
 					$actions = [
 							"type" =>  "uri",
 							"label" => "電話",
-							"uri" =>  "tel:".$row[2]
+							//"uri" =>  "tel:".$row[2]
+							"uri" =>  "tel:0425214192"
 					];
 					array_push($actionsarray, $actions);
 				}
