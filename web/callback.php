@@ -535,6 +535,7 @@ if($type == "text"){
 				array_push($actionsarray, $actions);
 				//電話
 				$row[2]= str_replace("-","",$row[2]);
+				$row[2]= str_replace(" ","",$row[2]);
 				if($row[2] != ""){
 					$actions = [
 							"type" =>  "uri",
