@@ -529,7 +529,7 @@ if($type == "text"){
 					$actions = [
 							"type" =>  "postback",
 							"label" => "詳細なし",
-							"uri" =>  ""
+							"uri" =>  "https://gyoseibot.herokuapp.com/nopage.html"
 					];
 					array_push($actionsarray, $actions);
 				}
@@ -554,7 +554,7 @@ if($type == "text"){
 					$actions = [
 							"type" =>  "uri",
 							"label" => "電話番号なし",
-							"uri" =>  ""
+							"uri" =>  "https://gyoseibot.herokuapp.com/nopage.html"
 					];
 					array_push($actionsarray, $actions);
 				}
