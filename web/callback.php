@@ -536,7 +536,8 @@ if($type == "text"){
 				//電話
 				$row[2]= str_replace("-","",$row[2]);
 				$row[2]= str_replace(" ","",$row[2]);
-				if($row[2] != ""){
+				error_log("★★★★★★★★★★★★★".$row[2]);
+				if(ctype_digit($row[2])){
 					$actions = [
 							"type" =>  "uri",
 							"label" => "電話",
