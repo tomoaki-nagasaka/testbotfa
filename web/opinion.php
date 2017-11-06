@@ -147,7 +147,7 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 });
 
 function detailwin(no){
-	alert(v);
+	alert(no);
 }
 </script>
 </body>
