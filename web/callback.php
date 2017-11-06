@@ -18,6 +18,8 @@ $db_user =  getenv('DB_USER');
 $LTuser = getenv('LT_USER');
 $LTpass = getenv('LT_PASS');
 $VRkey = getenv('VR_KEY');
+$nlu_pass =  getenv('NLU_PASS');
+$nlu_user =  getenv('NLU_USER');
 
 
 //ユーザーからのメッセージ取得
@@ -612,16 +614,17 @@ if($type != "text"){
 
 	error_log("★★★★★★★★★★★★★★★★★text:".$text);
 
-	$url = "https://watson-api-explorer.mybluemix.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
+	$url = "https://".$nlu_user.":".$nlu_pass."@gateway.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2017-02-27&features=emotion&language=en&text=".$text;
 	$curl = curl_init($url);
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-	$jsonString = curl_exec ($curl);
+	curl_setopt($curl, CURLOPT_USERPWD, $LTuser. ':' . $LTpass);
+	$jsonString = curl_exec($curl);
 	//$json = json_decode($jsonString, true);
 	$json = json_decode($jsonString);
 
-	error_log("★★★★★★★★★★★★★★★★★text:".$json->{"usage"}->{"text_characters"});
+	error_log("★★★★★★★★★★★★★★★★★text:".$jsonString);
 
 	/*
 	$sadness = $json["emotion"]["document"]["emotion"]["sadness"] * 100;
