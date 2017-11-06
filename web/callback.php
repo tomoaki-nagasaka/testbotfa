@@ -619,7 +619,7 @@ if($type != "text"){
 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-	curl_setopt($curl, CURLOPT_USERPWD, $LTuser. ':' . $LTpass);
+	//curl_setopt($curl, CURLOPT_USERPWD, $LTuser. ':' . $LTpass);
 	$jsonString = curl_exec($curl);
 	//$json = json_decode($jsonString, true);
 	$json = json_decode($jsonString);
