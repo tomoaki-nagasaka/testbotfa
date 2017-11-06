@@ -41,12 +41,13 @@ if ($link) {
                <th data-column-id='date' data-width='7%'>日時</th>
                <th data-column-id='sex'  data-width='5%'>性別</th>
                <th data-column-id='age'  data-width='5%'>年齢</th>
-               <th data-column-id='sadness'  data-width='10%'>悲しみ</th>
-               <th data-column-id='joy'  data-width='10%'>喜び</th>
-               <th data-column-id='fear'  data-width='10%'>恐れ</th>
-               <th data-column-id='disgust'  data-width='10%'>嫌悪</th>
-               <th data-column-id='anger'  data-width='10%'>怒り</th>
+               <th data-column-id='sadness'  data-width='9%'>悲しみ</th>
+               <th data-column-id='joy'  data-width='9%'>喜び</th>
+               <th data-column-id='fear'  data-width='9%'>恐れ</th>
+               <th data-column-id='disgust'  data-width='9%'>嫌悪</th>
+               <th data-column-id='anger'  data-width='9%'>怒り</th>
                <th data-column-id='opinion'  data-width='30%'>ご意見</th>
+               <th data-column-id='detail'  data-width='5%' data-formatter='details' data-sortable='false'></th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
@@ -111,6 +112,14 @@ $(function() {
 		multiSelect: true,
 		rowSelect: true,
 	    keepSelection: true,
+	    formatters: {
+	        "details": function($column, $row) {
+                  //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
+	        	//return "<Form><input type='button' value='画像拡大' onClick='window.open('" + getimage.php?id=$row.no + "','test','width=250,height=100,');'></Form> ";
+	        	//return "<Form><input type='button' value='画像拡大' onclick='imgwin()'></Form> ";
+	        	return "<input type='button' value='詳細' onclick='detailwin("  + $row.no + ")'> ";
+             }
+	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
 	{
 	    for (var i = 0; i < rows.length; i++)
@@ -137,7 +146,9 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#wrap').css('display', 'block');
 });
 
-
+function detailwin(no){
+	alert(v);
+}
 </script>
 </body>
 </html>

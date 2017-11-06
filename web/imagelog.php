@@ -204,6 +204,10 @@ function imgwin(imgno){
     myWin.onpageshow = function(){
     	var img = myWin.document.getElementById("image");
     	myWin.resizeTo(img.width + 70, img.height + 80);
+
+    	var width=screen.availWidth - img.width - 70;
+        var height=screen.availHeight - img.height - 80;
+        myWin.moveTo(width/2, height/2);
     };
 }
 
