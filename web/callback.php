@@ -622,6 +622,13 @@ if($type != "text"){
 	curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 	curl_setopt($curl, CURLOPT_USERPWD, $nlu_user. ':' . $nlu_pass);
 	$jsonString = curl_exec($curl);
+
+	// エラーが発生したかどうかを確認します
+	if (!curl_errno($curl)) {
+		$info = curl_getinfo($curl);
+		echo 'Took ', $info['total_time'], ' seconds to send a request to ', $info['url'], "\n";
+	}
+
 	//$json = json_decode($jsonString, true);
 	$json = json_decode($jsonString);
 
