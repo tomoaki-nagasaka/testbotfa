@@ -59,7 +59,13 @@ if ($link) {
 		echo substr($row[1], 0,4)."/".substr($row[1], 4,2)."/".substr($row[1], 6,2)." ".substr($row[1], 8,2).":".substr($row[1], 10,2);
 		echo "</td>";
 		echo "<td>";
-		echo $row[2];
+		if($row[2] == "1"){
+			echo "男性";
+		}else if($row[2] == "2"){
+			echo "女性";
+		}else{
+			echo "登録なし";
+		}
 		echo "</td>";
 		echo "<td>";
 		echo $row[3];
