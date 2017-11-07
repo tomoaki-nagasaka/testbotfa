@@ -158,20 +158,26 @@ function detailwin(date,sex,age,sadness,joy,fear,disgust,anger,opinion){
 function detailwin(value){
 	for (var i = 0; i < dbvalue.length; i++){
 		if(dbvalue[i][0] == value){
-			myWinSize = "resizable=yes,width=600,height=300"; // ウィンドウオプション
-		    myWin = window.open("" , "detailwindow" , myWinSize); // ウィンドウを開く
+			// 表示するウィンドウのサイズ
+			var w_size=800;
+			var h_size=600;
+			// 表示するウィンドウの位置
+			var l_position=Number((window.screen.width-w_size)/2);
+			var t_position=Number((window.screen.height-h_size)/2);
+
+		    myWin = window.open("" , "detailwindow" , 'width='+w_size+', height='+h_size+', left='+l_position+', top='+t_position); // ウィンドウを開く
 
 		    myWin.document.open();
 		    myWin.document.write( "<html>" );
 		    myWin.document.write( "<head>" );
 		    myWin.document.write( "<title>", "詳細" , "</title>" );
 		    myWin.document.write( "</head>" );
-		    myWin.document.write( "<body style='margin:0px;padding:0px'>" );
-		    myWin.document.write( "<p>　日時</p>" );
+		    myWin.document.write( "<body style='margin:10px;padding:10px'>" );
+		    myWin.document.write( "<p style='display:inline;'>　日時</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][1] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p>　ご意見</p>" );
-		    myWin.document.write( "<textarea  readonly value='" + dbvalue[i][4] + "'>" );
+		    myWin.document.write( "<p style='display:inline;'>　ご意見</p>" );
+		    myWin.document.write( "<textarea  readonly rows='5' cols='100' >" + dbvalue[i][4] + "</textarea>");
 		    myWin.document.write( "</body>" );
 		    myWin.document.write( "</html>" );
 		    myWin.document.close();
