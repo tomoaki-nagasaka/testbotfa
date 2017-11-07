@@ -117,7 +117,11 @@ $(function() {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
 	        	//return "<Form><input type='button' value='画像拡大' onClick='window.open('" + getimage.php?id=$row.no + "','test','width=250,height=100,');'></Form> ";
 	        	//return "<Form><input type='button' value='画像拡大' onclick='imgwin()'></Form> ";
-	        	return "<input type='button' value='詳細' onclick='detailwin("  + $row + ")'> ";
+	        	var arr = [];
+	        	for (var i = 0; i < $row.length; i++){
+	        		arr.push($row[i]);
+	        	}
+	        	return "<input type='button' value='詳細' onclick='detailwin("  + arr + ")'> ";
              }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
