@@ -31,7 +31,7 @@ $db_user =  getenv('DB_USER');
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 
-
+$dbvalue = array();
 
 if ($link) {
 	$result = pg_query("SELECT * FROM botlog");
@@ -40,12 +40,14 @@ if ($link) {
 	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='day' data-width='7%'>日時</th>
                <th data-column-id='user'  data-width='10%'>ユーザーID</th>
-               <th data-column-id='que'  data-width='40%'>質問内容</th>
-               <th data-column-id='ans'  data-width='40%'>回答内容</th>
+               <th data-column-id='que'  data-width='37%'>質問内容</th>
+               <th data-column-id='ans'  data-width='37%'>回答内容</th>
+               <th data-column-id='detail'  data-width='6%' data-formatter='details' data-sortable='false'></th>
            </tr>";
 	echo "</thead>";
 	echo "<tbody>";
 	while ($row = pg_fetch_row($result)) {
+		array_push($dbvalue,$row);
 		echo "<tr>";
 		echo "<td>";
 		echo $row[0];
@@ -88,6 +90,11 @@ $(function() {
 		multiSelect: true,
 		rowSelect: true,
 	    keepSelection: true,
+	    formatters: {
+	        "details": function($column, $row) {
+	        	return "<input type='button' value='詳細' onclick='detailwin("  + $row.no + ")'> ";
+             }
+	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
 	{
 	    for (var i = 0; i < rows.length; i++)
@@ -144,7 +151,50 @@ function drow() {
 	}
 }
 
+function detailwin(value){
+	for (var i = 0; i < dbvalue.length; i++){
+		if(dbvalue[i][0] == value){
+			// 表示するウィンドウのサイズ
+			var w_size=900;
+			var h_size=400;
+			// 表示するウィンドウの位置
+			var l_position=Number((window.screen.width-w_size)/2);
+			var t_position=Number((window.screen.height-h_size)/2);
 
+		    myWin = window.open("" , "detailwindow" , 'width='+w_size+', height='+h_size+', left='+l_position+', top='+t_position); // ウィンドウを開く
+
+		    myWin.document.open();
+		    myWin.document.write( "<html>" );
+		    myWin.document.write( "<head>" );
+		    myWin.document.write( "<title>", "詳細" , "</title>" );
+		    myWin.document.write( "</head>" );
+		    myWin.document.write( "<body style='margin:10px;padding:10px'>" );
+		    var idate = dbvalue[i][1].substr(0,4) + "/" + dbvalue[i][1].substr(4,2) + "/" + dbvalue[i][1].substr(6,2) + " " + dbvalue[i][1].substr(8,2) + ":" + dbvalue[i][1].substr(10,2);
+		    myWin.document.write( "<p style='display:inline;'>　　　　日時　</p>" );
+		    myWin.document.write( "<input type='text' readonly value='" + idate + "'>" );
+		    myWin.document.write( "<br>" );
+		    myWin.document.write( "<p style='display:inline;'>ユーザーＩＤ　</p>" );
+		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][2] + "'>" );
+		    myWin.document.write( "<br>" );
+		    myWin.document.write( "<label>　　質問内容　</label>" );
+		    myWin.document.write( "<textarea  readonly rows='5' cols='100' style='vertical-align:middle;'>" + dbvalue[i][3] + "</textarea>");
+		    myWin.document.write( "<br>" );
+		    myWin.document.write( "<label>　　回答内容　</label>" );
+		    myWin.document.write( "<textarea  readonly rows='5' cols='100' style='vertical-align:middle;'>" + dbvalue[i][4] + "</textarea>");
+		    myWin.document.write( "</body>" );
+		    myWin.document.write( "</html>" );
+		    myWin.document.close();
+
+		    myWin.onpageshow = function(){
+
+		    	var width=screen.availWidth - 600;
+		        var height=screen.availHeight - 300;
+		        myWin.moveTo(width/2, height/2);
+		    };
+		    break;
+		}
+	}
+}
 </script>
 </body>
 </html>

@@ -17,7 +17,6 @@
 		<input type="button" class="btn btn-default" onclick="location.href='shisetsu.php'" value="施設情報" />
 		<input type="button" class="btn btn-default" onclick="location.href='genre.php'" value="施設ジャンル" />
 		<input type="button" class="btn btn-default" onclick="location.href='opinion.php'" value="市政へのご意見" />
-		<input type="button" class="btn btn-default" onclick="location.href='attribute.php'" value="属性登録" />
 	</div>
 </div>
 </body>

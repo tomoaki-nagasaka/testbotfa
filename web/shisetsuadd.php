@@ -35,7 +35,7 @@
 	<p style="display:inline;">画像ＵＲＬ</p>
 	<input id="iurl" class="form-control" maxlength="300" placeholder="https://www.yyy.zzz.jpg" style="width: 600px;">
 	※必ずhttpsから始まるURLを指定してください
-	<br>
+	<br><br>
 	<p style="display:inline;">詳細ＵＲＬ</p>
 	<input id="url" class="form-control" maxlength="300" placeholder="http://www.yyy.zzz.html" style="width: 600px;">
 	<br>
@@ -179,43 +179,6 @@ function j1change(){
 		select.appendChild(option);
 	}
 
-	/*
-	var janru = [];
-	switch (document.getElementById('j1').value){
-	  case "グルメ":
-		  janru = ["和食","寿司","洋食","中華","多国籍"];
-	    break;
-	  case "レジャー・観光・スポーツ":
-		  janru = ["レジャー施設","美術館","温泉","公園","緑地","庭園","神社","寺","教会","スポーツ","体育館","アウトドア","ゴルフ場","釣堀","動物園","遊園地","博物館"];
-	    break;
-	  case "ホテル・旅館":
-		  janru = ["ホテル","旅館","民宿"];
-	    break;
-	  case "駅・バス・車・交通":
-		  janru = ["駅","バス停","駐車場","ガソリンスタンド","レンタカー","ディーラー","空港","道の駅"];
-	    break;
-	  case "公共・病院・銀行・学校":
-		  janru = ["役所","病院","幼稚園","保育園","小学校","中学校","高校","大学","専門学校","図書館","交番","銀行"];
-	    break;
-	  case "ショッピング":
-		  janru = ["コンビニ","薬局","スーパー","家電","ホームセンター","本屋","洋服"];
-	    break;
-	  case "生活・不動産":
-		  janru = ["レンタルショップ","クリーニング","不動産"];
-	    break;
-	    break;
-	  default:
-	    break;
-	}
-
-	janru.forEach(function (item, index, array) {
-		var option = document.createElement('option');
-		option.setAttribute('value', item);
-		var text = document.createTextNode(item);
-		option.appendChild(text);
-		select.appendChild(option);
-	});
-	*/
 }
 
 //クリア
