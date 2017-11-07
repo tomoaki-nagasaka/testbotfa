@@ -160,7 +160,7 @@ function detailwin(value){
 		if(dbvalue[i][0] == value){
 			// 表示するウィンドウのサイズ
 			var w_size=900;
-			var h_size=300;
+			var h_size=400;
 			// 表示するウィンドウの位置
 			var l_position=Number((window.screen.width-w_size)/2);
 			var t_position=Number((window.screen.height-h_size)/2);
