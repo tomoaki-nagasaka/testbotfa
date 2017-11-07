@@ -147,7 +147,9 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 });
 
 function detailwin(row){
-	alert(row.no);
+	alert(row);
+	alert(row.get(no));
+	alert(row[0]);
 }
 </script>
 </body>
