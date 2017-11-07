@@ -117,8 +117,9 @@ $(function() {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
 	        	//return "<Form><input type='button' value='画像拡大' onClick='window.open('" + getimage.php?id=$row.no + "','test','width=250,height=100,');'></Form> ";
 	        	//return "<Form><input type='button' value='画像拡大' onclick='imgwin()'></Form> ";
-	        	var ivalue = $row.date + "," + $row.sex + "," + $row.age + "," + $row.sadness + "," + $row.joy + "," + $row.fear + "," + $row.disgust + "," + $row.anger + "," + $row.opinion;
-	        	return "<input type='button' value='詳細' onclick='detailwin("  + ivalue + ")'> ";
+	        	//var ivalue = $row.date + "," + $row.sex + "," + $row.age + "," + $row.sadness + "," + $row.joy + "," + $row.fear + "," + $row.disgust + "," + $row.anger + "," + $row.opinion;
+	        	var ivalue = $row.date + "," + $row.sex;
+	        	return "<input type='button' value='詳細' onclick='detailwin("  + $row.date + "," + $row.sex + ")'> ";
              }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
@@ -147,8 +148,13 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#wrap').css('display', 'block');
 });
 
+/*
 function detailwin(date,sex,age,sadness,joy,fear,disgust,anger,opinion){
 	alert(date + "/" + sex + "/" + age);
+}
+*/
+function detailwin(date,sex){
+	alert(date + "/" + sex );
 }
 </script>
 </body>
