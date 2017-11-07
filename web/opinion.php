@@ -160,7 +160,7 @@ function detailwin(value){
 		if(dbvalue[i][0] == value){
 			// 表示するウィンドウのサイズ
 			var w_size=900;
-			var h_size=400;
+			var h_size=300;
 			// 表示するウィンドウの位置
 			var l_position=Number((window.screen.width-w_size)/2);
 			var t_position=Number((window.screen.height-h_size)/2);
@@ -207,7 +207,6 @@ function detailwin(value){
 		    myWin.document.write( "<br>" );
 		    myWin.document.write( "<label>　ご意見　</label>" );
 		    myWin.document.write( "<textarea  readonly rows='5' cols='100' style='vertical-align:middle;'>" + dbvalue[i][4] + "</textarea>");
-		    myWin.document.write( "<input type='button' class='btn btn-default' onclick='test()' value='閉じる' />" );
 		    myWin.document.write( "</body>" );
 		    myWin.document.write( "</html>" );
 		    myWin.document.close();
@@ -221,10 +220,6 @@ function detailwin(value){
 		    break;
 		}
 	}
-}
-
-function test(){
-	alert("削除する行を選択してください");
 }
 </script>
 </body>
