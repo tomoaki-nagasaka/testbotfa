@@ -11,13 +11,13 @@
 <div id="header"></div>
 <body>
 <div class="container">
-	<p  style="display:inline;">　施設名称</p>
+	<p  style="display:inline;">施設名称</p>
 	<input id="meisho" class="form-control" maxlength="40" placeholder="行政公園" style="width: 600px;">
 	<br>
-	<p style="display:inline;">　　　住所</p>
+	<p style="display:inline;">住所</p>
 	<input id="jusho" class="form-control" maxlength="128" placeholder="行政市行政1-1-1"  style="width: 600px;">
 	<br>
-	<p style="display:inline;">　電話番号</p>
+	<p style="display:inline;">電話番号</p>
 	<input id="tel" class="form-control" type="tel" maxlength="14" placeholder="000-000-0000"  style="width: 600px;">
 	<br>
 	<p style="display:inline;">ジャンル１</p>
@@ -34,12 +34,11 @@
 	<br><br>
 	<p style="display:inline;">画像ＵＲＬ</p>
 	<input id="iurl" class="form-control" maxlength="300" placeholder="https://www.yyy.zzz.jpg" style="width: 600px;">
-	<br>
 	※必ずhttpsから始まるURLを指定してください
-	<br><br>
+	<br>
 	<p style="display:inline;">詳細ＵＲＬ</p>
 	<input id="url" class="form-control" maxlength="300" placeholder="http://www.yyy.zzz.html" style="width: 600px;">
-	<br><br>
+	<br>
 	<input type="button" class="btn btn-default" onclick="clearform()" value="クリア" />
 	<input type="button" class="btn btn-default" onclick="update()" value="更新" />
 	<input type="button" class="btn btn-default" onclick="back()" value="もどる" />
