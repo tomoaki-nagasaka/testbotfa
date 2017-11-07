@@ -159,8 +159,8 @@ function detailwin(value){
 	for (var i = 0; i < dbvalue.length; i++){
 		if(dbvalue[i][0] == value){
 			// 表示するウィンドウのサイズ
-			var w_size=800;
-			var h_size=600;
+			var w_size=900;
+			var h_size=400;
 			// 表示するウィンドウの位置
 			var l_position=Number((window.screen.width-w_size)/2);
 			var t_position=Number((window.screen.height-h_size)/2);
@@ -174,7 +174,7 @@ function detailwin(value){
 		    myWin.document.write( "</head>" );
 		    myWin.document.write( "<body style='margin:10px;padding:10px'>" );
 		    var idate = dbvalue[i][1].substr(0,4) + "/" + dbvalue[i][1].substr(4,2) + "/" + dbvalue[i][1].substr(6,2) + " " + dbvalue[i][1].substr(8,2) + ":" + dbvalue[i][1].substr(10,2);
-		    myWin.document.write( "<p style='display:inline;'>　日時　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　日時　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + idate + "'>" );
 		    myWin.document.write( "<br>" );
 		    var sex = "";
@@ -205,7 +205,7 @@ function detailwin(value){
 		    myWin.document.write( "<p style='display:inline;'>　　怒り　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][9] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "　ご意見　" );
+		    myWin.document.write( "<label style='vertical-align:middle;'>　ご意見　</label>" );
 		    myWin.document.write( "<textarea  readonly rows='5' cols='100' >" + dbvalue[i][4] + "</textarea>");
 		    myWin.document.write( "</body>" );
 		    myWin.document.write( "</html>" );
