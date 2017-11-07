@@ -184,29 +184,29 @@ function detailwin(value){
 		    if(dbvalue[i][2] = 2){
 			    sex = "女性";
 		    }
-		    myWin.document.write( "<p style='display:inline;'>　性別　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　性別　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + sex + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p style='display:inline;'>　年齢　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　年齢　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][3] + "'>" );
 		    myWin.document.write( "<br>" );
 		    myWin.document.write( "<p style='display:inline;'>　悲しみ　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][5] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p style='display:inline;'>　喜び　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　喜び　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][6] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p style='display:inline;'>　恐れ　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　恐れ　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][7] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p style='display:inline;'>　嫌悪　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　嫌悪　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][8] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p style='display:inline;'>　怒り　</p>" );
+		    myWin.document.write( "<p style='display:inline;'>　　怒り　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][9] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<p style='display:inline;'>　ご意見　</p>" );
-		    myWin.document.write( "<textarea  style='display:inline;' readonly rows='5' cols='100' >" + dbvalue[i][4] + "</textarea>");
+		    myWin.document.write( "　ご意見　" );
+		    myWin.document.write( "<textarea  readonly rows='5' cols='100' >" + dbvalue[i][4] + "</textarea>");
 		    myWin.document.write( "</body>" );
 		    myWin.document.write( "</html>" );
 		    myWin.document.close();
