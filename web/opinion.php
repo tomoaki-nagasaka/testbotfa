@@ -117,7 +117,7 @@ $(function() {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
 	        	//return "<Form><input type='button' value='画像拡大' onClick='window.open('" + getimage.php?id=$row.no + "','test','width=250,height=100,');'></Form> ";
 	        	//return "<Form><input type='button' value='画像拡大' onclick='imgwin()'></Form> ";
-	        	return "<input type='button' value='詳細' onclick='detailwin("  + $row.no + ")'> ";
+	        	return "<input type='button' value='詳細' onclick='detailwin("  + $row + ")'> ";
              }
 	    }
 	}).on("selected.rs.jquery.bootgrid", function(e, rows)
@@ -146,8 +146,8 @@ $(window).load(function () { //全ての読み込みが完了したら実行
 	  $('#wrap').css('display', 'block');
 });
 
-function detailwin(no){
-	alert(no);
+function detailwin(row){
+	alert(row.no);
 }
 </script>
 </body>
