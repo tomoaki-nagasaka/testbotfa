@@ -12,19 +12,19 @@
 <div id="header"></div>
 <div class="container">
 	<p>分類</p>
-	<select class="form-control" id="bunrui"  onChange="bchange()">
+	<select class="form-control" id="bunrui"  onChange="bchange()" style="width: 600px;">
 	<option value="1">大分類</option>
 	<option value="2">小分類</option>
 	</select>
-	<br><br>
+	<br>
 	<p>大分類名称</p>
-	<input id="g1meisho" class="form-control" maxlength="50" placeholder="大分類名称" style="width: 500px;">
-	<select id="g1">
+	<input id="g1meisho" class="form-control" maxlength="50" placeholder="大分類名称" style="width: 600px;">
+	<select id="g1" class="form-control" style="width: 600px;">
 	</select>
-	<br><br>
+	<br>
 	<p>小分類名称</p>
-	<input id="g2meisho" class="form-control" maxlength="50" placeholder="小分類名称" style="width: 500px;">
-	<br><br>
+	<input id="g2meisho" class="form-control" maxlength="50" placeholder="小分類名称" style="width: 600px;">
+	<br>
 	<input type="button" class="btn btn-default" onclick="update()" value="更新" />
 	<input type="button" class="btn btn-default" onclick="back()" value="もどる" />
 </div>
