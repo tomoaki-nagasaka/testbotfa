@@ -205,8 +205,9 @@ function detailwin(value){
 		    myWin.document.write( "<p style='display:inline;'>　　怒り　</p>" );
 		    myWin.document.write( "<input type='text' readonly value='" + dbvalue[i][9] + "'>" );
 		    myWin.document.write( "<br>" );
-		    myWin.document.write( "<label style='vertical-align:middle;'>　ご意見　</label>" );
-		    myWin.document.write( "<textarea  readonly rows='5' cols='100' >" + dbvalue[i][4] + "</textarea>");
+		    myWin.document.write( "<label>　ご意見　</label>" );
+		    myWin.document.write( "<textarea  readonly rows='5' cols='100' style='vertical-align:middle;'>" + dbvalue[i][4] + "</textarea>");
+		    myWin.document.write( "<input type='button' class='btn btn-default' onclick='test()' value='閉じる' />" );
 		    myWin.document.write( "</body>" );
 		    myWin.document.write( "</html>" );
 		    myWin.document.close();
@@ -220,6 +221,10 @@ function detailwin(value){
 		    break;
 		}
 	}
+}
+
+function test(){
+	alert("削除する行を選択してください");
 }
 </script>
 </body>
