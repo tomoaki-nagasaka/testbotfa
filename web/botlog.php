@@ -39,9 +39,9 @@ if ($link) {
 	echo "<thead>";
 	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>
                <th data-column-id='day' data-width='7%'>日時</th>
-               <th data-column-id='user'  data-width='10%'>ユーザーID</th>
-               <th data-column-id='que'  data-width='37%'>質問内容</th>
-               <th data-column-id='ans'  data-width='37%'>回答内容</th>
+               <th data-column-id='user'  data-width='20%'>ユーザーID</th>
+               <th data-column-id='que'  data-width='32%'>質問内容</th>
+               <th data-column-id='ans'  data-width='32%'>回答内容</th>
                <th data-column-id='detail'  data-width='6%' data-formatter='details' data-sortable='false'></th>
            </tr>";
 	echo "</thead>";
