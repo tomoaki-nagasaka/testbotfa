@@ -117,7 +117,7 @@ $(function() {
                   //return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + $row.no + "\">画像拡大</button> ";
 	        	//return "<Form><input type='button' value='画像拡大' onClick='window.open('" + getimage.php?id=$row.no + "','test','width=250,height=100,');'></Form> ";
 	        	//return "<Form><input type='button' value='画像拡大' onclick='imgwin()'></Form> ";
-	        	var ivalue = $row.date + "," + $row.sex + "," + $row.age + "," + $row.sadness + "," + $row.joy + "," + $row.fear + "," + $row.disgust + "," + $row.anger + "," + $row.opinion;
+	        	var ivalue = $row.date + "|" + $row.sex + "|" + $row.age + "|" + $row.sadness + "|" + $row.joy + "|" + $row.fear + "|" + $row.disgust + "|" + $row.anger + "|" + $row.opinion;
 	        	return "<input type='button' value='詳細' onclick='detailwin("  + ivalue + ")'> ";
              }
 	    }
