@@ -31,7 +31,7 @@ $db_user =  getenv('DB_USER');
 $conn = "host=".$db_host." dbname=".$db_name." user=".$db_user." password=".$db_pass;
 $link = pg_connect($conn);
 
-
+$dbvalue = array();
 
 if ($link) {
 	$result = pg_query("SELECT * FROM opinion");
@@ -52,6 +52,7 @@ if ($link) {
 	echo "</thead>";
 	echo "<tbody>";
 	while ($row = pg_fetch_row($result)) {
+		array_push($dbvalue,$row);
 		echo "<tr>";
 		echo "<td>";
 		echo $row[0];
@@ -100,7 +101,9 @@ if ($link) {
 </div>
 <script>
 var rowIds = [];
+var dbvalue = [];
 $(function() {
+	dbvalue = <?php echo json_encode($dbvalue); ?>;
 	var h = $(window).height();
 	$('#wrap').css('display','none');
 	$('#loader-bg ,#loader').height(h).css('display','block');
@@ -154,6 +157,8 @@ function detailwin(date,sex,age,sadness,joy,fear,disgust,anger,opinion){
 */
 function detailwin(value){
 	alert(value);
+	alert(dbvalue.length);
+	alert(dbvalue[0][0]);
 }
 </script>
 </body>
