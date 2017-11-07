@@ -171,11 +171,13 @@ function detailwin(value){
 		    myWin.document.write( "<html>" );
 		    myWin.document.write( "<head>" );
 		    myWin.document.write( "<title>", "詳細" , "</title>" );
+		    myWin.document.write( "<link href="css/common.css" rel='stylesheet' />" );
+		    myWin.document.write( "<link href="css/bootstrap.css" rel='stylesheet' /> );
 		    myWin.document.write( "</head>" );
 		    myWin.document.write( "<body style='margin:10px;padding:10px'>" );
 		    var idate = dbvalue[i][1].substr(0,4) + "/" + dbvalue[i][1].substr(4,2) + "/" + dbvalue[i][1].substr(6,2) + " " + dbvalue[i][1].substr(8,2) + ":" + dbvalue[i][1].substr(10,2);
 		    myWin.document.write( "<p style='display:inline;'>　　日時　</p>" );
-		    myWin.document.write( "<input type='text' readonly value='" + idate + "'>" );
+		    myWin.document.write( "<input class='form-control' type='text' readonly value='" + idate + "'>" );
 		    myWin.document.write( "<br>" );
 		    var sex = "";
 		    if(dbvalue[i][2] == 1){
