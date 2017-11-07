@@ -78,7 +78,9 @@ if ($link) {
 </div>
 <script>
 var rowIds = [];
+var dbvalue = [];
 $(function() {
+	dbvalue = <?php echo json_encode($dbvalue); ?>;
 	var h = $(window).height();
 	$('#wrap').css('display','none');
 	$('#loader-bg ,#loader').height(h).css('display','block');
