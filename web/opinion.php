@@ -178,10 +178,10 @@ function detailwin(value){
 		    myWin.document.write( "<input type='text' readonly value='" + idate + "'>" );
 		    myWin.document.write( "<br>" );
 		    var sex = "";
-		    if(dbvalue[i][2] = 1){
+		    if(dbvalue[i][2] == 1){
 			    sex = "男性";
 		    }
-		    if(dbvalue[i][2] = 2){
+		    if(dbvalue[i][2] == 2){
 			    sex = "女性";
 		    }
 		    myWin.document.write( "<p style='display:inline;'>　　性別　</p>" );
