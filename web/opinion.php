@@ -41,11 +41,11 @@ if ($link) {
                <th data-column-id='date' data-width='7%'>日時</th>
                <th data-column-id='sex'  data-width='5%'>性別</th>
                <th data-column-id='age'  data-width='5%'>年齢</th>
-               <th data-column-id='sadness'  data-width='9%'>悲しみ</th>
-               <th data-column-id='joy'  data-width='9%'>喜び</th>
-               <th data-column-id='fear'  data-width='9%'>恐れ</th>
-               <th data-column-id='disgust'  data-width='9%'>嫌悪</th>
-               <th data-column-id='anger'  data-width='9%'>怒り</th>
+               <th data-column-id='sadness' data-type='numeric' data-width='9%'>悲しみ</th>
+               <th data-column-id='joy' data-type='numeric' data-width='9%'>喜び</th>
+               <th data-column-id='fear' data-type='numeric' data-width='9%'>恐れ</th>
+               <th data-column-id='disgust' data-type='numeric' data-width='9%'>嫌悪</th>
+               <th data-column-id='anger' data-type='numeric' data-width='9%'>怒り</th>
                <th data-column-id='opinion'  data-width='30%'>ご意見</th>
                <th data-column-id='detail'  data-width='5%' data-formatter='details' data-sortable='false'></th>
            </tr>";
