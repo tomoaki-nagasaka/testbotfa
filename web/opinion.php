@@ -34,7 +34,7 @@ $link = pg_connect($conn);
 $dbvalue = array();
 
 if ($link) {
-	$result = pg_query("SELECT * FROM opinion");
+	$result = pg_query("SELECT * FROM opinion ORDER BY no DESC");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
 	echo "<tr><th data-column-id='no' data-type='numeric' data-identifier='true' data-width='3%'>No</th>

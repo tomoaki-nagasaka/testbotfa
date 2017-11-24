@@ -34,7 +34,7 @@ $link = pg_connect($conn);
 
 
 if ($link) {
-	$result = pg_query("SELECT * FROM shisetsu");
+	$result = pg_query("SELECT * FROM shisetsu ORDER BY genre1, genre2");
 	echo "<table id='grid-basic' class='table table-condensed table-hover table-striped'>";
 	echo "<thead>";
 	echo "<tr><th data-column-id='id' data-type='numeric' data-identifier='true' data-width='3%'>ID</th>
